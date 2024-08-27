@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
-import Logo2 from '../../images/logo.jpg';
+import Logo2 from '../../images/logo.png';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -47,7 +47,7 @@ const SignIn: React.FC = () => {
               </p>
 
               <span className="mt-15 inline-block">
-                 <img src={Logo2} alt="Logo" width={350} height={350} />
+                 <img src={Logo2} alt="Logo" width={400} height={400} />
                 {/*<svg*/}
                 {/*  width="350"*/}
                 {/*  height="350"*/}
