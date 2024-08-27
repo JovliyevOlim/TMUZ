@@ -25,12 +25,12 @@ const loginSlice = createSlice({
         loginSuccess(state, action) {
             console.log(action)
             state.user = action.payload.object
-            state.userToken = action.payload.object.message
-            state.businessId = action.payload.object.business.id
-            state.userId = action.payload.object.id
-            state.firstBranchId = action.payload.object.branches[0].id
-            state.loading = false;
-            state.errorMsg = false;
+            // state.userToken = action.payload.object.message
+            // state.businessId = action.payload.object.business.id
+            // state.userId = action.payload.object.id
+            // state.firstBranchId = action.payload.object.branches[0].id
+            // state.loading = false;
+            // state.errorMsg = false;
         },
         logoutUserSuccess(state, action) {
             state.isUserLogout = true

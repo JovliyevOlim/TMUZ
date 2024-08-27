@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 //routes
 import { authProtectedRoutes, publicRoutes } from './allRoutes';
-// import AuthProtected from './AuthProtected';
+import AuthProtected from './AuthProtected';
 import DefaultLayout from '../layout/DefaultLayout.tsx';
 
 const Index = () => {
@@ -16,27 +16,27 @@ const Index = () => {
             <Route
               path={route.path}
               element={
-                <DefaultLayout>
+                <div>
                   {route.component}
-                </DefaultLayout>
+                </div>
               }
               key={idx}
             />
           ))}
         </Route>
 
-        {/*<Route>*/}
-        {/*  {authProtectedRoutes.map((route, idx) => (*/}
-        {/*    <Route*/}
-        {/*      path={route.path}*/}
-        {/*      element={*/}
-        {/*        <AuthProtected>*/}
-        {/*          <DefaultLayout path={route.path}>{route.component}</DefaultLayout>*/}
-        {/*        </AuthProtected>}*/}
-        {/*      key={idx}*/}
-        {/*    />*/}
-        {/*  ))}*/}
-        {/*</Route>*/}
+        <Route>
+          {authProtectedRoutes.map((route, idx) => (
+            <Route
+              path={route.path}
+              element={
+                <AuthProtected>
+                  <DefaultLayout>{route.component}</DefaultLayout>
+                </AuthProtected>}
+              key={idx}
+            />
+          ))}
+        </Route>
       </Routes>
     </React.Fragment>
   );

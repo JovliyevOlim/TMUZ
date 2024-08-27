@@ -48,8 +48,8 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
   // Authentication Page
-  { path: '/auth/signin', component: <SignIn /> },
-  { path: '/auth/signup', component: <SignUp /> }
+  { path: '/login', component: <SignIn /> },
+  { path: '/register', component: <SignUp /> }
 ];
 
 export { authProtectedRoutes, publicRoutes };

@@ -6,11 +6,38 @@ import './css/style.css';
 import './css/satoshi.css';
 import 'jsvectormap/dist/css/jsvectormap.css';
 import 'flatpickr/dist/flatpickr.min.css';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from './slices';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const persistConfig = {
+  key: 'root',
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({ reducer: persistedReducer, devTools: true });
+
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+const persistor = persistStore(store);
+
+root.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>,
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <React.Fragment>
+          <Router>
+            {/*<ToastContainer />*/}
+            <App />
+          </Router>
+        </React.Fragment>
+      </PersistGate>
+    </Provider>
+  </React.StrictMode>
 );

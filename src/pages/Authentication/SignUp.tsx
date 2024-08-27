@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
+// Formik validation
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+
 
 const SignUp: React.FC = () => {
+
+  document.title = 'Register';
+
+  const validation: any = useFormik({
+    // enableReinitialize : use this flag when initial values needs to be changed
+    enableReinitialize: true,
+
+    initialValues: {
+      userName: '',
+      password: ''
+    },
+    validationSchema: Yup.object({
+      userName: Yup.string().required('Please Enter Your Username'),
+      password: Yup.string().required('Please Enter Your Password')
+    }),
+    onSubmit: (values) => {
+      console.log('values', values);
+    }
+  });
+
   return (
     <>
-      <Breadcrumb pageName="Sign Up" />
+      {/*<Breadcrumb pageName="Sign Up" />*/}
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
@@ -149,9 +172,9 @@ const SignUp: React.FC = () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <span className="mb-1.5 block font-medium">Start for free</span>
+              {/*<span className="mb-1.5 block font-medium">Start for free</span>*/}
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign Up to TailAdmin
+                Sign Up
               </h2>
 
               <form>
@@ -299,7 +322,8 @@ const SignUp: React.FC = () => {
                   />
                 </div>
 
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                <button
+                  className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                       width="20"
@@ -333,17 +357,17 @@ const SignUp: React.FC = () => {
                       </defs>
                     </svg>
                   </span>
-                  Sign up with Google
+                  {/*Sign up with Google*/}
                 </button>
 
-                <div className="mt-6 text-center">
-                  <p>
-                    Already have an account?{' '}
-                    <Link to="/auth/signin" className="text-primary">
-                      Sign in
-                    </Link>
-                  </p>
-                </div>
+                {/*<div className="mt-6 text-center">*/}
+                {/*  <p>*/}
+                {/*    Already have an account?{' '}*/}
+                {/*    <Link to="/auth/signin" className="text-primary">*/}
+                {/*      Sign in*/}
+                {/*    </Link>*/}
+                {/*  </p>*/}
+                {/*</div>*/}
               </form>
             </div>
           </div>
