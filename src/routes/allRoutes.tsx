@@ -10,6 +10,8 @@ import Buttons from '../pages/UiElements/Buttons.tsx';
 import SignIn from '../pages/Authentication/SignIn.tsx';
 import SignUp from '../pages/Authentication/SignUp.tsx';
 import ECommerce from '../pages/Dashboard/ECommerce.tsx';
+import Users from '../pages/Users/Users.tsx';
+import Works from '../pages/Works/Works.tsx';
 
 
 const authProtectedRoutes = [
@@ -18,6 +20,12 @@ const authProtectedRoutes = [
 
   // Calendar
   { path: '/calendar', component: <Calendar /> },
+
+  // Users
+  { path: '/users', component: <Users /> },
+
+  // Work
+  { path: '/work', component: <Works /> },
 
   //Profile
   { path: '/profile', component: <Profile /> },
