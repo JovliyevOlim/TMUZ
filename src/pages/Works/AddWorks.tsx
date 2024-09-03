@@ -24,7 +24,7 @@ export const AddWorks = ({ modalOpen, setModalOpen }) => {
     validationSchema: Yup.object({
       companyId: Yup.string().required('Korxonani tanlang !'),
       exampleId: Yup.string().required(''),
-      example: Yup.string().required('Namuna !'),
+      example: Yup.string().required('Namuna ish!'),
       roleId: Yup.string().required('Lavozimini tanlang')
     }),
     onSubmit: (values) => {
@@ -32,9 +32,8 @@ export const AddWorks = ({ modalOpen, setModalOpen }) => {
     }
   });
 
-  useEffect(() => {
-    initialValues.example = validation?.valuee?.exampleId;
-  }, [validation?.valuee?.exampleId]);
+
+  console.log(initialValues);
 
   return (
     modalOpen &&
@@ -88,12 +87,15 @@ export const AddWorks = ({ modalOpen, setModalOpen }) => {
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       value={validation.values.exampleId}
-                      onChange={validation.handleChange}
+                      onChange={(e) => {
+                        validation.handleChange(e);
+                        setInitialValues({ ...initialValues, example: validation?.values?.exampleId });
+                      }}
                       onBlur={validation.handleBlur}
                       name="exampleId"
                       className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
                     >
-                      <option value="" disabled className="text-body dark:text-bodydark">
+                      <option value=""  className="text-body dark:text-bodydark">
                         Ishni qo'lda kiritish
                       </option>
                       <option value="Birinchi ish" className="text-body dark:text-bodydark">
@@ -149,6 +151,7 @@ export const AddWorks = ({ modalOpen, setModalOpen }) => {
               </div>
 
               <button
+                type="submit"
                 className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                 Saqlash
               </button>
