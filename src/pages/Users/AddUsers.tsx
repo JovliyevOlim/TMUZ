@@ -1,11 +1,13 @@
 import React from 'react';
 import userSix from '../../images/user/user-06.png';
-import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne.tsx';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addNewUser } from '../../slices/user/thunk.ts';
 
 
-export const AddUser = ({ modalOpen, setModalOpen }) => {
+export const AddUser = ({ modalOpen, setModalOpen }: any) => {
+  const dispatch: any = useDispatch();
 
 
   function tog_standard() {
@@ -29,7 +31,7 @@ export const AddUser = ({ modalOpen, setModalOpen }) => {
       roleId: Yup.string().required('Lavozimini tanlang')
     }),
     onSubmit: (values) => {
-      // dispatch(loginUser(values, navigate));
+      dispatch(addNewUser(values));
     }
   });
 

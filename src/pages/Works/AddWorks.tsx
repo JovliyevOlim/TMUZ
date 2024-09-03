@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { addNewWork } from '../../slices/work/thunk.ts';
 
 
-export const AddWorks = ({ modalOpen, setModalOpen }) => {
-
+export const AddWorks = ({ modalOpen, setModalOpen }: any) => {
+  const dispatch: any = useDispatch();
   const [initialValues, setInitialValues] = useState({
     name: '',
     example: '',
@@ -28,7 +30,7 @@ export const AddWorks = ({ modalOpen, setModalOpen }) => {
       roleId: Yup.string().required('Lavozimini tanlang')
     }),
     onSubmit: (values) => {
-      // dispatch(loginUser(values, navigate));
+      dispatch(addNewWork(values));
     }
   });
 
@@ -95,7 +97,7 @@ export const AddWorks = ({ modalOpen, setModalOpen }) => {
                       name="exampleId"
                       className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
                     >
-                      <option value=""  className="text-body dark:text-bodydark">
+                      <option value="" className="text-body dark:text-bodydark">
                         Ishni qo'lda kiritish
                       </option>
                       <option value="Birinchi ish" className="text-body dark:text-bodydark">
