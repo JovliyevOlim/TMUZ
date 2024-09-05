@@ -1,37 +1,37 @@
-import axios, {AxiosResponse, AxiosRequestConfig} from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 
 // default
-axios.defaults.baseURL = "http://192.168.1.50:8080/api";
+axios.defaults.baseURL = 'http://192.168.1.93:8080/api';
 // content type
-axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // content type
-const authUser: any = sessionStorage.getItem("authUser")
+const authUser: any = sessionStorage.getItem('authUser');
 const token = JSON.parse(authUser) ? JSON.parse(authUser).message : null;
-console.log(JSON.parse(authUser))
-console.log(token)
+console.log(JSON.parse(authUser));
+console.log(token);
 if (token)
-  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
 // intercepting to capture errors
 axios.interceptors.response.use(
-  function (response) {
+  function(response) {
     return response.data ? response.data : response;
   },
-  function (error) {
-    console.log(error)
+  function(error) {
+    console.log(error);
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     let message;
     switch (error.response.status) {
       case 500:
-        message = "Internal Server Error";
+        message = 'Internal Server Error';
         break;
       case 401:
-        message = "Invalid credentials";
+        message = 'Invalid credentials';
         break;
       case 404:
-        message = "Sorry! the data you are looking for could not be found";
+        message = 'Sorry! the data you are looking for could not be found';
         break;
       case 409:
         message = error.response.data.message;
@@ -47,7 +47,7 @@ axios.interceptors.response.use(
  * @param {*} token
  */
 const setAuthorization = (token: string) => {
-  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 };
 
 class APIClient {
@@ -65,7 +65,7 @@ class APIClient {
           return paramKeys;
         }
       });
-      const queryString = paramKeys && paramKeys.length ? paramKeys.join('&') : "";
+      const queryString = paramKeys && paramKeys.length ? paramKeys.join('&') : '';
       response = axios.get(`${url}?${queryString}`);
     } else {
       response = axios.get(`${url}`);
@@ -96,12 +96,12 @@ class APIClient {
    * Deletes data
    */
   delete = (url: string, config?: AxiosRequestConfig): Promise<AxiosResponse> => {
-    return axios.delete(url, {...config});
+    return axios.delete(url, { ...config });
   };
 }
 
 const getLoggedinUser = () => {
-  const user = sessionStorage.getItem("authUser");
+  const user = sessionStorage.getItem('authUser');
   if (!user) {
     return null;
   } else {
@@ -109,4 +109,4 @@ const getLoggedinUser = () => {
   }
 };
 
-export {APIClient, setAuthorization, getLoggedinUser};
+export { APIClient, setAuthorization, getLoggedinUser };

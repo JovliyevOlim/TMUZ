@@ -9,7 +9,7 @@ import update = toast.update;
 
 export const AddWorks = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
-  const { loading, isAction, isSuccess } = useSelector((state: any) => state.Work);
+  const { loading, isAction, isSuccess, jobs } = useSelector((state: any) => state.Work);
   const [initialValues, setInitialValues] = useState({
     name: '',
     description: '',
@@ -124,15 +124,13 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                       <option value="" className="text-body dark:text-bodydark">
                         Ishni qo'lda kiritish
                       </option>
-                      <option value="Birinchi ish" className="text-body dark:text-bodydark">
-                        Birinchi ish
-                      </option>
-                      <option value="Ikkinchi ish" className="text-body dark:text-bodydark">
-                        Ikkinchi ish
-                      </option>
-                      <option value="Uchinchi ish" className="text-body dark:text-bodydark">
-                        Uchinchi ish
-                      </option>
+                      {
+                        jobs.map((item: any) =>
+                          <option value={item.description} className="text-body dark:text-bodydark">
+                            {item.description}
+                          </option>
+                        )
+                      }
                     </select>
 
                     <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">

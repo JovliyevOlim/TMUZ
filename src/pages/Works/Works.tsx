@@ -90,8 +90,8 @@ const Works = () => {
         </h4>
 
         <div className="flex flex-col">
-          <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-            <div className="p-2.5 text-center xl:p-5">
+          <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4">
+            <div className="p-2.5 text-start xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Ish
               </h5>
@@ -103,14 +103,14 @@ const Works = () => {
             </div>
             <div className="p-2.5 text-center  xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Conversion
+                Action
               </h5>
             </div>
           </div>
 
           {jobs?.map((item, key) => (
             <div
-              className={`grid grid-cols-3 sm:grid-cols-5 ${
+              className={`grid grid-cols-3 ${
                 key === brandData.length - 1
                   ? ''
                   : 'border-b border-stroke dark:border-strokedark'
@@ -128,7 +128,7 @@ const Works = () => {
               <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-black dark:text-white">{item.description}</p>
               </div>
-              <div className=" items-center justify-center p-2.5 flex  gap-2 xl:p-5">
+              <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
                 <Button
                   onClick={() => onClickEdit(item)}
                   className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
