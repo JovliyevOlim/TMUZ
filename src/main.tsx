@@ -12,6 +12,8 @@ import rootReducer from './slices';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const persistConfig = {
   key: 'root',
@@ -33,7 +35,7 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <React.Fragment>
           <Router>
-            {/*<ToastContainer />*/}
+            <ToastContainer />
             <App />
           </Router>
         </React.Fragment>
