@@ -12,6 +12,7 @@ import SignUp from '../pages/Authentication/SignUp.tsx';
 import ECommerce from '../pages/Dashboard/ECommerce.tsx';
 import Users from '../pages/Users/Users.tsx';
 import Works from '../pages/Works/Works.tsx';
+import MapOne from "../components/Maps/MapOne";
 
 
 const authProtectedRoutes = [
@@ -28,7 +29,7 @@ const authProtectedRoutes = [
   { path: '/work', component: <Works /> },
 
   //Profile
-  { path: '/profile', component: <Profile /> },
+  { path: '/profile', component: <MapOne /> },
 
   // Forms
   { path: '/forms/form-elements', component: <FormElements /> },
