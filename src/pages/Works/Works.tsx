@@ -5,8 +5,12 @@ import BrandThree from '../../images/brand/brand-03.svg';
 import BrandFour from '../../images/brand/brand-04.svg';
 import BrandFive from '../../images/brand/brand-05.svg';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddWorks } from './AddWorks.tsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteJob, getJobs } from '../../slices/work/thunk.ts';
+import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
 const brandData: BRAND[] = [
   {
@@ -54,6 +58,18 @@ const brandData: BRAND[] = [
 const Works = () => {
 
   const [modal, setModal] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const { jobs, isAction } = useSelector((state: any) => state.Work);
+  const dispatch: any = useDispatch();
+
+  const onClickEdit = (data: any) => {
+    setModal(true);
+    setEditData(data);
+  };
+
+  useEffect(() => {
+    dispatch(getJobs());
+  }, [isAction]);
 
   return (
     <>
@@ -75,34 +91,24 @@ const Works = () => {
 
         <div className="flex flex-col">
           <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
-            <div className="p-2.5 xl:p-5">
+            <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Source
+                Ish
               </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Visitors
+                Description
               </h5>
             </div>
-            <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Revenues
-              </h5>
-            </div>
-            <div className="hidden p-2.5 text-center sm:block xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Sales
-              </h5>
-            </div>
-            <div className="hidden p-2.5 text-center sm:block xl:p-5">
+            <div className="p-2.5 text-center  xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Conversion
               </h5>
             </div>
           </div>
 
-          {brandData.map((brand, key) => (
+          {jobs?.map((item, key) => (
             <div
               className={`grid grid-cols-3 sm:grid-cols-5 ${
                 key === brandData.length - 1
@@ -114,31 +120,33 @@ const Works = () => {
               <div className="flex items-center gap-3 p-2.5 xl:p-5">
                 <div className="flex-shrink-0">
                 </div>
-                <p className="hidden text-black dark:text-white sm:block">
-                  {brand.name}
+                <p className="text-black dark:text-white sm:block">
+                  {item.name}
                 </p>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="text-black dark:text-white">{brand.visitors}K</p>
+                <p className="text-black dark:text-white">{item.description}</p>
               </div>
-
-              <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="text-meta-3">${brand.revenues}</p>
-              </div>
-
-              <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                <p className="text-black dark:text-white">{brand.sales}</p>
-              </div>
-
-              <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                <p className="text-meta-5">{brand.conversion}%</p>
+              <div className=" items-center justify-center p-2.5 flex  gap-2 xl:p-5">
+                <Button
+                  onClick={() => onClickEdit(item)}
+                  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => dispatch(deleteJob(item?.id))}
+                  className="inline-flex items-center justify-center gap-2.5 border border-danger py-2 px-5 text-center font-semibold text-danger hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  Delete
+                </Button>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <AddWorks modalOpen={modal} setModalOpen={setModal} />
+      <AddWorks modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
     </>
   );
 };

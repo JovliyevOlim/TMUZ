@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { addNewWork } from '../../slices/work/thunk.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewJob, updateJob } from '../../slices/work/thunk.ts';
+import { toast } from 'react-toastify';
+import update = toast.update;
 
 
-export const AddWorks = ({ modalOpen, setModalOpen }: any) => {
+export const AddWorks = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
+  const { loading, isAction, isSuccess } = useSelector((state: any) => state.Work);
   const [initialValues, setInitialValues] = useState({
     name: '',
-    example: '',
-    company: '',
+    description: '',
     exampleId: ''
   });
 
@@ -18,24 +20,47 @@ export const AddWorks = ({ modalOpen, setModalOpen }: any) => {
     setModalOpen(!modalOpen);
   }
 
+  useEffect(() => {
+    if (item) {
+      setInitialValues({
+        name: item?.name,
+        description: item?.description,
+        exampleId: ''
+      });
+    }
+  }, [item]);
+
   const validation: any = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
 
     initialValues: initialValues,
     validationSchema: Yup.object({
-      companyId: Yup.string().required('Korxonani tanlang !'),
-      exampleId: Yup.string().required(''),
-      example: Yup.string().required('Namuna ish!'),
-      roleId: Yup.string().required('Lavozimini tanlang')
+      name: Yup.string().required('Korxonani tanlang !'),
+      description: Yup.string().required('Namuna ish!')
     }),
     onSubmit: (values) => {
-      dispatch(addNewWork(values));
+      if (item) {
+        dispatch(updateJob({ ...values, id: item.id }));
+      } else {
+        dispatch(addNewJob(values));
+      }
     }
   });
 
 
-  console.log(initialValues);
+  useEffect(() => {
+    if (isSuccess) {
+      setModalOpen(false);
+      validation.resetForm();
+      setItem(null);
+      setInitialValues({
+        name: '',
+        description: '',
+        exampleId: ''
+      });
+    }
+  }, [dispatch, isAction]);
 
   return (
     modalOpen &&
@@ -73,10 +98,10 @@ export const AddWorks = ({ modalOpen, setModalOpen }: any) => {
                   <input
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.companyId || ''}
-                    name="companyId"
+                    value={validation.values.name || ''}
+                    name="name"
                     type="text"
-                    placeholder="F.I.O"
+                    placeholder="Korxona"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
@@ -88,10 +113,9 @@ export const AddWorks = ({ modalOpen, setModalOpen }: any) => {
 
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
                     <select
-                      value={validation.values.exampleId}
+                      value={validation.values.exampleId || ''}
                       onChange={(e) => {
-                        validation.handleChange(e);
-                        setInitialValues({ ...initialValues, example: validation?.values?.exampleId });
+                        setInitialValues({ ...initialValues, description: e.target.value, exampleId: e.target.value });
                       }}
                       onBlur={validation.handleBlur}
                       name="exampleId"
@@ -142,10 +166,10 @@ export const AddWorks = ({ modalOpen, setModalOpen }: any) => {
                   </label>
                   <textarea
                     rows={6}
-                    value={validation.values.example || validation.values.exampleId}
+                    value={validation.values.description || ''}
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    name="example"
+                    name="description"
                     placeholder="Namuna"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   ></textarea>
@@ -154,8 +178,11 @@ export const AddWorks = ({ modalOpen, setModalOpen }: any) => {
 
               <button
                 type="submit"
+                disabled={loading && true}
                 className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                 Saqlash
+                {/*<svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">*/}
+                {/*</svg>*/}
               </button>
             </div>
           </form>
