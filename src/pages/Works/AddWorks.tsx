@@ -126,8 +126,8 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                       </option>
                       {
                         jobs.map((item: any) =>
-                          <option value={item.description} className="text-body dark:text-bodydark">
-                            {item.description}
+                          <option value={item.name} className="text-body dark:text-bodydark">
+                            {item.name}
                           </option>
                         )
                       }
