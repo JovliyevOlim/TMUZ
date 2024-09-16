@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addNewUser, deleteUser, getAllUser, updateUser } from './thunk';
+import { getActionByUserDoneFalse, getActionByUserDone, addNewAction, updateAction } from './thunk';
 
 
 interface initialState {
@@ -7,12 +7,12 @@ interface initialState {
   loading: boolean,
   isAction: boolean,
   isSuccess: boolean,
-  users: [],
+  actions: [],
   message: ''
 }
 
 export const initialState: initialState = {
-  users: [],
+  actions: [],
   error: null,
   loading: false,
   isAction: false,
@@ -21,65 +21,65 @@ export const initialState: initialState = {
 };
 
 const sliceOptions = {
-  name: 'user',
+  name: 'action',
   initialState,
   reducers: {},
   extraReducers: (builder: any) => {
 
-    // get all user
-    builder.addCase(getAllUser.pending, (state: any) => {
+    // get action by user done
+    builder.addCase(getActionByUserDone.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
     })
-      .addCase(getAllUser.fulfilled, (state: any, action: any) => {
+      .addCase(getActionByUserDone.fulfilled, (state: any, action: any) => {
         state.customers = action.payload.object;
         state.loading = false;
       })
-      .addCase(getAllUser.rejected, (state: any) => {
+      .addCase(getActionByUserDone.rejected, (state: any) => {
+        state.loading = false;
+      });
+
+    // get action by user done false
+    builder.addCase(getActionByUserDoneFalse.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getActionByUserDoneFalse.fulfilled, (state: any, action: any) => {
+        state.customers = action.payload.object;
+        state.loading = false;
+      })
+      .addCase(getActionByUserDoneFalse.rejected, (state: any) => {
         state.loading = false;
       });
 
     // add new users
-    builder.addCase(addNewUser.pending, (state: any) => {
+    builder.addCase(addNewAction.pending, (state: any) => {
       state.loadingTrade = true;
     });
-    builder.addCase(addNewUser.fulfilled, (state: any) => {
+    builder.addCase(addNewAction.fulfilled, (state: any) => {
       state.loading = false;
       state.isSuccess = true;
       state.isAction = !state.isAction;
     });
-    builder.addCase(addNewUser.rejected, (state: any) => {
+    builder.addCase(addNewAction.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
 
     //update user
-    builder.addCase(updateUser.pending, (state: any) => {
+    builder.addCase(updateAction.pending, (state: any) => {
       state.loading = true;
-    }).addCase(updateUser.fulfilled, (state: any) => {
+    }).addCase(updateAction.fulfilled, (state: any) => {
       state.loading = false;
       state.isSuccess = true;
       state.isAction = !state.isAction;
-    }).addCase(updateUser.rejected, (state: any) => {
+    }).addCase(updateAction.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
 
-
-    // delete customer
-    builder.addCase(deleteUser.pending, (state: any) => {
-      state.loading = true;
-    }).addCase(deleteUser.fulfilled, (state: any) => {
-      state.loading = false;
-      state.isSuccess = true;
-      state.isAction = !state.isAction;
-    }).addCase(deleteUser.rejected, (state: any) => {
-      state.loading = false;
-      state.isSuccess = false;
-      state.isAction = !state.isAction;
-    });
   }
 };
 

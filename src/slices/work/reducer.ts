@@ -34,7 +34,7 @@ const sliceOptions = {
         state.jobs = action.payload.data;
         state.loading = false;
       })
-      .addCase(getJobs.rejected, (state: any, action: any) => {
+      .addCase(getJobs.rejected, (state: any) => {
         // state.error = action.payload.error || null;
         state.jobs = [];
         state.loading = false;
@@ -73,13 +73,13 @@ const sliceOptions = {
       // state.error = action.payload.error || null;
     });
     // delete Product
-    builder.addCase(deleteJob.pending, (state) => {
+    builder.addCase(deleteJob.pending, (state:any) => {
       state.loading = true;
-    }).addCase(deleteJob.fulfilled, (state: any, action: any) => {
+    }).addCase(deleteJob.fulfilled, (state: any) => {
       state.loading = false;
       state.isSuccess = true;
       state.isAction = !state.isAction;
-    }).addCase(deleteJob.rejected, (state: any, action: any) => {
+    }).addCase(deleteJob.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;

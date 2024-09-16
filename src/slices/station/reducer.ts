@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addNewUser, deleteUser, getAllUser, updateUser } from './thunk';
+import { getAllStation, addNewStation, updateStation } from './thunk';
 
 
 interface initialState {
@@ -7,12 +7,12 @@ interface initialState {
   loading: boolean,
   isAction: boolean,
   isSuccess: boolean,
-  users: [],
+  stations: [],
   message: ''
 }
 
 export const initialState: initialState = {
-  users: [],
+  stations: [],
   error: null,
   loading: false,
   isAction: false,
@@ -21,65 +21,52 @@ export const initialState: initialState = {
 };
 
 const sliceOptions = {
-  name: 'user',
+  name: 'station',
   initialState,
   reducers: {},
   extraReducers: (builder: any) => {
 
     // get all user
-    builder.addCase(getAllUser.pending, (state: any) => {
+    builder.addCase(getAllStation.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
     })
-      .addCase(getAllUser.fulfilled, (state: any, action: any) => {
-        state.customers = action.payload.object;
+      .addCase(getAllStation.fulfilled, (state: any, action: any) => {
+        state.stations = action.payload.object;
         state.loading = false;
       })
-      .addCase(getAllUser.rejected, (state: any) => {
+      .addCase(getAllStation.rejected, (state: any) => {
         state.loading = false;
       });
 
     // add new users
-    builder.addCase(addNewUser.pending, (state: any) => {
+    builder.addCase(addNewStation.pending, (state: any) => {
       state.loadingTrade = true;
     });
-    builder.addCase(addNewUser.fulfilled, (state: any) => {
+    builder.addCase(addNewStation.fulfilled, (state: any) => {
       state.loading = false;
       state.isSuccess = true;
       state.isAction = !state.isAction;
     });
-    builder.addCase(addNewUser.rejected, (state: any) => {
+    builder.addCase(addNewStation.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
 
     //update user
-    builder.addCase(updateUser.pending, (state: any) => {
+    builder.addCase(updateStation.pending, (state: any) => {
       state.loading = true;
-    }).addCase(updateUser.fulfilled, (state: any) => {
+    }).addCase(updateStation.fulfilled, (state: any) => {
       state.loading = false;
       state.isSuccess = true;
       state.isAction = !state.isAction;
-    }).addCase(updateUser.rejected, (state: any) => {
+    }).addCase(updateStation.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
 
-
-    // delete customer
-    builder.addCase(deleteUser.pending, (state: any) => {
-      state.loading = true;
-    }).addCase(deleteUser.fulfilled, (state: any) => {
-      state.loading = false;
-      state.isSuccess = true;
-      state.isAction = !state.isAction;
-    }).addCase(deleteUser.rejected, (state: any) => {
-      state.loading = false;
-      state.isSuccess = false;
-      state.isAction = !state.isAction;
-    });
   }
 };
 

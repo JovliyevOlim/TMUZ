@@ -1,0 +1,55 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+//Include Both Helper File with needed methods
+
+import {
+  getActionByUserDone as getActionByUserDoneApi,
+  getActionByUserDoneFalse as getActionByUserDoneFalseApi,
+  addNewAction as addNewActionApi,
+  updateAction as updateActionApi
+} from '../../helpers/backend_helpers.ts';
+
+export const getActionByUserDone = createAsyncThunk('action/getActionByUserDone', async (action: string) => {
+  try {
+    const response = getActionByUserDoneApi(action);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getActionByUserDoneFalse = createAsyncThunk('action/getActionByUserDoneFalse', async (action: string) => {
+  try {
+    const response = getActionByUserDoneFalseApi(action);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const addNewAction = createAsyncThunk<any, any>('action/addAction', async (action: any, { rejectWithValue }) => {
+  try {
+    const response = addNewActionApi(action);
+    const data = await response;
+    toast.success('Action qo\'shildi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
+export const updateAction = createAsyncThunk('action/updateAction', async (action: any, { rejectWithValue }) => {
+  try {
+    const response = updateActionApi(action);
+    const data = await response;
+    toast.success('Action tahrirlandi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
+
+
