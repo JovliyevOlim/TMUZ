@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getActionByUserDoneFalse, getActionByUserDone, addNewAction, updateAction } from './thunk';
+import {
+  getAllDevice,
+  getAllDeviceInfoActions, getDeviceInfoForQr, addNewDevice, updateDevice
+} from './thunk';
 
 
 interface initialState {
@@ -7,12 +10,14 @@ interface initialState {
   loading: boolean,
   isAction: boolean,
   isSuccess: boolean,
-  actions: [],
+  devices: [],
+  device: {},
   message: ''
 }
 
 export const initialState: initialState = {
-  actions: [],
+  devices: [],
+  device: {},
   error: null,
   loading: false,
   isAction: false,
@@ -26,55 +31,81 @@ const sliceOptions = {
   reducers: {},
   extraReducers: (builder: any) => {
 
-    // get action by user done
-    builder.addCase(getActionByUserDone.pending, (state: any) => {
+    // get all device
+    builder.addCase(getAllDevice.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
     })
-      .addCase(getActionByUserDone.fulfilled, (state: any, action: any) => {
-        state.customers = action.payload.object;
+      .addCase(getAllDevice.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.object;
         state.loading = false;
       })
-      .addCase(getActionByUserDone.rejected, (state: any) => {
+      .addCase(getAllDevice.rejected, (state: any) => {
         state.loading = false;
       });
 
-    // get action by user done false
-    builder.addCase(getActionByUserDoneFalse.pending, (state: any) => {
+    // get all device action
+    builder.addCase(getAllDeviceInfoActions.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
     })
-      .addCase(getActionByUserDoneFalse.fulfilled, (state: any, action: any) => {
-        state.customers = action.payload.object;
+      .addCase(getAllDeviceInfoActions.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.object;
         state.loading = false;
       })
-      .addCase(getActionByUserDoneFalse.rejected, (state: any) => {
+      .addCase(getAllDeviceInfoActions.rejected, (state: any) => {
+        state.loading = false;
+      });
+
+    // get device qr code
+    builder.addCase(getDeviceInfoForQr.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getDeviceInfoForQr.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.object;
+        state.loading = false;
+      })
+      .addCase(getDeviceInfoForQr.rejected, (state: any) => {
+        state.loading = false;
+      });
+
+    // get device by id
+    builder.addCase(getAllDevice.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getAllDevice.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.object;
+        state.loading = false;
+      })
+      .addCase(getAllDevice.rejected, (state: any) => {
         state.loading = false;
       });
 
     // add new users
-    builder.addCase(addNewAction.pending, (state: any) => {
-      state.loadingTrade = true;
+    builder.addCase(addNewDevice.pending, (state: any) => {
+      state.loading = true;
     });
-    builder.addCase(addNewAction.fulfilled, (state: any) => {
+    builder.addCase(addNewDevice.fulfilled, (state: any) => {
       state.loading = false;
       state.isSuccess = true;
       state.isAction = !state.isAction;
     });
-    builder.addCase(addNewAction.rejected, (state: any) => {
+    builder.addCase(addNewDevice.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
 
     //update user
-    builder.addCase(updateAction.pending, (state: any) => {
+    builder.addCase(updateDevice.pending, (state: any) => {
       state.loading = true;
-    }).addCase(updateAction.fulfilled, (state: any) => {
+    }).addCase(updateDevice.fulfilled, (state: any) => {
       state.loading = false;
       state.isSuccess = true;
       state.isAction = !state.isAction;
-    }).addCase(updateAction.rejected, (state: any) => {
+    }).addCase(updateDevice.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;

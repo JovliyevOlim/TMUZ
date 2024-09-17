@@ -5,33 +5,51 @@ import 'react-toastify/dist/ReactToastify.css';
 //Include Both Helper File with needed methods
 
 import {
-  getActionByUserDone as getActionByUserDoneApi,
-  getActionByUserDoneFalse as getActionByUserDoneFalseApi,
-  addNewAction as addNewActionApi,
-  updateAction as updateActionApi
+  getDeviceById as getDeviceByIdApi,
+  getDeviceInfoForQr as getDeviceInfoForQrApi,
+  getAllDevice as getAllDeviceApi,
+  getAllDeviceInfoActions as getAllDeviceInfoActionsApi,
+  addNewDevice as addNewDeviceApi,
+  updateDevice as updateDeviceApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getActionByUserDone = createAsyncThunk('action/getActionByUserDone', async (action: string) => {
+export const getAllDevice = createAsyncThunk('device/getAllDevice', async (action: string) => {
   try {
-    const response = getActionByUserDoneApi(action);
+    const response = getAllDeviceApi(action);
     return response;
   } catch (error) {
     return error;
   }
 });
-export const getActionByUserDoneFalse = createAsyncThunk('action/getActionByUserDoneFalse', async (action: string) => {
+export const getAllDeviceInfoActions = createAsyncThunk('device/getAllDeviceInfoActions', async (action: string) => {
   try {
-    const response = getActionByUserDoneFalseApi(action);
+    const response = getAllDeviceInfoActionsApi(action);
     return response;
   } catch (error) {
     return error;
   }
 });
-export const addNewAction = createAsyncThunk<any, any>('action/addAction', async (action: any, { rejectWithValue }) => {
+export const getDeviceInfoForQr = createAsyncThunk('device/getDeviceInfoForQr', async (action: string) => {
   try {
-    const response = addNewActionApi(action);
+    const response = getDeviceInfoForQrApi(action);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getDeviceById = createAsyncThunk('device/getDeviceById', async (action: string) => {
+  try {
+    const response = getDeviceByIdApi(action);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const addNewDevice = createAsyncThunk<any, any>('device/addNewDevice', async (action: any, { rejectWithValue }) => {
+  try {
+    const response = addNewDeviceApi(action);
     const data = await response;
-    toast.success('Action qo\'shildi', { autoClose: 3000 });
+    toast.success('Qurilma qo\'shildi', { autoClose: 3000 });
     return data;
   } catch (error) {
     let message: any = error;
@@ -39,11 +57,11 @@ export const addNewAction = createAsyncThunk<any, any>('action/addAction', async
     return rejectWithValue(error);
   }
 });
-export const updateAction = createAsyncThunk('action/updateAction', async (action: any, { rejectWithValue }) => {
+export const updateDevice = createAsyncThunk('device/updateDevice', async (action: any, { rejectWithValue }) => {
   try {
-    const response = updateActionApi(action);
+    const response = updateDeviceApi(action);
     const data = await response;
-    toast.success('Action tahrirlandi', { autoClose: 3000 });
+    toast.success('Qurilma tahrirlandi', { autoClose: 3000 });
     return data;
   } catch (error) {
     let message: any = error;
