@@ -2,33 +2,24 @@
 
 
 import { loginSuccess, logoutUserSuccess, apiError, reset_login_flag } from './reducer';
+import { postLogin } from '../../helpers/backend_helpers.ts';
 
 export const loginUser = (user: any, navigate: any) => async (dispatch: any) => {
 
   try {
-    // let response;
-    // response = postLogin({
-    //     username: user.username,
-    //     password: user.password,
-    // });
-    if (user.username === 'admin', user.password === '123') {
-      // var data: any = await response;
-      var data = {
-        success: true,
-        user: {
-          username: 'admin',
-          password: '123'
-        }
-      };
-      console.log('login');
-      if (data) {
-        sessionStorage.setItem('authUser', JSON.stringify(data));
-        if (data.success) {
-          dispatch(loginSuccess(data));
-          navigate('/dashboard');
-        } else {
-          dispatch(apiError(data));
-        }
+    let response;
+    response = postLogin({
+      username: user.username,
+      password: user.password
+    });
+    var data: any = await response;
+    if (data) {
+      sessionStorage.setItem('authUser', JSON.stringify(data.data));
+      if (data.success) {
+        dispatch(loginSuccess(data.data));
+        navigate('/dashboard');
+      } else {
+        dispatch(apiError(data.data));
       }
     }
   } catch (error) {

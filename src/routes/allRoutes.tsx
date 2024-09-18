@@ -12,7 +12,10 @@ import SignUp from '../pages/Authentication/SignUp.tsx';
 import ECommerce from '../pages/Dashboard/ECommerce.tsx';
 import Users from '../pages/Users/Users.tsx';
 import Works from '../pages/Works/Works.tsx';
-import MapOne from "../components/Maps/MapOne";
+import MapOne from '../components/Maps/MapOne';
+import Stations from '../pages/Station/Station.tsx';
+import Device from '../pages/Device/Device.tsx';
+import DeviceInfo from '../pages/Device/DeviceInfo.tsx';
 
 
 const authProtectedRoutes = [
@@ -27,6 +30,12 @@ const authProtectedRoutes = [
 
   // Work
   { path: '/work', component: <Works /> },
+
+  //Stations
+  { path: '/stations', component: <Stations /> },
+
+  //Device
+  { path: '/device', component: <Device /> },
 
   //Profile
   { path: '/profile', component: <MapOne /> },
@@ -58,7 +67,9 @@ const authProtectedRoutes = [
 const publicRoutes = [
   // Authentication Page
   { path: '/login', component: <SignIn /> },
-  { path: '/register', component: <SignUp /> }
+  { path: '/register', component: <SignUp /> },
+  //Device
+  { path: '/deviceInfo/:id', component: <DeviceInfo /> }
 ];
 
 export { authProtectedRoutes, publicRoutes };

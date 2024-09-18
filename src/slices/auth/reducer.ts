@@ -4,7 +4,6 @@ export const initialState = {
   userToken: '',
   user: {},
   userId: null,
-  firstBranchId: null,
   businessId: null,
   error: '', // for error message
   loading: false,
@@ -23,14 +22,11 @@ const loginSlice = createSlice({
       state.errorMsg = true;
     },
     loginSuccess(state, action) {
-      console.log(action);
-      state.user = action.payload.object;
-      // state.userToken = action.payload.object.message
-      // state.businessId = action.payload.object.business.id
-      // state.userId = action.payload.object.id
-      // state.firstBranchId = action.payload.object.branches[0].id
-      // state.loading = false;
-      // state.errorMsg = false;
+      state.user = action.payload.user;
+      state.userToken = action.payload.token;
+      state.userId = action.payload.user.id;
+      state.loading = false;
+      state.errorMsg = false;
     },
     logoutUserSuccess(state) {
       state.isUserLogout = true;

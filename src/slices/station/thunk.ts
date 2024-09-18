@@ -11,9 +11,9 @@ import {
   updateStation as updateStationApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getAllStation = createAsyncThunk('station/getAllStation', async (station: string) => {
+export const getAllStation = createAsyncThunk('station/getAllStation', async () => {
   try {
-    const response = getAllStationByApi(station);
+    const response = getAllStationByApi();
     return response;
   } catch (error) {
     return error;

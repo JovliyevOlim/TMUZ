@@ -1,6 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 
+export const localUrl = 'http://192.168.1.100:5173';
 // default
 axios.defaults.baseURL = 'http://192.168.1.50:8080/api';
 // content type
@@ -8,7 +9,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // content type
 const authUser: any = sessionStorage.getItem('authUser');
-const token = JSON.parse(authUser) ? JSON.parse(authUser).message : null;
+const token = JSON.parse(authUser) ? JSON.parse(authUser).token : null;
 console.log(JSON.parse(authUser));
 console.log(token);
 if (token)

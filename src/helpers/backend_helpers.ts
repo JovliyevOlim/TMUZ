@@ -4,6 +4,8 @@ import * as url from './url_helper';
 
 const api = new APIClient();
 
+//auth user
+export const postLogin = (data: any) => api.create(url.POST_LOGIN, data);
 
 // get all user
 export const getAllUser = (user: any) => api.get(url.ADD_NEW_USER, user);
@@ -23,13 +25,13 @@ export const deleteJob = (jobId: string) => api.delete(url.DELETE_JOB + '/' + jo
 export const getJobs = () => api.get(url.GET_ALL_JOB);
 
 // get all station
-export const getAllStation = (station: any) => api.get(url.ADD_NEW_USER, station);
+export const getAllStation = () => api.get(url.GET_ALL_STATION);
 // get user by id
 export const getStationById = (station: any) => api.get(url.GET_STATION_BY_ID, station);
 // add New User
 export const addNewStation = (station: any) => api.create(url.ADD_NEW_STATION, station);
 // update  User
-export const updateStation = (station: any) => api.put(url.UPDATE_STATION, station);
+export const updateStation = (station: any) => api.put(url.UPDATE_STATION + '/' + station.id, station);
 
 
 // get action by user done
@@ -42,14 +44,14 @@ export const addNewAction = (action: any) => api.create(url.ADD_NEW_ACTION, acti
 export const updateAction = (action: any) => api.put(url.UPDATE_ACTION, action);
 
 // get device by qr code
-export const getDeviceInfoForQr = (device: any) => api.get(url.GET_DEVICE_INFO_FOR_QR, device);
+export const getDeviceInfoForQr = (device: any) => api.get(url.GET_DEVICE_INFO_FOR_QR + '/' + device);
 // get device by id
 export const getDeviceById = (device: any) => api.get(url.GET_DEVICE_BY_ID, device);
 // get all device
-export const getAllDevice = (device: any) => api.get(url.GET_ALL_DEVICE, device);
+export const getAllDevice = () => api.get(url.GET_ALL_DEVICE);
 // get all device info action
 export const getAllDeviceInfoActions = (device: any) => api.get(url.GET_ALL_DEVICE_INFO_ACTIONS, device);
 // add New device
 export const addNewDevice = (device: any) => api.create(url.ADD_NEW_DEVICE, device);
 // update  device
-export const updateDevice = (device: any) => api.put(url.UPDATE_DEVICE, device);
+export const updateDevice = (device: any) => api.put(url.UPDATE_DEVICE + '/' + device.id, device);

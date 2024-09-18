@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   getAllDevice,
-  getAllDeviceInfoActions, getDeviceInfoForQr, addNewDevice, updateDevice
+  getAllDeviceInfoActions, getDeviceInfoForQr, addNewDevice, updateDevice, getDeviceById
 } from './thunk';
 
 
@@ -12,12 +12,14 @@ interface initialState {
   isSuccess: boolean,
   devices: [],
   device: {},
+  deviceQrCodeInfo: {}
   message: ''
 }
 
 export const initialState: initialState = {
   devices: [],
   device: {},
+  deviceQrCodeInfo: {},
   error: null,
   loading: false,
   isAction: false,
@@ -37,7 +39,7 @@ const sliceOptions = {
       state.isSuccess = false;
     })
       .addCase(getAllDevice.fulfilled, (state: any, action: any) => {
-        state.devices = action.payload.object;
+        state.devices = action.payload.data;
         state.loading = false;
       })
       .addCase(getAllDevice.rejected, (state: any) => {
@@ -63,7 +65,7 @@ const sliceOptions = {
       state.isSuccess = false;
     })
       .addCase(getDeviceInfoForQr.fulfilled, (state: any, action: any) => {
-        state.devices = action.payload.object;
+        state.deviceQrCodeInfo = action.payload.data;
         state.loading = false;
       })
       .addCase(getDeviceInfoForQr.rejected, (state: any) => {
@@ -71,15 +73,15 @@ const sliceOptions = {
       });
 
     // get device by id
-    builder.addCase(getAllDevice.pending, (state: any) => {
+    builder.addCase(getDeviceById.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
     })
-      .addCase(getAllDevice.fulfilled, (state: any, action: any) => {
+      .addCase(getDeviceById.fulfilled, (state: any, action: any) => {
         state.devices = action.payload.object;
         state.loading = false;
       })
-      .addCase(getAllDevice.rejected, (state: any) => {
+      .addCase(getDeviceById.rejected, (state: any) => {
         state.loading = false;
       });
 

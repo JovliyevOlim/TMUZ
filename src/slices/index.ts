@@ -9,10 +9,18 @@ import UserReducer from './user/reducer.ts';
 // Work
 import WorkReducer from './work/reducer.ts';
 
+//Station
+import StationReducer from './station/reducer.ts';
+
+//Device
+import DeviceReducer from './device/reducer.ts';
+
 const rootReducer = combineReducers({
   Login: LoginReducer,
   User: UserReducer,
-  Work: WorkReducer
+  Work: WorkReducer,
+  Station: StationReducer,
+  Device: DeviceReducer
 });
 
 export default rootReducer;

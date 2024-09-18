@@ -13,9 +13,9 @@ import {
   updateDevice as updateDeviceApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getAllDevice = createAsyncThunk('device/getAllDevice', async (action: string) => {
+export const getAllDevice = createAsyncThunk('device/getAllDevice', async () => {
   try {
-    const response = getAllDeviceApi(action);
+    const response = getAllDeviceApi();
     return response;
   } catch (error) {
     return error;

@@ -1,3 +1,7 @@
+// auth
+export const POST_LOGIN = '/auth/login';
+
+
 // add new user
 export const ADD_NEW_USER = '/user/create';
 export const UPDATE_USER = '/user/edit';

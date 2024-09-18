@@ -32,7 +32,7 @@ const sliceOptions = {
       state.isSuccess = false;
     })
       .addCase(getAllStation.fulfilled, (state: any, action: any) => {
-        state.stations = action.payload.object;
+        state.stations = action.payload.data;
         state.loading = false;
       })
       .addCase(getAllStation.rejected, (state: any) => {
