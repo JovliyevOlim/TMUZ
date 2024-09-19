@@ -26,6 +26,7 @@ export const GET_STATION_BY_ID = '/station/get-by-id';
 // Action
 export const ADD_NEW_ACTION = '/action/create';
 export const UPDATE_ACTION = '/action/edit-done';
+export const CHECK_DEVICE_FOR_ACTION = '/action/check-user';
 export const GET_ACTION_BY_USER = '/action/get-by-user-done';
 export const GET_ACTION_BY_USER_FALSE = '/action/get-by-user-done-is-false';
 

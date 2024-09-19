@@ -1,7 +1,8 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 
-export const localUrl = 'http://192.168.1.100:5173';
+// export const localUrl = 'http://192.168.1.100:5173';
+export const localUrl = 'http://localhost:5173';
 // default
 axios.defaults.baseURL = 'http://192.168.1.50:8080/api';
 // content type
@@ -21,7 +22,6 @@ axios.interceptors.response.use(
     return response.data ? response.data : response;
   },
   function(error) {
-    console.log(error);
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     let message;
     switch (error.response.status) {
@@ -29,6 +29,7 @@ axios.interceptors.response.use(
         message = 'Internal Server Error';
         break;
       case 401:
+        window.location.href = '/login';
         message = 'Invalid credentials';
         break;
       case 404:

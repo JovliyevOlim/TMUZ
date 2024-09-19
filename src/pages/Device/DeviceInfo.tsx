@@ -5,12 +5,18 @@ import { useParams } from 'react-router-dom';
 import { getDeviceInfoForQr } from '../../slices/device/thunk.ts';
 import moment from 'moment';
 import 'moment/locale/uz-latn';
+import { Button } from 'reactstrap';
+import { AddDevice } from './AddDevice.tsx';
+import { AddNewAction } from './AddNewAction.tsx';
+import { checkDeviceForAction } from '../../slices/action/thunk.ts';
 
 const DeviceInfo = () => {
 
   const { deviceQrCodeInfo, isAction } = useSelector((state: any) => state.Device);
   const dispatch: any = useDispatch();
   const { id } = useParams();
+  const [modal, setModal] = useState(false);
+  const [editData, setEditData] = useState(null);
   const [userLocation, setUserLocation] = useState<{
     latitude: number;
     longitude: number;
@@ -21,7 +27,6 @@ const DeviceInfo = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-
           setUserLocation({ latitude, longitude });
         },
 
@@ -33,6 +38,19 @@ const DeviceInfo = () => {
       console.log('Geolocation is not supported by this browser');
     }
   };
+
+
+  useEffect(() => {
+    dispatch(checkDeviceForAction({
+      lon: userLocation?.longitude,
+      lat: userLocation?.latitude,
+      deviceId: id
+    }));
+  }, [userLocation]);
+
+  function addNewActionForCheck() {
+    getUserLocation();
+  }
 
   useEffect(() => {
     getUserLocation();
@@ -68,6 +86,13 @@ const DeviceInfo = () => {
               <strong>Stansiya:</strong> {deviceQrCodeInfo?.deviceDto?.stationName}
             </h5>
           </div>
+          <Button
+            onClick={addNewActionForCheck}
+            className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Yangi ish qilish
+          </Button>
+          <AddNewAction modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
         </div>
       </div>
       <div

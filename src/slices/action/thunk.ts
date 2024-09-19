@@ -8,7 +8,8 @@ import {
   getActionByUserDone as getActionByUserDoneApi,
   getActionByUserDoneFalse as getActionByUserDoneFalseApi,
   addNewAction as addNewActionApi,
-  updateAction as updateActionApi
+  updateAction as updateActionApi,
+  checkDeviceForAction as checkDeviceForActionApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getActionByUserDone = createAsyncThunk('action/getActionByUserDone', async (action: string) => {
@@ -51,5 +52,16 @@ export const updateAction = createAsyncThunk('action/updateAction', async (actio
     return rejectWithValue(error);
   }
 });
-
+export const checkDeviceForAction = createAsyncThunk<any, any>('action/checkDeviceForAction', async (action: any, { rejectWithValue }) => {
+  try {
+    const response = checkDeviceForActionApi(action);
+    const data = await response;
+    toast.success('Masofa yetarli', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
 

@@ -16,6 +16,7 @@ import MapOne from '../components/Maps/MapOne';
 import Stations from '../pages/Station/Station.tsx';
 import Device from '../pages/Device/Device.tsx';
 import DeviceInfo from '../pages/Device/DeviceInfo.tsx';
+import ReloadSignIn from '../pages/Authentication/ReloadSignIn.tsx';
 
 
 const authProtectedRoutes = [
@@ -67,6 +68,7 @@ const authProtectedRoutes = [
 const publicRoutes = [
   // Authentication Page
   { path: '/login', component: <SignIn /> },
+  { path: '/signIn', component: <ReloadSignIn /> },
   { path: '/register', component: <SignUp /> },
   //Device
   { path: '/deviceInfo/:id', component: <DeviceInfo /> }

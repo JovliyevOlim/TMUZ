@@ -42,6 +42,9 @@ export const getActionByUserDoneFalse = (action: any) => api.get(url.GET_ACTION_
 export const addNewAction = (action: any) => api.create(url.ADD_NEW_ACTION, action);
 // update  Action
 export const updateAction = (action: any) => api.put(url.UPDATE_ACTION, action);
+// check device for  Action
+export const checkDeviceForAction = (action: any) => api.create(url.CHECK_DEVICE_FOR_ACTION, action);
+
 
 // get device by qr code
 export const getDeviceInfoForQr = (device: any) => api.get(url.GET_DEVICE_INFO_FOR_QR + '/' + device);

@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../slices/auth/thunk.ts';
 
-const SignIn: React.FC = () => {
+const ReloadSignIn: React.FC = () => {
 
   document.title = 'Login';
   const dispatch: any = useDispatch();
@@ -327,4 +327,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default ReloadSignIn;

@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getActionByUserDoneFalse, getActionByUserDone, addNewAction, updateAction } from './thunk';
+import {
+  getActionByUserDoneFalse,
+  getActionByUserDone,
+  addNewAction,
+  updateAction,
+  checkDeviceForAction
+} from './thunk';
 
 
 interface initialState {
@@ -7,6 +13,7 @@ interface initialState {
   loading: boolean,
   isAction: boolean,
   isSuccess: boolean,
+  checkUser: false,
   actions: [],
   message: ''
 }
@@ -16,6 +23,7 @@ export const initialState: initialState = {
   error: null,
   loading: false,
   isAction: false,
+  checkUser: false,
   isSuccess: false,
   message: ''
 };
@@ -52,9 +60,9 @@ const sliceOptions = {
         state.loading = false;
       });
 
-    // add new users
+    // add new action
     builder.addCase(addNewAction.pending, (state: any) => {
-      state.loadingTrade = true;
+      state.loading = true;
     });
     builder.addCase(addNewAction.fulfilled, (state: any) => {
       state.loading = false;
@@ -64,6 +72,23 @@ const sliceOptions = {
     builder.addCase(addNewAction.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
+      state.isAction = !state.isAction;
+    });
+
+    // check device for action
+    builder.addCase(checkDeviceForAction.pending, (state: any) => {
+      state.loading = true;
+    });
+    builder.addCase(checkDeviceForAction.fulfilled, (state: any) => {
+      state.loading = false;
+      state.checkUser = true;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    });
+    builder.addCase(checkDeviceForAction.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.checkUser = false;
       state.isAction = !state.isAction;
     });
 
