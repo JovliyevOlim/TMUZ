@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewStation, updateStation } from '../../slices/station/thunk.ts';
-import { addNewDevice, updateDevice } from '../../slices/device/thunk.ts';
+import { clearCheckUser } from '../../slices/action/reducer.ts';
+import { addNewAction, updateAction } from '../../slices/action/thunk.ts';
 
 
 export const AddNewAction = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
-  const { loading, isAction, isSuccess } = useSelector((state: any) => state.Device);
-  const { stations } = useSelector((state: any) => state.Station);
+  const { loading, deviceQrCodeInfo } = useSelector((state: any) => state.Device);
+  const { userId } = useSelector((state: any) => state.Login);
+  const { isAction, isSuccess } = useSelector((state: any) => state.Action);
   const [initialValues, setInitialValues] = useState({
     description: ''
   });
 
   function tog_standard() {
     setModalOpen(!modalOpen);
+    dispatch(clearCheckUser());
   }
 
   useEffect(() => {
@@ -36,9 +38,9 @@ export const AddNewAction = ({ modalOpen, setModalOpen, item, setItem }: any) =>
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateDevice({ ...values, id: item.id }));
+        dispatch(updateAction({ ...values, id: item.id }));
       } else {
-        dispatch(addNewDevice(values));
+        dispatch(addNewAction({ ...values, deviceId: deviceQrCodeInfo?.deviceDto?.id, userId }));
       }
     }
   });
@@ -52,6 +54,7 @@ export const AddNewAction = ({ modalOpen, setModalOpen, item, setItem }: any) =>
       setInitialValues({
         description: ''
       });
+      dispatch(clearCheckUser());
     }
   }, [dispatch, isAction]);
 

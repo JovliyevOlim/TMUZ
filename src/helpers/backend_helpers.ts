@@ -35,13 +35,13 @@ export const updateStation = (station: any) => api.put(url.UPDATE_STATION + '/' 
 
 
 // get action by user done
-export const getActionByUserDone = (action: any) => api.get(url.GET_ACTION_BY_USER, action);
+export const getActionByUserDone = (action: any) => api.get(url.GET_ACTION_BY_USER + '/' + action);
 // get action by user done false
-export const getActionByUserDoneFalse = (action: any) => api.get(url.GET_ACTION_BY_USER_FALSE, action);
+export const getActionByUserDoneFalse = (action: any) => api.get(url.GET_ACTION_BY_USER_FALSE + '/' + action);
 // add New Action
 export const addNewAction = (action: any) => api.create(url.ADD_NEW_ACTION, action);
 // update  Action
-export const updateAction = (action: any) => api.put(url.UPDATE_ACTION, action);
+export const updateAction = (action: any) => api.put(url.UPDATE_ACTION + '/' + action.id, action);
 // check device for  Action
 export const checkDeviceForAction = (action: any) => api.create(url.CHECK_DEVICE_FOR_ACTION, action);
 

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewStation, updateStation } from '../../slices/station/thunk.ts';
+import { Button } from 'reactstrap';
 
 
 export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
@@ -12,13 +13,36 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     name: '',
     description: '',
     address: '',
-    latitude: '',
-    longitude: ''
+    latitude: 0,
+    longitude: 0
   });
 
   function tog_standard() {
     setModalOpen(!modalOpen);
   }
+
+  const getUserLocation = () => {
+    console.log('ewef');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          let formValues = initialValues;
+          formValues.latitude = latitude;
+          formValues.longitude = longitude;
+          let a = { ...formValues };
+          console.log(a);
+          setInitialValues(a);
+        },
+
+        (error) => {
+          console.error('Error get user location: ', error);
+        }
+      );
+    } else {
+      console.log('Geolocation is not supported by this browser');
+    }
+  };
 
   useEffect(() => {
     if (item) {
@@ -126,6 +150,12 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
+                <Button
+                  onClick={getUserLocation}
+                  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  Stansiya koordinatasini olish(avtomatik)
+                </Button>
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Stansiya koordinatasi(latitude)
@@ -135,7 +165,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.latitude || ''}
                     name="latitude"
-                    type="text"
+                    type="number"
                     placeholder="latitude"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -149,7 +179,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     onBlur={validation.handleBlur}
                     value={validation.values.longitude || ''}
                     name="longitude"
-                    type="text"
+                    type="number"
                     placeholder="longitude"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />

@@ -31,7 +31,11 @@ export const initialState: initialState = {
 const sliceOptions = {
   name: 'action',
   initialState,
-  reducers: {},
+  reducers: {
+    clearCheckUser(state: initialState) {
+      state.checkUser = false;
+    }
+  },
   extraReducers: (builder: any) => {
 
     // get action by user done
@@ -40,7 +44,7 @@ const sliceOptions = {
       state.isSuccess = false;
     })
       .addCase(getActionByUserDone.fulfilled, (state: any, action: any) => {
-        state.customers = action.payload.object;
+        state.actions = action.payload.data;
         state.loading = false;
       })
       .addCase(getActionByUserDone.rejected, (state: any) => {
@@ -53,7 +57,7 @@ const sliceOptions = {
       state.isSuccess = false;
     })
       .addCase(getActionByUserDoneFalse.fulfilled, (state: any, action: any) => {
-        state.customers = action.payload.object;
+        state.actions = action.payload.data;
         state.loading = false;
       })
       .addCase(getActionByUserDoneFalse.rejected, (state: any) => {
@@ -83,13 +87,11 @@ const sliceOptions = {
       state.loading = false;
       state.checkUser = true;
       state.isSuccess = true;
-      state.isAction = !state.isAction;
     });
     builder.addCase(checkDeviceForAction.rejected, (state: any) => {
       state.loading = false;
       state.isSuccess = false;
       state.checkUser = false;
-      state.isAction = !state.isAction;
     });
 
     //update user
@@ -111,5 +113,6 @@ const sliceOptions = {
 
 const userSlice = createSlice(sliceOptions);
 
+export const { clearCheckUser } = userSlice.actions;
 
 export default userSlice.reducer;

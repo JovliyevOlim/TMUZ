@@ -15,12 +15,16 @@ import StationReducer from './station/reducer.ts';
 //Device
 import DeviceReducer from './device/reducer.ts';
 
+//Action
+import ActionReducer from './action/reducer.ts';
+
 const rootReducer = combineReducers({
   Login: LoginReducer,
   User: UserReducer,
   Work: WorkReducer,
   Station: StationReducer,
-  Device: DeviceReducer
+  Device: DeviceReducer,
+  Action: ActionReducer
 });
 
 export default rootReducer;

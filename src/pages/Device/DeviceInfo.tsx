@@ -4,17 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getDeviceInfoForQr } from '../../slices/device/thunk.ts';
 import moment from 'moment';
-import 'moment/locale/uz-latn';
 import { Button } from 'reactstrap';
-import { AddDevice } from './AddDevice.tsx';
 import { AddNewAction } from './AddNewAction.tsx';
 import { checkDeviceForAction } from '../../slices/action/thunk.ts';
 
 const DeviceInfo = () => {
 
-  const { deviceQrCodeInfo, isAction } = useSelector((state: any) => state.Device);
+  const { deviceQrCodeInfo } = useSelector((state: any) => state.Device);
+  const { checkUser, isAction } = useSelector((state: any) => state.Action);
   const dispatch: any = useDispatch();
-  const { id } = useParams();
+  const { id }:any = useParams();
   const [modal, setModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [userLocation, setUserLocation] = useState<{
@@ -39,26 +38,33 @@ const DeviceInfo = () => {
     }
   };
 
-
   useEffect(() => {
-    dispatch(checkDeviceForAction({
-      lon: userLocation?.longitude,
-      lat: userLocation?.latitude,
-      deviceId: id
-    }));
-  }, [userLocation]);
+    console.log('check use', checkUser);
+    if (checkUser) {
+      setModal(true);
+    } else {
+      setModal(false);
+    }
+  }, [checkUser]);
+
 
   function addNewActionForCheck() {
     getUserLocation();
+    setTimeout(() => {
+      dispatch(checkDeviceForAction({
+        // lon: userLocation?.longitude,
+        // lat: userLocation?.latitude,
+        latitude: 41.30579777333337,
+        longitude: 69.27896333550243,
+        deviceId: id
+      }));
+    }, 500);
   }
 
   useEffect(() => {
-    getUserLocation();
     dispatch(getDeviceInfoForQr(id));
-  }, []);
+  }, [isAction]);
 
-
-  console.log(userLocation);
 
   return (
     <>
@@ -101,23 +107,31 @@ const DeviceInfo = () => {
           Oxirgi harakat
         </h4>
 
-        <div className="flex flex-col">
-          <div className="p-2.5 text-start xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              <strong>Xodim:</strong> {deviceQrCodeInfo?.actionGetDto?.userLastName} {deviceQrCodeInfo?.actionGetDto?.userFirstName}
-            </h5>
-          </div>
-          <div className="p-2.5 text-start xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              <strong>Qilingan vaqti:</strong> {moment(deviceQrCodeInfo?.actionGetDto?.doneTime).format('LLLL')}
-            </h5>
-          </div>
-          <div className="p-2.5 text-start xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              <strong>Tavsif:</strong> {deviceQrCodeInfo?.actionGetDto?.description}
-            </h5>
-          </div>
-        </div>
+        {
+          deviceQrCodeInfo?.actionGetDto?.userId ?
+            <div className="flex flex-col">
+              <div className="p-2.5 text-start xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  <strong>Xodim:</strong> {deviceQrCodeInfo?.actionGetDto?.userLastName} {deviceQrCodeInfo?.actionGetDto?.userFirstName}
+                </h5>
+              </div>
+              <div className="p-2.5 text-start xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  <strong>Qilingan vaqti:</strong> {moment(deviceQrCodeInfo?.actionGetDto?.doneTime).format('LLLL')}
+                </h5>
+              </div>
+              <div className="p-2.5 text-start xl:p-5">
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  <strong>Tavsif:</strong> {deviceQrCodeInfo?.actionGetDto?.description}
+                </h5>
+              </div>
+            </div>
+            : <div className="p-2.5 text-start xl:p-5">
+              <h5 className="text-sm font-medium uppercase xsm:text-base">
+                Harakat yo'q
+              </h5>
+            </div>
+        }
       </div>
     </>
   );

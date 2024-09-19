@@ -29,7 +29,7 @@ const Device = () => {
     dispatch(getAllDevice());
     dispatch(getAllStation());
   }, [isAction]);
-
+  console.log(devices);
   return (
     <>
       <Breadcrumb pageName="Qurilmalar" />

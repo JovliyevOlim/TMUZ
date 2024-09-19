@@ -9,12 +9,13 @@ axios.defaults.baseURL = 'http://192.168.1.50:8080/api';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // content type
-const authUser: any = sessionStorage.getItem('authUser');
+const authUser: any = localStorage.getItem('authUser');
 const token = JSON.parse(authUser) ? JSON.parse(authUser).token : null;
 console.log(JSON.parse(authUser));
 console.log(token);
-if (token)
+if (token) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+}
 
 // intercepting to capture errors
 axios.interceptors.response.use(
@@ -103,7 +104,7 @@ class APIClient {
 }
 
 const getLoggedinUser = () => {
-  const user = sessionStorage.getItem('authUser');
+  const user = localStorage.getItem('authUser');
   if (!user) {
     return null;
   } else {

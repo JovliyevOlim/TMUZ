@@ -1,6 +1,5 @@
 import { Navigate } from 'react-router-dom';
 import Calendar from '../pages/Calendar.tsx';
-import Profile from '../pages/Profile.tsx';
 import FormElements from '../pages/Form/FormElements.tsx';
 import FormLayout from '../pages/Form/FormLayout.tsx';
 import Tables from '../pages/Tables.tsx';
@@ -17,6 +16,7 @@ import Stations from '../pages/Station/Station.tsx';
 import Device from '../pages/Device/Device.tsx';
 import DeviceInfo from '../pages/Device/DeviceInfo.tsx';
 import ReloadSignIn from '../pages/Authentication/ReloadSignIn.tsx';
+import Actions from '../pages/Device/Actions.tsx';
 
 
 const authProtectedRoutes = [
@@ -34,6 +34,9 @@ const authProtectedRoutes = [
 
   //Stations
   { path: '/stations', component: <Stations /> },
+
+  //Action
+  { path: '/action', component: <Actions /> },
 
   //Device
   { path: '/device', component: <Device /> },

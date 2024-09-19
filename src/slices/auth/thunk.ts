@@ -14,7 +14,7 @@ export const loginUser = (user: any, navigate: any) => async (dispatch: any) => 
     });
     var data: any = await response;
     if (data) {
-      sessionStorage.setItem('authUser', JSON.stringify(data.data));
+      localStorage.setItem('authUser', JSON.stringify(data.data));
       if (data.success) {
         dispatch(loginSuccess(data.data));
         navigate('/dashboard');
@@ -29,7 +29,7 @@ export const loginUser = (user: any, navigate: any) => async (dispatch: any) => 
 
 export const logoutUser = () => async (dispatch: any) => {
   try {
-    sessionStorage.removeItem('authUser');
+    localStorage.removeItem('authUser');
     dispatch(logoutUserSuccess(true));
 
   } catch (error) {

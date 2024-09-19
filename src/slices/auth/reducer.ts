@@ -27,8 +27,7 @@ const loginSlice = createSlice({
       state.userId = action.payload.user.id;
       state.loading = false;
       state.errorMsg = false;
-      console.log(document.referrer);
-      if (document.referrer !== 'login') {
+      if (window.location.pathname !== 'login') {
         window.history.back();
       }
     },
