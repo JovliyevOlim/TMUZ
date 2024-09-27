@@ -12,9 +12,9 @@ import {
   // getUserById as getUserByIdApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getAllUser = createAsyncThunk('user/getAllUser', async (supplier: string) => {
+export const getAllUser = createAsyncThunk('user/getAllUser', async () => {
   try {
-    const response = getAllUserApi(supplier);
+    const response = getAllUserApi();
     return response;
   } catch (error) {
     return error;

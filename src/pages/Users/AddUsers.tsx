@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addNewUser } from '../../slices/user/thunk.ts';
 
 
-export const AddUser = ({ modalOpen, setModalOpen }: any) => {
+export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
 
 
@@ -133,7 +133,7 @@ export const AddUser = ({ modalOpen, setModalOpen }: any) => {
               <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
-                    Belgilangan korxona (MTU-5)
+                    Belgilangan korxona (Plot-5)
                   </label>
                   <input
                     onChange={validation.handleChange}
@@ -141,7 +141,7 @@ export const AddUser = ({ modalOpen, setModalOpen }: any) => {
                     value={validation.values.company || ''}
                     name="company"
                     type="text"
-                    placeholder="Belgilangan korxona (MTU-5)"
+                    placeholder="Belgilangan korxona (Plot-5)"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>

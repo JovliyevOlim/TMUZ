@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 
-// export const localUrl = 'http://192.168.1.100:5173';
+// export const localUrl = 'http://192.168.1.84:5173';
 export const localUrl = 'http://localhost:5173';
 // default
 axios.defaults.baseURL = 'http://192.168.1.50:8080/api';

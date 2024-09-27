@@ -32,7 +32,7 @@ const sliceOptions = {
       state.isSuccess = false;
     })
       .addCase(getAllUser.fulfilled, (state: any, action: any) => {
-        state.customers = action.payload.object;
+        state.users = action.payload.data;
         state.loading = false;
       })
       .addCase(getAllUser.rejected, (state: any) => {

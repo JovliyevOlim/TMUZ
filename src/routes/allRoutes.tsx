@@ -17,6 +17,10 @@ import Device from '../pages/Device/Device.tsx';
 import DeviceInfo from '../pages/Device/DeviceInfo.tsx';
 import ReloadSignIn from '../pages/Authentication/ReloadSignIn.tsx';
 import Actions from '../pages/Device/Actions.tsx';
+import MTU from '../pages/MTU/MTU.tsx';
+import Enterprise from '../pages/Enterprise/Enterprise.tsx';
+import Plot from '../pages/Plot/Plot.tsx';
+import LevelCrossing from '../pages/LevelCrossing/LevelCrossing.tsx';
 
 
 const authProtectedRoutes = [
@@ -35,10 +39,22 @@ const authProtectedRoutes = [
   //Stations
   { path: '/stations', component: <Stations /> },
 
+  //Mtu
+  { path: '/mtu', component: <MTU /> },
+
+  //EnterPrise
+  { path: '/enterprise', component: <Enterprise /> },
+
+  //Plot
+  { path: '/plot', component: <Plot /> },
+
+  //Level Crossing
+  { path: '/levelCrossing', component: <LevelCrossing /> },
+
   //Action
   { path: '/action', component: <Actions /> },
 
-  //Device
+  //LevelCrossing
   { path: '/device', component: <Device /> },
 
   //Profile
@@ -73,7 +89,7 @@ const publicRoutes = [
   { path: '/login', component: <SignIn /> },
   { path: '/signIn', component: <ReloadSignIn /> },
   { path: '/register', component: <SignUp /> },
-  //Device
+  //LevelCrossing
   { path: '/deviceInfo/:id', component: <DeviceInfo /> }
 ];
 

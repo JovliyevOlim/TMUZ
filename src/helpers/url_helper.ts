@@ -30,7 +30,7 @@ export const CHECK_DEVICE_FOR_ACTION = '/action/check-user';
 export const GET_ACTION_BY_USER = '/action/get-by-user-done';
 export const GET_ACTION_BY_USER_FALSE = '/action/get-by-user-done-is-false';
 
-// Device
+// LevelCrossing
 export const ADD_NEW_DEVICE = '/device/create';
 export const UPDATE_DEVICE = '/device/edit';
 export const GET_DEVICE_INFO_FOR_QR = '/device/get-info-for-QR';
@@ -38,4 +38,32 @@ export const GET_DEVICE_BY_ID = '/device/get-by-id';
 export const GET_ALL_DEVICE = '/device/get-all';
 export const GET_ALL_DEVICE_INFO_ACTIONS = '/device/get-all-info-actions';
 
+// MTU
+export const ADD_NEW_MTU = '/mtu/create';
+export const UPDATE_MTU = '/mtu/edit';
+export const GET_ALL_MTU = '/mtu/get-all';
+export const GET_MTU_BY_ID = '/mtu/get-by-id';
 
+
+// EnterPrise
+export const ADD_NEW_ENTERPRISE = '/enterprise/create';
+export const UPDATE_ENTERPRISE = '/enterprise/edit';
+export const GET_ALL_ENTERPRISE = '/enterprise/get-all';
+export const GET_ENTERPRISE_BY_ID = '/enterprise/get-by-id';
+export const GET_ENTERPRISE_BY_MTU = '/enterprise/get-by-mtu';
+
+
+// plot
+export const ADD_NEW_PLOT = '/plot/create';
+export const UPDATE_PLOT = '/plot/edit';
+export const GET_ALL_PLOT = '/plot/get-all';
+export const GET_PLOT_BY_ID = '/plot/get-by-id';
+export const GET_PLOT_BY_ENTERPRISE = '/plot/get-by-enterprise';
+
+
+// plot
+export const ADD_NEW_LEVEL_CROSSING = '/level-crossing';
+export const UPDATE_LEVEL_CROSSING = '/level-crossing';
+export const GET_ALL_LEVEL_CROSSING = '/level-crossing';
+export const GET_LEVEL_CROSSING_BY_ID = '/level-crossing';
+export const GET_LEVEL_CROSSING_BY_PLOT = '/level-crossing';

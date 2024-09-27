@@ -8,7 +8,7 @@ const api = new APIClient();
 export const postLogin = (data: any) => api.create(url.POST_LOGIN, data);
 
 // get all user
-export const getAllUser = (user: any) => api.get(url.ADD_NEW_USER, user);
+export const getAllUser = () => api.get(url.GET_ALL_USER);
 // get user by id
 export const getUserById = (user: any) => api.get(url.ADD_NEW_USER, user);
 // add New User
@@ -58,3 +58,47 @@ export const getAllDeviceInfoActions = (device: any) => api.get(url.GET_ALL_DEVI
 export const addNewDevice = (device: any) => api.create(url.ADD_NEW_DEVICE, device);
 // update  device
 export const updateDevice = (device: any) => api.put(url.UPDATE_DEVICE + '/' + device.id, device);
+
+
+// get mtu
+export const getAllMtu = () => api.get(url.GET_ALL_MTU);
+// get mtu by id
+export const getMtuById = (mtu: any) => api.get(url.GET_MTU_BY_ID, mtu);
+// add New mtu
+export const addNewMtu = (mtu: any) => api.create(url.ADD_NEW_MTU, mtu);
+// update  mtu
+export const updateMtu = (mtu: any) => api.put(url.UPDATE_MTU + '/' + mtu.id, mtu);
+
+
+// get enterprise
+export const getAllEnterprise = () => api.get(url.GET_ALL_ENTERPRISE);
+// get enterprise by id
+export const getEnterpriseById = (enterprise: any) => api.get(url.GET_ENTERPRISE_BY_ID, enterprise);
+// get enterprise by mtu
+export const getEnterpriseByMTU = (enterprise: any) => api.get(url.GET_ENTERPRISE_BY_MTU + '/' + enterprise);
+// add New enterprise
+export const addNewEnterprise = (enterprise: any) => api.create(url.ADD_NEW_ENTERPRISE, enterprise);
+// update  enterprise
+export const updateEnterprise = (enterprise: any) => api.put(url.UPDATE_ENTERPRISE + '/' + enterprise.id, enterprise);
+
+// get plot
+export const getAllPlot = () => api.get(url.GET_ALL_PLOT);
+// get plot by id
+export const getPlotById = (plot: any) => api.get(url.GET_PLOT_BY_ID, plot);
+// get plot by mtu
+export const getPlotByEnterprise = (plot: any) => api.get(url.GET_PLOT_BY_ENTERPRISE + '/' + plot);
+// add New plot
+export const addNewPlot = (plot: any) => api.create(url.ADD_NEW_PLOT, plot);
+// update  plot
+export const updatePlot = (plot: any) => api.put(url.UPDATE_PLOT + '/' + plot.id, plot);
+
+// get level crossing
+export const getAllLevelCrossing = () => api.get(url.GET_ALL_LEVEL_CROSSING);
+// get level crossing by id
+export const getLevelCrossingById = (levelCrossing: any) => api.get(url.GET_LEVEL_CROSSING_BY_ID, levelCrossing);
+// get level crossing by plot
+export const getLevelCrossingByPlot = (levelCrossing: any) => api.get(url.GET_LEVEL_CROSSING_BY_PLOT + '/' + levelCrossing);
+// add New level crossing
+export const addNewLevelCrossing = (levelCrossing: any) => api.create(url.ADD_NEW_LEVEL_CROSSING, levelCrossing);
+// update  level crossing
+export const updateLevelCrossing = (levelCrossing: any) => api.put(url.UPDATE_LEVEL_CROSSING + '/' + levelCrossing.id, levelCrossing);
