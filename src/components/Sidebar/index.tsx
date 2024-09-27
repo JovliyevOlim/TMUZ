@@ -452,7 +452,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Qurilmalar 2
+                  Temiryo'l kesishmasi
                 </NavLink>
               </li>
 

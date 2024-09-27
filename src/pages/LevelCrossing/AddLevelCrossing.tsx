@@ -109,7 +109,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
         className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
         <div className="py-4 px-4 dark:border-strokedark">
           <div className="w-full flex justify-between">
-            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Qurilma 2 yaratish</h4>
+            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Temiryo'l kesishmasi</h4>
             <strong className="text-xl align-center cursor-pointer "
                     onClick={tog_standard}
             >&times;</strong>
@@ -131,7 +131,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
               <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
-                    Qurilma 2 nomi
+                    Qurilma nomi
                   </label>
                   <input
                     onChange={validation.handleChange}
