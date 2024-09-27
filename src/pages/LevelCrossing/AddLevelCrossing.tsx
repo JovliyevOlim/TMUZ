@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewDevice, updateDevice } from '../../slices/device/thunk.ts';
 import { Button } from 'reactstrap';
 import { addNewLevelCrossing, updateLevelCrossing } from '../../slices/levelCrossing/thunk.ts';
 
@@ -15,6 +14,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
   const [initialValues, setInitialValues] = useState({
     name: '',
     description: '',
+    address: '',
     plotId: '',
     latitude: 0,
     longitude: 0
@@ -54,6 +54,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
       setInitialValues({
         name: item?.name,
         description: item?.description,
+        address: item?.address,
         plotId: item?.plotId,
         latitude: item?.latitude,
         longitude: item?.longitude
@@ -69,6 +70,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
     validationSchema: Yup.object({
       name: Yup.string().required('Stansiya nomini kiriting!'),
       description: Yup.string().required('Namuna ish!'),
+      address: Yup.string().required('Manzilni kiriting!'),
       latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
       longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
     }),
@@ -90,6 +92,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
       setInitialValues({
         name: '',
         description: '',
+        address: '',
         plotId: '',
         latitude: 0,
         longitude: 0
@@ -151,6 +154,20 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
                     name="description"
                     type="text"
                     placeholder="description"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                </div>
+                <div className="w-full xl:w-1/2">
+                  <label className="mb-2.5 block text-black dark:text-white">
+                    Manzil
+                  </label>
+                  <input
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.address || ''}
+                    name="address"
+                    type="text"
+                    placeholder="Manzil"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
