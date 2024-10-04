@@ -40,7 +40,6 @@ const Device = () => {
         >
           Qurilma yaratish +
         </button>
-
       </div>
       <div
         className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -90,7 +89,8 @@ const Device = () => {
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="text-black dark:text-white">{item.stationName}</p>
+                <p
+                  className="text-black dark:text-white">{item.stationName ? item?.stationName : item?.levelCrossingName}</p>
               </div>
               <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-black dark:text-white">{item.description}</p>

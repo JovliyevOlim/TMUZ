@@ -4,7 +4,9 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 // export const localUrl = 'http://192.168.1.84:5173';
 export const localUrl = 'http://localhost:5173';
 // default
-axios.defaults.baseURL = 'http://192.168.1.50:8080/api';
+// axios.defaults.baseURL = 'http://192.168.1.50:8080/api';
+// axios.defaults.baseURL = 'http://172.20.10.2:8080/api';
+axios.defaults.baseURL = 'http://localhost:8080/api';
 // content type
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
