@@ -38,6 +38,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getEnterpriseByMTU.rejected, (state: any) => {
+        state.enterpriseForSelect = []
         state.loading = false;
       });
 
@@ -51,6 +52,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllEnterprise.rejected, (state: any) => {
+        state.enterprise = []
         state.loading = false;
       });
 

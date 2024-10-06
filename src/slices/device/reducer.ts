@@ -1,7 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   getAllDevice,
-  getAllDeviceInfoActions, getDeviceInfoForQr, addNewDevice, updateDevice, getDeviceById
+  getAllDeviceInfoActions,
+  getDeviceInfoForQr,
+  addNewDevice,
+  updateDevice,
+  getDeviceById,
+  getAllSimpleDevice,
+  getAllLevelCrossingDevice
 } from './thunk';
 
 
@@ -11,6 +17,8 @@ interface initialState {
   isAction: boolean,
   isSuccess: boolean,
   devices: [],
+  levelCrossingDevice: [],
+  simpleDevices: [],
   device: {},
   deviceQrCodeInfo: {}
   message: ''
@@ -20,6 +28,8 @@ export const initialState: initialState = {
   devices: [],
   device: {},
   deviceQrCodeInfo: {},
+  levelCrossingDevice: [],
+  simpleDevices: [],
   error: null,
   loading: false,
   isAction: false,
@@ -43,6 +53,35 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllDevice.rejected, (state: any) => {
+        state.devices = [];
+        state.loading = false;
+      });
+
+    // get all simple device
+    builder.addCase(getAllSimpleDevice.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getAllSimpleDevice.fulfilled, (state: any, action: any) => {
+        state.simpleDevices = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getAllSimpleDevice.rejected, (state: any) => {
+        state.simpleDevices = [];
+        state.loading = false;
+      });
+
+    // get all level crossing device
+    builder.addCase(getAllLevelCrossingDevice.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getAllLevelCrossingDevice.fulfilled, (state: any, action: any) => {
+        state.levelCrossingDevice = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getAllLevelCrossingDevice.rejected, (state: any) => {
+        state.levelCrossingDevice = [];
         state.loading = false;
       });
 
@@ -56,6 +95,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllDeviceInfoActions.rejected, (state: any) => {
+        state.devices = [];
         state.loading = false;
       });
 

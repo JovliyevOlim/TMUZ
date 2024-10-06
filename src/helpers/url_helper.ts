@@ -21,6 +21,7 @@ export const ADD_NEW_STATION = '/station/create';
 export const UPDATE_STATION = '/station/edit';
 export const GET_ALL_STATION = '/station/get-all';
 export const GET_STATION_BY_ID = '/station/get-by-id';
+export const GET_STATION_BY_PLOT_ID = '/station/get-by-plot-id';
 
 
 // Action
@@ -30,12 +31,14 @@ export const CHECK_DEVICE_FOR_ACTION = '/action/check-user';
 export const GET_ACTION_BY_USER = '/action/get-by-user-done';
 export const GET_ACTION_BY_USER_FALSE = '/action/get-by-user-done-is-false';
 
-// LevelCrossing
+// LevelCrossingDevice
 export const ADD_NEW_DEVICE = '/device/create';
 export const UPDATE_DEVICE = '/device/edit';
 export const GET_DEVICE_INFO_FOR_QR = '/device/get-info-for-QR';
 export const GET_DEVICE_BY_ID = '/device/get-by-id';
 export const GET_ALL_DEVICE = '/device/get-all';
+export const GET_ALL_SIMPLE_DEVICE = '/device/get-by-isStation-true';
+export const GET_ALL_LEVEL_CROSSING_DEVICE = '/device/get-by-isStation-false';
 export const GET_ALL_DEVICE_INFO_ACTIONS = '/device/get-all-info-actions';
 
 // MTU
@@ -61,7 +64,7 @@ export const GET_PLOT_BY_ID = '/plot/get-by-id';
 export const GET_PLOT_BY_ENTERPRISE = '/plot/get-by-enterprise';
 
 
-// plot
+// levelCrossing
 export const ADD_NEW_LEVEL_CROSSING = '/level-crossing';
 export const UPDATE_LEVEL_CROSSING = '/level-crossing';
 export const GET_ALL_LEVEL_CROSSING = '/level-crossing';

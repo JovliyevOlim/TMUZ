@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllStation, addNewStation, updateStation } from './thunk';
+import { getAllStation, addNewStation, updateStation, getStationByPlotId } from './thunk';
 
 
 interface initialState {
@@ -26,6 +26,19 @@ const sliceOptions = {
   reducers: {},
   extraReducers: (builder: any) => {
 
+    // get all station by plot
+    builder.addCase(getStationByPlotId.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getStationByPlotId.fulfilled, (state: any, action: any) => {
+        state.stations = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getStationByPlotId.rejected, (state: any) => {
+        state.loading = false;
+      });
+
     // get all user
     builder.addCase(getAllStation.pending, (state: any) => {
       state.loading = true;
@@ -36,6 +49,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllStation.rejected, (state: any) => {
+        state.stations = [];
         state.loading = false;
       });
 

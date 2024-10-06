@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'reactstrap';
 import { AddStation } from './AddStation.tsx';
 import { getAllStation } from '../../slices/station/thunk.ts';
+import { getAllPlot } from '../../slices/plot/thunk.ts';
 
 const Stations = () => {
 
@@ -20,6 +21,7 @@ const Stations = () => {
 
   useEffect(() => {
     dispatch(getAllStation());
+    dispatch(getAllPlot())
   }, [isAction]);
 
   return (

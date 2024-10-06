@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addNewDevice, updateDevice } from '../../slices/device/thunk.ts';
 
 
-export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
+export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
   const { loading, isAction, isSuccess } = useSelector((state: any) => state.Device);
 
   const [initialValues, setInitialValues] = useState({
     name: '',
-    station: true,
+    station: false,
     description: '',
-    stationId: '',
+    address: '',
+    levelCrossingId: '',
     latitude: 0,
     longitude: 0
   });
@@ -21,23 +22,16 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
 
   function tog_standard() {
     setModalOpen(!modalOpen);
-    setInitialValues({
-      name: '',
-      station: true,
-      description: '',
-      stationId: '',
-      latitude: 0,
-      longitude: 0
-    });
   }
 
   useEffect(() => {
     if (item) {
       setInitialValues({
         name: item?.name,
-        station: true,
+        station: false,
         description: item?.description,
-        stationId: item?.stationId,
+        address: item?.address,
+        levelCrossingId: item?.levelCrossingId,
         latitude: item?.latitude,
         longitude: item?.longitude
       });
@@ -50,7 +44,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
 
     initialValues: initialValues,
     validationSchema: Yup.object({
-      name: Yup.string().required('Stansiya nomini kiriting!')
+      name: Yup.string().required('Qurilma nomini kiriting!')
     }),
     onSubmit: (values) => {
       if (item) {
@@ -69,9 +63,10 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       setItem(null);
       setInitialValues({
         name: '',
-        station: true,
+        station: false,
         description: '',
-        stationId: '',
+        address: '',
+        levelCrossingId: '',
         latitude: 0,
         longitude: 0
       });
@@ -87,7 +82,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
         className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
         <div className="py-4 px-4 dark:border-strokedark">
           <div className="w-full flex justify-between">
-            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Qurilma yaratish</h4>
+            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Temiryo'l kesishmasi</h4>
             <strong className="text-xl align-center cursor-pointer "
                     onClick={tog_standard}
             >&times;</strong>
@@ -117,7 +112,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     value={validation.values.name || ''}
                     name="name"
                     type="text"
-                    placeholder="Stansiya nomi"
+                    placeholder="Qurilma nomi"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>

@@ -8,11 +8,13 @@ interface initialState {
   isAction: boolean,
   isSuccess: boolean,
   levelCrossing: [],
+  levelCrossingForSelect: []
   message: ''
 }
 
 export const initialState: initialState = {
   levelCrossing: [],
+  levelCrossingForSelect: [],
   error: null,
   loading: false,
   isAction: false,
@@ -26,7 +28,7 @@ const sliceOptions = {
   reducers: {},
   extraReducers: (builder: any) => {
 
-    // get all LevelCrossing by Plot
+    // get all LevelCrossingDevice by Plot
     builder.addCase(getLevelCrossingByPlot.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
@@ -36,10 +38,11 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getLevelCrossingByPlot.rejected, (state: any) => {
+        state.levelCrossingForSelect = [];
         state.loading = false;
       });
 
-    // get all LevelCrossing
+    // get all LevelCrossingDevice
     builder.addCase(getAllLevelCrossing.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
@@ -49,10 +52,11 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllLevelCrossing.rejected, (state: any) => {
+        state.levelCrossing = [];
         state.loading = false;
       });
 
-    // add new LevelCrossing
+    // add new LevelCrossingDevice
     builder.addCase(addNewLevelCrossing.pending, (state: any) => {
       state.loading = true;
     });
@@ -67,7 +71,7 @@ const sliceOptions = {
       state.isAction = !state.isAction;
     });
 
-    //update LevelCrossing
+    //update LevelCrossingDevice
     builder.addCase(updateLevelCrossing.pending, (state: any) => {
       state.loading = true;
     }).addCase(updateLevelCrossing.fulfilled, (state: any) => {

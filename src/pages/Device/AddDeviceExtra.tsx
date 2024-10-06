@@ -2,22 +2,25 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { addNewDevice, updateDevice } from '../../slices/device/thunk.ts';
 import { Button } from 'reactstrap';
-import { addNewLevelCrossing, updateLevelCrossing } from '../../slices/levelCrossing/thunk.ts';
+import { getStationByPlotId } from '../../slices/station/thunk.ts';
 
 
-export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any) => {
+export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
-  const { loading, isAction, isSuccess } = useSelector((state: any) => state.LevelCrossing);
+  const { loading, isAction, isSuccess } = useSelector((state: any) => state.Device);
+  const { stations } = useSelector((state: any) => state.Station);
   const { plot } = useSelector((state: any) => state.Plot);
 
   const [initialValues, setInitialValues] = useState({
     name: '',
+    station: true,
     description: '',
-    address: '',
-    plotId: '',
+    stationId: '',
     latitude: 0,
-    longitude: 0
+    longitude: 0,
+    plotId: ''
   });
 
 
@@ -53,11 +56,12 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
     if (item) {
       setInitialValues({
         name: item?.name,
+        station: true,
         description: item?.description,
-        address: item?.address,
-        plotId: item?.plotId,
+        stationId: item?.stationId,
         latitude: item?.latitude,
-        longitude: item?.longitude
+        longitude: item?.longitude,
+        plotId: item?.plotId
       });
     }
   }, [item]);
@@ -70,15 +74,14 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
     validationSchema: Yup.object({
       name: Yup.string().required('Stansiya nomini kiriting!'),
       description: Yup.string().required('Namuna ish!'),
-      address: Yup.string().required('Manzilni kiriting!'),
       latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
       longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateLevelCrossing({ ...values, id: item.id }));
+        dispatch(updateDevice({ ...values, id: item.id }));
       } else {
-        dispatch(addNewLevelCrossing(values));
+        dispatch(addNewDevice(values));
       }
     }
   });
@@ -91,14 +94,21 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
       setItem(null);
       setInitialValues({
         name: '',
+        station: true,
         description: '',
-        address: '',
-        plotId: '',
+        stationId: '',
         latitude: 0,
-        longitude: 0
+        longitude: 0,
+        plotId: ''
       });
     }
   }, [dispatch, isAction]);
+
+  useEffect(() => {
+    if (validation.values.plotId) {
+      dispatch(getStationByPlotId(validation.values.plotId));
+    }
+  }, [validation.values.plotId]);
 
   return (
     modalOpen &&
@@ -109,7 +119,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
         className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
         <div className="py-4 px-4 dark:border-strokedark">
           <div className="w-full flex justify-between">
-            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Temiryo'l kesishmasi</h4>
+            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Qurilma yaratish</h4>
             <strong className="text-xl align-center cursor-pointer "
                     onClick={tog_standard}
             >&times;</strong>
@@ -129,20 +139,20 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
             </div>
             <div className="p-6.5">
               <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                <div className="w-full xl:w-1/2">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Qurilma nomi
-                  </label>
-                  <input
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.name || ''}
-                    name="name"
-                    type="text"
-                    placeholder="Qurilma nomi"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
+                {/*<div className="w-full xl:w-1/2">*/}
+                {/*  <label className="mb-2.5 block text-black dark:text-white">*/}
+                {/*    Qurilma nomi*/}
+                {/*  </label>*/}
+                {/*  <input*/}
+                {/*    onChange={validation.handleChange}*/}
+                {/*    onBlur={validation.handleBlur}*/}
+                {/*    value={validation.values.name || ''}*/}
+                {/*    name="name"*/}
+                {/*    type="text"*/}
+                {/*    placeholder="Stansiya nomi"*/}
+                {/*    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"*/}
+                {/*  />*/}
+                {/*</div>*/}
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Tavsif
@@ -159,22 +169,8 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
                 </div>
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
-                    Manzil
-                  </label>
-                  <input
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.address || ''}
-                    name="address"
-                    type="text"
-                    placeholder="Manzil"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
-                <div className="w-full xl:w-1/2">
-                  <label className="mb-2.5 block text-black dark:text-white">
                     {' '}
-                    Uchastkani tanlang
+                    Uchastka tanlang
                   </label>
 
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
@@ -186,7 +182,7 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
                       className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
                     >
                       <option value="" className="text-body dark:text-bodydark">
-                        Tanlang
+                        Uchastka tanlang
                       </option>
                       {
                         plot.map((item: any) =>
@@ -218,12 +214,60 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
         </span>
                   </div>
                 </div>
-                <Button
-                  onClick={getUserLocation}
-                  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-                >
-                  Qurilma koordinatasini olish(avtomatik)
-                </Button>
+
+                <div className="w-full xl:w-1/2">
+                  <label className="mb-2.5 block text-black dark:text-white">
+                    {' '}
+                    Stansiyani tanlang
+                  </label>
+
+                  <div className="relative z-20 bg-transparent dark:bg-form-input">
+                    <select
+                      value={validation.values.stationId || ''}
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      name="stationId"
+                      className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
+                    >
+                      <option value="" className="text-body dark:text-bodydark">
+                        Stansiya tanlang
+                      </option>
+                      {
+                        stations.map((item: any) =>
+                          <option value={item.id} className="text-body dark:text-bodydark">
+                            {item.name}
+                          </option>
+                        )
+                      }
+                    </select>
+
+                    <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
+          <svg
+            className="fill-current"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g opacity="0.8">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
+                fill=""
+              ></path>
+            </g>
+          </svg>
+        </span>
+                  </div>
+                </div>
+                {/*<Button*/}
+                {/*  onClick={getUserLocation}*/}
+                {/*  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"*/}
+                {/*>*/}
+                {/*  Qurilma koordinatasini olish(avtomatik)*/}
+                {/*</Button>*/}
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Qurilma koordinatasi(latitude)

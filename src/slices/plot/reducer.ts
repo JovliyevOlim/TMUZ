@@ -38,6 +38,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getPlotByEnterprise.rejected, (state: any) => {
+        state.plotForSelect = [];
         state.loading = false;
       });
 
@@ -51,6 +52,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllPlot.rejected, (state: any) => {
+        state.plot = [];
         state.loading = false;
       });
 

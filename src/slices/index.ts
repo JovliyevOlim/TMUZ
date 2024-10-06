@@ -12,7 +12,7 @@ import WorkReducer from './work/reducer.ts';
 //Station
 import StationReducer from './station/reducer.ts';
 
-//LevelCrossing
+//LevelCrossingDevice
 import DeviceReducer from './device/reducer.ts';
 
 //Action
@@ -27,7 +27,7 @@ import EnterPriseReducer from './enterprise/reducer.ts';
 //Plot
 import PlotReducer from './plot/reducer.ts';
 
-//LevelCrossing
+//LevelCrossingDevice
 import LevelCrossingReducer from './levelCrossing/reducer.ts';
 
 const rootReducer = combineReducers({

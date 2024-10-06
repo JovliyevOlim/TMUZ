@@ -3,33 +3,42 @@ import { useEffect, useState } from 'react';
 // import { AddWorks } from './AddWorks.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'reactstrap';
-import { AddLevelCrossing } from './AddLevelCrossing.tsx';
+import { AddLevelCrossingDevice } from './AddLevelCrossingDevice.tsx';
 import { getAllPlot } from '../../slices/plot/thunk.ts';
-import { getAllLevelCrossing } from '../../slices/levelCrossing/thunk.ts';
+import { getAllLevelCrossingDevice } from '../../slices/device/thunk.ts';
+import { AddLevelCrossingDeviceExtra } from './AddLevelCrossingDeviceExtra.tsx';
+import { DeviceQrCode } from '../Device/DeviceQrCode.tsx';
 
-const LevelCrossing = () => {
+const LevelCrossingDevice = () => {
 
   const [modal, setModal] = useState(false);
+  const [modalStation, setModalStation] = useState(false);
+  const [qrCodemodal, setQrCodeModal] = useState(false);
   const [editData, setEditData] = useState(null);
-  const { levelCrossing, isAction } = useSelector((state: any) => state.LevelCrossing);
+  const { levelCrossingDevice, isAction } = useSelector((state: any) => state.Device);
   const dispatch: any = useDispatch();
 
+
+  const onClickEditStation = (data: any) => {
+    setModalStation(true);
+    setEditData(data);
+  };
   const onClickEdit = (data: any) => {
     setModal(true);
     setEditData(data);
   };
-  // const onClickQrCode = (data: any) => {
-  //   setQrCodeModal(true);
-  //   setEditData(data);
-  // };
+  const onClickQrCode = (data: any) => {
+    setQrCodeModal(true);
+    setEditData(data);
+  };
 
   useEffect(() => {
-    dispatch(getAllLevelCrossing());
+    dispatch(getAllLevelCrossingDevice());
     dispatch(getAllPlot());
   }, [isAction]);
   return (
     <>
-      <Breadcrumb pageName="Temiryo'l kesishmasi" />
+      <Breadcrumb pageName="Temiryo'l kesishmasi qurilmalari" />
       <div className={'flex justify-end my-3'}>
         <button
           onClick={() => setModal(true)}
@@ -42,7 +51,7 @@ const LevelCrossing = () => {
       <div
         className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-          Temiryo' kesishmasi
+          Temiryo'l kesishmasi qurilmalari
         </h4>
 
         <div className="flex flex-col">
@@ -69,10 +78,10 @@ const LevelCrossing = () => {
             </div>
           </div>
 
-          {levelCrossing?.map((item: any, key: number) => (
+          {levelCrossingDevice?.map((item: any, key: number) => (
             <div
               className={`grid grid-cols-4 ${
-                key === levelCrossing?.length - 1
+                key === levelCrossingDevice?.length - 1
                   ? ''
                   : 'border-b border-stroke dark:border-strokedark'
               }`}
@@ -94,17 +103,23 @@ const LevelCrossing = () => {
               </div>
               <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
                 <Button
+                  onClick={() => onClickEditStation(item)}
+                  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  Stansiya biriktirish
+                </Button>
+                <Button
                   onClick={() => onClickEdit(item)}
                   className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
                 >
                   Edit
                 </Button>
-                {/*<Button*/}
-                {/*  onClick={() => onClickQrCode(item)}*/}
-                {/*  className="inline-flex items-center justify-center gap-2.5 border border-success py-2 px-5 text-center font-semibold text-success hover:bg-opacity-90 lg:px-8 xl:px-10"*/}
-                {/*>*/}
-                {/*  QrCode*/}
-                {/*</Button>*/}
+                <Button
+                  onClick={() => onClickQrCode(item)}
+                  className="inline-flex items-center justify-center gap-2.5 border border-success py-2 px-5 text-center font-semibold text-success hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  QrCode
+                </Button>
                 {/*<Button*/}
                 {/*  onClick={() => dispatch((item?.id))}*/}
                 {/*  className="inline-flex items-center justify-center gap-2.5 border border-danger py-2 px-5 text-center font-semibold text-danger hover:bg-opacity-90 lg:px-8 xl:px-10"*/}
@@ -116,9 +131,12 @@ const LevelCrossing = () => {
           ))}
         </div>
       </div>
-      <AddLevelCrossing modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
+      <AddLevelCrossingDevice modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
+      <AddLevelCrossingDeviceExtra modalOpen={modalStation} setModalOpen={setModalStation} item={editData}
+                                   setItem={setEditData} />
+      <DeviceQrCode modalOpen={qrCodemodal} setModalOpen={setQrCodeModal} item={editData} setItem={setEditData} />
     </>
   );
 };
 
-export default LevelCrossing;
+export default LevelCrossingDevice;

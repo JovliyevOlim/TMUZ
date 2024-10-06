@@ -4,20 +4,26 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'reactstrap';
 import { AddDevice } from './AddDevice.tsx';
-import { getAllDevice } from '../../slices/device/thunk.ts';
+import { getAllSimpleDevice } from '../../slices/device/thunk.ts';
 import { getAllStation } from '../../slices/station/thunk.ts';
 import { DeviceQrCode } from './DeviceQrCode.tsx';
+import { AddDeviceExtra } from './AddDeviceExtra.tsx';
 
 const Device = () => {
 
   const [modal, setModal] = useState(false);
+  const [modalStation, setModalStation] = useState(false);
   const [qrCodemodal, setQrCodeModal] = useState(false);
   const [editData, setEditData] = useState(null);
-  const { devices, isAction } = useSelector((state: any) => state.Device);
+  const { simpleDevices, isAction } = useSelector((state: any) => state.Device);
   const dispatch: any = useDispatch();
 
   const onClickEdit = (data: any) => {
     setModal(true);
+    setEditData(data);
+  };
+  const onClickEditStation = (data: any) => {
+    setModalStation(true);
     setEditData(data);
   };
   const onClickQrCode = (data: any) => {
@@ -26,10 +32,9 @@ const Device = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllDevice());
+    dispatch(getAllSimpleDevice());
     dispatch(getAllStation());
   }, [isAction]);
-  console.log(devices);
   return (
     <>
       <Breadcrumb pageName="Qurilmalar" />
@@ -71,10 +76,10 @@ const Device = () => {
             </div>
           </div>
 
-          {devices?.map((item: any, key: number) => (
+          {simpleDevices?.map((item: any, key: number) => (
             <div
               className={`grid grid-cols-4 ${
-                key === devices?.length - 1
+                key === simpleDevices?.length - 1
                   ? ''
                   : 'border-b border-stroke dark:border-strokedark'
               }`}
@@ -95,7 +100,13 @@ const Device = () => {
               <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-black dark:text-white">{item.description}</p>
               </div>
-              <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
+              <div className="flex flex-wrap items-center justify-center p-2.5  gap-2 xl:p-5">
+                <Button
+                  onClick={() => onClickEditStation(item)}
+                  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                  Stansiya biriktirish
+                </Button>
                 <Button
                   onClick={() => onClickEdit(item)}
                   className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
@@ -120,6 +131,7 @@ const Device = () => {
         </div>
       </div>
       <AddDevice modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
+      <AddDeviceExtra modalOpen={modalStation} setModalOpen={setModalStation} item={editData} setItem={setEditData} />
       <DeviceQrCode modalOpen={qrCodemodal} setModalOpen={setQrCodeModal} item={editData} setItem={setEditData} />
     </>
   );

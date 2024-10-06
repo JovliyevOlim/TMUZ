@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {
   // getStationById as getStationByIdApi,
+  getStationByPlotId as getStationByPlotIdApi,
   getAllStation as getAllStationByApi,
   addNewStation as addNewStationApi,
   updateStation as updateStationApi
@@ -14,6 +15,14 @@ import {
 export const getAllStation = createAsyncThunk('station/getAllStation', async () => {
   try {
     const response = getAllStationByApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getStationByPlotId = createAsyncThunk('station/getStationPlotById', async (station: string) => {
+  try {
+    const response = getStationByPlotIdApi(station);
     return response;
   } catch (error) {
     return error;

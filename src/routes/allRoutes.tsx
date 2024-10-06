@@ -21,6 +21,7 @@ import MTU from '../pages/MTU/MTU.tsx';
 import Enterprise from '../pages/Enterprise/Enterprise.tsx';
 import Plot from '../pages/Plot/Plot.tsx';
 import LevelCrossing from '../pages/LevelCrossing/LevelCrossing.tsx';
+import LevelCrossingDevice from '../pages/levelCrossingDevice/LevelCrossingDevice.tsx';
 
 
 const authProtectedRoutes = [
@@ -51,10 +52,13 @@ const authProtectedRoutes = [
   //Level Crossing
   { path: '/levelCrossing', component: <LevelCrossing /> },
 
+  //Level Crossing
+  { path: '/levelCrossingDevice', component: <LevelCrossingDevice /> },
+
   //Action
   { path: '/action', component: <Actions /> },
 
-  //LevelCrossing
+  //LevelCrossingDevice
   { path: '/device', component: <Device /> },
 
   //Profile
@@ -89,7 +93,7 @@ const publicRoutes = [
   { path: '/login', component: <SignIn /> },
   { path: '/signIn', component: <ReloadSignIn /> },
   { path: '/register', component: <SignUp /> },
-  //LevelCrossing
+  //LevelCrossingDevice
   { path: '/deviceInfo/:id', component: <DeviceInfo /> }
 ];
 

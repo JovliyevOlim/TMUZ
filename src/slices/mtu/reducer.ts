@@ -36,6 +36,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllMtu.rejected, (state: any) => {
+        state.mtu = []
         state.loading = false;
       });
 

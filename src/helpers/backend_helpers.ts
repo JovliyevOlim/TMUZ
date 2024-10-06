@@ -26,8 +26,10 @@ export const getJobs = () => api.get(url.GET_ALL_JOB);
 
 // get all station
 export const getAllStation = () => api.get(url.GET_ALL_STATION);
-// get user by id
+// get station by id
 export const getStationById = (station: any) => api.get(url.GET_STATION_BY_ID, station);
+// get station by plot id
+export const getStationByPlotId = (station: any) => api.get(url.GET_STATION_BY_PLOT_ID + '/' + station);
 // add New User
 export const addNewStation = (station: any) => api.create(url.ADD_NEW_STATION, station);
 // update  User
@@ -52,6 +54,10 @@ export const getDeviceInfoForQr = (device: any) => api.get(url.GET_DEVICE_INFO_F
 export const getDeviceById = (device: any) => api.get(url.GET_DEVICE_BY_ID, device);
 // get all device
 export const getAllDevice = () => api.get(url.GET_ALL_DEVICE);
+// get all simple device
+export const getAllSimpleDevice = () => api.get(url.GET_ALL_SIMPLE_DEVICE);
+// get all level crossing device
+export const getAllLevelCrossingDevice = () => api.get(url.GET_ALL_LEVEL_CROSSING_DEVICE);
 // get all device info action
 export const getAllDeviceInfoActions = (device: any) => api.get(url.GET_ALL_DEVICE_INFO_ACTIONS, device);
 // add New device

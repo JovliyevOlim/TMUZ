@@ -8,6 +8,8 @@ import {
   getDeviceById as getDeviceByIdApi,
   getDeviceInfoForQr as getDeviceInfoForQrApi,
   getAllDevice as getAllDeviceApi,
+  getAllSimpleDevice as getAllSimpleDeviceApi,
+  getAllLevelCrossingDevice as getAllLevelCrossingDeviceApi,
   getAllDeviceInfoActions as getAllDeviceInfoActionsApi,
   addNewDevice as addNewDeviceApi,
   updateDevice as updateDeviceApi
@@ -16,6 +18,22 @@ import {
 export const getAllDevice = createAsyncThunk('device/getAllDevice', async () => {
   try {
     const response = getAllDeviceApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getAllSimpleDevice = createAsyncThunk('device/getAllSimpleDevice', async () => {
+  try {
+    const response = getAllSimpleDeviceApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getAllLevelCrossingDevice = createAsyncThunk('device/getAllLevelCrossingDevice', async () => {
+  try {
+    const response = getAllLevelCrossingDeviceApi();
     return response;
   } catch (error) {
     return error;

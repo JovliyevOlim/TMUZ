@@ -11,7 +11,7 @@ import {
   updateLevelCrossing as updateLevelCrossingApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getAllLevelCrossing = createAsyncThunk('LevelCrossing/getAllLevelCrossing', async () => {
+export const getAllLevelCrossing = createAsyncThunk('LevelCrossingDevice/getAllLevelCrossing', async () => {
   try {
     const response = getAllLevelCrossingApi();
     return response;
@@ -19,7 +19,7 @@ export const getAllLevelCrossing = createAsyncThunk('LevelCrossing/getAllLevelCr
     return error;
   }
 });
-export const getLevelCrossingByPlot = createAsyncThunk('LevelCrossing/getLevelCrossingByPlot', async (LevelCrossing: string) => {
+export const getLevelCrossingByPlot = createAsyncThunk('LevelCrossingDevice/getLevelCrossingByPlot', async (LevelCrossing: string) => {
   try {
     const response = getLevelCrossingByPlotApi(LevelCrossing);
     return response;
@@ -27,7 +27,7 @@ export const getLevelCrossingByPlot = createAsyncThunk('LevelCrossing/getLevelCr
     return error;
   }
 });
-export const addNewLevelCrossing = createAsyncThunk<any, any>('LevelCrossing/addLevelCrossing', async (LevelCrossing: any, { rejectWithValue }) => {
+export const addNewLevelCrossing = createAsyncThunk<any, any>('LevelCrossingDevice/addLevelCrossing', async (LevelCrossing: any, { rejectWithValue }) => {
   try {
     const response = addNewLevelCrossingApi(LevelCrossing);
     const data = await response;
@@ -39,7 +39,7 @@ export const addNewLevelCrossing = createAsyncThunk<any, any>('LevelCrossing/add
     return rejectWithValue(error);
   }
 });
-export const updateLevelCrossing = createAsyncThunk('LevelCrossing/updateLevelCrossing', async (LevelCrossing: any, { rejectWithValue }) => {
+export const updateLevelCrossing = createAsyncThunk('LevelCrossingDevice/updateLevelCrossing', async (LevelCrossing: any, { rejectWithValue }) => {
   try {
     const response = updateLevelCrossingApi(LevelCrossing);
     const data = await response;
