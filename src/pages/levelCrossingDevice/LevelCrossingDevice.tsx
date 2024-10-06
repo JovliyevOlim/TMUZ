@@ -63,7 +63,7 @@ const LevelCrossingDevice = () => {
             </div>
             <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Uchastka
+                Kesishma
               </h5>
             </div>
             <div className="p-2.5 text-center xl:p-5">
@@ -96,7 +96,7 @@ const LevelCrossingDevice = () => {
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="text-black dark:text-white">{item.address}</p>
+                <p className="text-black dark:text-white">{item.levelCrossingName}</p>
               </div>
               <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-black dark:text-white">{item.description}</p>
@@ -106,7 +106,7 @@ const LevelCrossingDevice = () => {
                   onClick={() => onClickEditStation(item)}
                   className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
                 >
-                  Stansiya biriktirish
+                  Kesishma biriktirish
                 </Button>
                 <Button
                   onClick={() => onClickEdit(item)}

@@ -28,7 +28,7 @@ const sliceOptions = {
   reducers: {},
   extraReducers: (builder: any) => {
 
-    // get all LevelCrossingDevice by Plot
+    // get all LevelCrossing by Plot
     builder.addCase(getLevelCrossingByPlot.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
@@ -42,7 +42,7 @@ const sliceOptions = {
         state.loading = false;
       });
 
-    // get all LevelCrossingDevice
+    // get all LevelCrossing
     builder.addCase(getAllLevelCrossing.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
@@ -56,7 +56,7 @@ const sliceOptions = {
         state.loading = false;
       });
 
-    // add new LevelCrossingDevice
+    // add new LevelCrossing
     builder.addCase(addNewLevelCrossing.pending, (state: any) => {
       state.loading = true;
     });
@@ -71,7 +71,7 @@ const sliceOptions = {
       state.isAction = !state.isAction;
     });
 
-    //update LevelCrossingDevice
+    //update LevelCrossing
     builder.addCase(updateLevelCrossing.pending, (state: any) => {
       state.loading = true;
     }).addCase(updateLevelCrossing.fulfilled, (state: any) => {

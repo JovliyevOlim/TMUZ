@@ -69,4 +69,4 @@ export const ADD_NEW_LEVEL_CROSSING = '/level-crossing';
 export const UPDATE_LEVEL_CROSSING = '/level-crossing';
 export const GET_ALL_LEVEL_CROSSING = '/level-crossing';
 export const GET_LEVEL_CROSSING_BY_ID = '/level-crossing';
-export const GET_LEVEL_CROSSING_BY_PLOT = '/level-crossing';
+export const GET_LEVEL_CROSSING_BY_PLOT = '/level-crossing/get-by-plot';

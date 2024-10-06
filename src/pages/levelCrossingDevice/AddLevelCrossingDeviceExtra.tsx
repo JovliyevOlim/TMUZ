@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'reactstrap';
-import { addNewLevelCrossing, updateLevelCrossing } from '../../slices/levelCrossing/thunk.ts';
-import { getLevelCrossingByPlot } from '../../helpers/backend_helpers.ts';
+import { addNewLevelCrossing, getLevelCrossingByPlot, updateLevelCrossing } from '../../slices/levelCrossing/thunk.ts';
+import { addNewDevice, updateDevice } from '../../slices/device/thunk.ts';
 
 
 export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) => {
@@ -12,6 +11,8 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
   const { loading, isAction, isSuccess } = useSelector((state: any) => state.Device);
   const { levelCrossingForSelect } = useSelector((state: any) => state.LevelCrossing);
   const { plot } = useSelector((state: any) => state.Plot);
+
+  console.log(levelCrossingForSelect);
 
   const [initialValues, setInitialValues] = useState({
     name: '',
@@ -74,15 +75,14 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
     validationSchema: Yup.object({
       name: Yup.string().required('Stansiya nomini kiriting!'),
       description: Yup.string().required('Namuna ish!'),
-      address: Yup.string().required('Manzilni kiriting!'),
       latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
       longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateLevelCrossing({ ...values, id: item.id }));
+        dispatch(updateDevice({ ...values, id: item.id }));
       } else {
-        dispatch(addNewLevelCrossing(values));
+        dispatch(addNewDevice(values));
       }
     }
   });
@@ -168,20 +168,20 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
-                <div className="w-full xl:w-1/2">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Manzil
-                  </label>
-                  <input
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.address || ''}
-                    name="address"
-                    type="text"
-                    placeholder="Manzil"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
+                {/*<div className="w-full xl:w-1/2">*/}
+                {/*  <label className="mb-2.5 block text-black dark:text-white">*/}
+                {/*    Manzil*/}
+                {/*  </label>*/}
+                {/*  <input*/}
+                {/*    onChange={validation.handleChange}*/}
+                {/*    onBlur={validation.handleBlur}*/}
+                {/*    value={validation.values.address || ''}*/}
+                {/*    name="address"*/}
+                {/*    type="text"*/}
+                {/*    placeholder="Manzil"*/}
+                {/*    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"*/}
+                {/*  />*/}
+                {/*</div>*/}
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
                     {' '}
@@ -236,25 +236,24 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
                   </label>
 
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
-                    {/*<select*/}
-                    {/*  value={validation.values.plotId || ''}*/}
-                    {/*  onChange={validation.handleChange}*/}
-                    {/*  onBlur={validation.handleBlur}*/}
-                    {/*  name="plotId"*/}
-                    {/*  className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}*/}
-                    {/*>*/}
-                    {/*  <option value="" className="text-body dark:text-bodydark">*/}
-                    {/*    Tanlang*/}
-                    {/*  </option>*/}
-                    {/*  {*/}
-                    {/*    levelCrossingForSelect.map((item: any) =>*/}
-                    {/*      <option value={item.id} className="text-body dark:text-bodydark">*/}
-                    {/*        {item.name}*/}
-                    {/*      </option>*/}
-                    {/*    )*/}
-                    {/*  }*/}
-                    {/*</select>*/}
-
+                    <select
+                      value={validation.values.levelCrossingId || ''}
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      name="levelCrossingId"
+                      className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
+                    >
+                      <option value="" className="text-body dark:text-bodydark">
+                        Tanlang
+                      </option>
+                      {
+                        levelCrossingForSelect.map((item: any) =>
+                          <option value={item.id} className="text-body dark:text-bodydark">
+                            {item.name}
+                          </option>
+                        )
+                      }
+                    </select>
                     <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
           <svg
             className="fill-current"
