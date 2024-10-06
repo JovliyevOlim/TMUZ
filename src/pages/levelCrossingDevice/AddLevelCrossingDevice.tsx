@@ -22,6 +22,16 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
 
   function tog_standard() {
     setModalOpen(!modalOpen);
+    setInitialValues({
+      name: '',
+      station: false,
+      description: '',
+      address: '',
+      levelCrossingId: '',
+      latitude: 0,
+      longitude: 0
+    });
+    setItem(null);
   }
 
   useEffect(() => {
@@ -102,7 +112,7 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
             </div>
             <div className="p-6.5">
               <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                <div className="w-full xl:w-1/2">
+                <div className="w-full">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Qurilma nomi
                   </label>

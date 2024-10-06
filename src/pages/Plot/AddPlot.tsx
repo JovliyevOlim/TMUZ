@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewPlot, updatePlot } from '../../slices/plot/thunk.ts';
+import { Simulate } from 'react-dom/test-utils';
+import reset = Simulate.reset;
 
 
 export const AddPlot = ({ modalOpen, setModalOpen, item, setItem }: any) => {
@@ -15,8 +17,18 @@ export const AddPlot = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     enterpriseId: ''
   });
 
+
+  console.log(item);
+
   function tog_standard() {
     setModalOpen(!modalOpen);
+    validation.resetForm();
+    setInitialValues({
+      name: '',
+      description: '',
+      enterpriseId: ''
+    });
+    setItem(null);
   }
 
 
@@ -29,6 +41,7 @@ export const AddPlot = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       });
     }
   }, [item]);
+
 
   const validation: any = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed

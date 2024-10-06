@@ -47,6 +47,15 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
 
   function tog_standard() {
     setModalOpen(!modalOpen);
+    setInitialValues({
+      name: '',
+      description: '',
+      address: '',
+      plotId: '',
+      latitude: 0,
+      longitude: 0
+    });
+    setItem(null);
   }
 
   useEffect(() => {

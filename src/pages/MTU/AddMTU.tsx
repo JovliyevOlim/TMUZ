@@ -15,6 +15,11 @@ export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
 
   function tog_standard() {
     setModalOpen(!modalOpen);
+    setInitialValues({
+      name: '',
+      description: ''
+    });
+    setItem(null);
   }
 
 

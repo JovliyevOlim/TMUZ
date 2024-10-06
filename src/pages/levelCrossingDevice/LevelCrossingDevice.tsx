@@ -44,7 +44,7 @@ const LevelCrossingDevice = () => {
           onClick={() => setModal(true)}
           className="inline-flex items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
         >
-          Temiryo'l kesishmasi
+          Yaratish
         </button>
 
       </div>
@@ -101,7 +101,7 @@ const LevelCrossingDevice = () => {
               <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-black dark:text-white">{item.description}</p>
               </div>
-              <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
+              <div className="flex flex-wrap items-center justify-center p-2.5  gap-2 xl:p-5">
                 <Button
                   onClick={() => onClickEditStation(item)}
                   className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"

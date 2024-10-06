@@ -120,7 +120,7 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
         className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
         <div className="py-4 px-4 dark:border-strokedark">
           <div className="w-full flex justify-between">
-            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Temiryo'l kesishmasi</h4>
+            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Qurilmani tahrirlash</h4>
             <strong className="text-xl align-center cursor-pointer "
                     onClick={tog_standard}
             >&times;</strong>
@@ -140,20 +140,20 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
             </div>
             <div className="p-6.5">
               <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                {/*<div className="w-full xl:w-1/2">*/}
-                {/*  <label className="mb-2.5 block text-black dark:text-white">*/}
-                {/*    Qurilma nomi*/}
-                {/*  </label>*/}
-                {/*  <input*/}
-                {/*    onChange={validation.handleChange}*/}
-                {/*    onBlur={validation.handleBlur}*/}
-                {/*    value={validation.values.name || ''}*/}
-                {/*    name="name"*/}
-                {/*    type="text"*/}
-                {/*    placeholder="Qurilma nomi"*/}
-                {/*    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"*/}
-                {/*  />*/}
-                {/*</div>*/}
+                <div className="w-full xl:w-1/2">
+                  <label className="mb-2.5 block text-black dark:text-white">
+                    Qurilma nomi
+                  </label>
+                  <input
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ''}
+                    name="name"
+                    type="text"
+                    placeholder="Qurilma nomi"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                </div>
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Tavsif
@@ -168,20 +168,20 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>
-                {/*<div className="w-full xl:w-1/2">*/}
-                {/*  <label className="mb-2.5 block text-black dark:text-white">*/}
-                {/*    Manzil*/}
-                {/*  </label>*/}
-                {/*  <input*/}
-                {/*    onChange={validation.handleChange}*/}
-                {/*    onBlur={validation.handleBlur}*/}
-                {/*    value={validation.values.address || ''}*/}
-                {/*    name="address"*/}
-                {/*    type="text"*/}
-                {/*    placeholder="Manzil"*/}
-                {/*    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"*/}
-                {/*  />*/}
-                {/*</div>*/}
+                <div className="w-full xl:w-1/2">
+                  <label className="mb-2.5 block text-black dark:text-white">
+                    Manzil
+                  </label>
+                  <input
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.address || ''}
+                    name="address"
+                    type="text"
+                    placeholder="Manzil"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  />
+                </div>
                 <div className="w-full xl:w-1/2">
                   <label className="mb-2.5 block text-black dark:text-white">
                     {' '}

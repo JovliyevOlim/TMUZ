@@ -17,6 +17,12 @@ export const AddEnterprise = ({ modalOpen, setModalOpen, item, setItem }: any) =
 
   function tog_standard() {
     setModalOpen(!modalOpen);
+    setInitialValues({
+      name: '',
+      description: '',
+      mtuId: ''
+    });
+    setItem(null);
   }
 
 
