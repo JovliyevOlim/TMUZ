@@ -97,12 +97,12 @@ const Device = () => {
                 >
                   Edit
                 </Button>
-                <Button
-                  onClick={() => onClickQrCode(item)}
-                  className="inline-flex items-center justify-center gap-2.5 border border-success py-2 px-5 text-center font-semibold text-success hover:bg-opacity-90 lg:px-8 xl:px-10"
-                >
-                  QrCode
-                </Button>
+                {/*<Button*/}
+                {/*  onClick={() => onClickQrCode(item)}*/}
+                {/*  className="inline-flex items-center justify-center gap-2.5 border border-success py-2 px-5 text-center font-semibold text-success hover:bg-opacity-90 lg:px-8 xl:px-10"*/}
+                {/*>*/}
+                {/*  QrCode*/}
+                {/*</Button>*/}
                 {/*<Button*/}
                 {/*  onClick={() => dispatch((item?.id))}*/}
                 {/*  className="inline-flex items-center justify-center gap-2.5 border border-danger py-2 px-5 text-center font-semibold text-danger hover:bg-opacity-90 lg:px-8 xl:px-10"*/}

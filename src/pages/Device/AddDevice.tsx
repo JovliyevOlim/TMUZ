@@ -22,6 +22,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       name: '',
       description: ''
     });
+    validation.resetForm();
     setItem(null);
   }
 
