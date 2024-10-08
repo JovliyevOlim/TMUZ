@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import {
   getDeviceById as getDeviceByIdApi,
+  getDeviceCategoryId as getDeviceCategoryIdApi,
   getDeviceInfoForQr as getDeviceInfoForQrApi,
   getAllDevice as getAllDeviceApi,
   getAllSimpleDevice as getAllSimpleDeviceApi,
@@ -18,6 +19,14 @@ import {
 export const getAllDevice = createAsyncThunk('device/getAllDevice', async () => {
   try {
     const response = getAllDeviceApi();
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getDeviceByCategoryId = createAsyncThunk('device/getDeviceByCategoryID', async (categoryId:string) => {
+  try {
+    const response = getDeviceCategoryIdApi(categoryId);
     return response;
   } catch (error) {
     return error;

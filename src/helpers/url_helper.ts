@@ -37,6 +37,7 @@ export const UPDATE_DEVICE = '/device/edit';
 export const GET_DEVICE_INFO_FOR_QR = '/device/get-info-for-QR';
 export const GET_DEVICE_BY_ID = '/device/get-by-id';
 export const GET_ALL_DEVICE = '/device/get-all';
+export const GET_DEVICE_BY_CATEGORY_ID = '/device/get-by-category';
 export const GET_ALL_SIMPLE_DEVICE = '/device/get-by-isStation-true';
 export const GET_ALL_LEVEL_CROSSING_DEVICE = '/device/get-by-isStation-false';
 export const GET_ALL_DEVICE_INFO_ACTIONS = '/device/get-all-info-actions';
@@ -70,3 +71,10 @@ export const UPDATE_LEVEL_CROSSING = '/level-crossing';
 export const GET_ALL_LEVEL_CROSSING = '/level-crossing';
 export const GET_LEVEL_CROSSING_BY_ID = '/level-crossing';
 export const GET_LEVEL_CROSSING_BY_PLOT = '/level-crossing/get-by-plot';
+
+// category
+export const ADD_NEW_CATEGORY = '/category/create';
+export const UPDATE_CATEGORY = '/category/edit';
+export const GET_ALL_CATEGORY = '/category';
+export const GET_CATEGORY_BY_ID = '/category/get-by-id';
+export const DELETE_CATEGORY = '/category/delete';

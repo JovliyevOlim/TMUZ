@@ -3,19 +3,16 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewDevice, updateDevice } from '../../slices/device/thunk.ts';
+import { addNewCategory, updateCategory } from '../../slices/category/thunk.ts';
 
 
 export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
-  const { loading, isAction, isSuccess } = useSelector((state: any) => state.Device);
+  const { loading, isAction, isSuccess } = useSelector((state: any) => state.Category);
 
   const [initialValues, setInitialValues] = useState({
     name: '',
-    station: true,
-    description: '',
-    stationId: '',
-    latitude: 0,
-    longitude: 0
+    description: ''
   });
 
 
@@ -23,11 +20,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     setModalOpen(!modalOpen);
     setInitialValues({
       name: '',
-      station: true,
-      description: '',
-      stationId: '',
-      latitude: 0,
-      longitude: 0
+      description: ''
     });
     setItem(null);
   }
@@ -36,11 +29,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     if (item) {
       setInitialValues({
         name: item?.name,
-        station: true,
-        description: item?.description,
-        stationId: item?.stationId,
-        latitude: item?.latitude,
-        longitude: item?.longitude
+        description: item?.description
       });
     }
   }, [item]);
@@ -55,9 +44,9 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateDevice({ ...values, id: item.id }));
+        dispatch(updateCategory({ ...values, id: item.id }));
       } else {
-        dispatch(addNewDevice(values));
+        dispatch(addNewCategory(values));
       }
     }
   });
@@ -70,11 +59,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       setItem(null);
       setInitialValues({
         name: '',
-        station: true,
-        description: '',
-        stationId: '',
-        latitude: 0,
-        longitude: 0
+        description: ''
       });
     }
   }, [dispatch, isAction]);
@@ -118,7 +103,7 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     value={validation.values.name || ''}
                     name="name"
                     type="text"
-                    placeholder="Stansiya nomi"
+                    placeholder="Qurilma nomi"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
                 </div>

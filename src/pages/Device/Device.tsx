@@ -8,6 +8,7 @@ import { getAllSimpleDevice } from '../../slices/device/thunk.ts';
 import { getAllStation } from '../../slices/station/thunk.ts';
 import { DeviceQrCode } from './DeviceQrCode.tsx';
 import { AddDeviceExtra } from './AddDeviceExtra.tsx';
+import { getAllCategory } from '../../slices/category/thunk.ts';
 
 const Device = () => {
 
@@ -15,7 +16,7 @@ const Device = () => {
   const [modalStation, setModalStation] = useState(false);
   const [qrCodemodal, setQrCodeModal] = useState(false);
   const [editData, setEditData] = useState(null);
-  const { simpleDevices, isAction } = useSelector((state: any) => state.Device);
+  const { category, isAction } = useSelector((state: any) => state.Category);
   const dispatch: any = useDispatch();
 
   const onClickEdit = (data: any) => {
@@ -32,7 +33,7 @@ const Device = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllSimpleDevice());
+    dispatch(getAllCategory());
     dispatch(getAllStation());
   }, [isAction]);
   return (
@@ -61,11 +62,6 @@ const Device = () => {
             </div>
             <div className="p-2.5 text-center xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Stansiya
-              </h5>
-            </div>
-            <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Tavsif
               </h5>
             </div>
@@ -76,37 +72,25 @@ const Device = () => {
             </div>
           </div>
 
-          {simpleDevices?.map((item: any, key: number) => (
+          {category?.map((item: any, key: number) => (
             <div
               className={`grid grid-cols-4 ${
-                key === simpleDevices?.length - 1
+                key === category?.length - 1
                   ? ''
                   : 'border-b border-stroke dark:border-strokedark'
               }`}
               key={key}
             >
-              <div className="flex items-center gap-3 p-2.5 xl:p-5">
-                <div className="flex-shrink-0">
-                </div>
-                <p className="text-black dark:text-white sm:block">
+              <div style={{ cursor: 'pointer' }} className="flex items-center gap-3 p-2.5 xl:p-5">
+                <p onClick={() => onClickEditStation(item)} className="text-black dark:text-white sm:block">
                   {item.name}
                 </p>
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p
-                  className="text-black dark:text-white">{item.stationName ? item?.stationName : item?.levelCrossingName}</p>
-              </div>
-              <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-black dark:text-white">{item.description}</p>
               </div>
               <div className="flex flex-wrap items-center justify-center p-2.5  gap-2 xl:p-5">
-                <Button
-                  onClick={() => onClickEditStation(item)}
-                  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-                >
-                  Stansiya biriktirish
-                </Button>
                 <Button
                   onClick={() => onClickEdit(item)}
                   className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"

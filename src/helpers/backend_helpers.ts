@@ -52,6 +52,8 @@ export const checkDeviceForAction = (action: any) => api.create(url.CHECK_DEVICE
 export const getDeviceInfoForQr = (device: any) => api.get(url.GET_DEVICE_INFO_FOR_QR + '/' + device);
 // get device by id
 export const getDeviceById = (device: any) => api.get(url.GET_DEVICE_BY_ID, device);
+// get device by category id
+export const getDeviceCategoryId = (device: any) => api.get(url.GET_DEVICE_BY_CATEGORY_ID+"/"+device);
 // get all device
 export const getAllDevice = () => api.get(url.GET_ALL_DEVICE);
 // get all simple device
@@ -108,3 +110,13 @@ export const getLevelCrossingByPlot = (levelCrossing: any) => api.get(url.GET_LE
 export const addNewLevelCrossing = (levelCrossing: any) => api.create(url.ADD_NEW_LEVEL_CROSSING, levelCrossing);
 // update  level crossing
 export const updateLevelCrossing = (levelCrossing: any) => api.put(url.UPDATE_LEVEL_CROSSING + '/' + levelCrossing.id, levelCrossing);
+
+// get category
+export const getAllCategory = () => api.get(url.GET_ALL_CATEGORY);
+// get category by id
+export const getCategoryById = (category: any) => api.get(url.GET_CATEGORY_BY_ID, category);
+// get category by mtu
+// add New category
+export const addNewCategory = (category: any) => api.create(url.ADD_NEW_CATEGORY, category);
+// update  category
+export const updateCategory = (category: any) => api.put(url.UPDATE_CATEGORY + '/' + category.id, category);

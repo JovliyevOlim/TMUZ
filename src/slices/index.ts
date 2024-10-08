@@ -30,7 +30,11 @@ import PlotReducer from './plot/reducer.ts';
 //LevelCrossingDevice
 import LevelCrossingReducer from './levelCrossing/reducer.ts';
 
+//Category
+import CategoryReducer from './category/reducer.ts';
+
 const rootReducer = combineReducers({
+  Category: CategoryReducer,
   LevelCrossing: LevelCrossingReducer,
   Plot: PlotReducer,
   EnterPrise: EnterPriseReducer,

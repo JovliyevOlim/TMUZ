@@ -7,7 +7,8 @@ import {
   updateDevice,
   getDeviceById,
   getAllSimpleDevice,
-  getAllLevelCrossingDevice
+  getAllLevelCrossingDevice,
+  getDeviceByCategoryId
 } from './thunk';
 
 
@@ -42,6 +43,20 @@ const sliceOptions = {
   initialState,
   reducers: {},
   extraReducers: (builder: any) => {
+
+    // get all device by category id
+    builder.addCase(getDeviceByCategoryId.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getDeviceByCategoryId.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getDeviceByCategoryId.rejected, (state: any) => {
+        state.devices = [];
+        state.loading = false;
+      });
 
     // get all device
     builder.addCase(getAllDevice.pending, (state: any) => {
