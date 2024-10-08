@@ -60,11 +60,11 @@ const Device = () => {
                 Nomi
               </h5>
             </div>
-            <div className="p-2.5 text-center xl:p-5">
-              <h5 className="text-sm font-medium uppercase xsm:text-base">
-                Tavsif
-              </h5>
-            </div>
+            {/*<div className="p-2.5 text-center xl:p-5">*/}
+            {/*  <h5 className="text-sm font-medium uppercase xsm:text-base">*/}
+            {/*    Tavsif*/}
+            {/*  </h5>*/}
+            {/*</div>*/}
             <div className="p-2.5 text-center  xl:p-5">
               <h5 className="text-sm font-medium uppercase xsm:text-base">
                 Action
@@ -87,10 +87,10 @@ const Device = () => {
                 </p>
               </div>
 
-              <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <p className="text-black dark:text-white">{item.description}</p>
-              </div>
-              <div className="flex flex-wrap items-center justify-center p-2.5  gap-2 xl:p-5">
+              {/*<div className="flex items-center justify-center p-2.5 xl:p-5">*/}
+              {/*  <p className="text-black dark:text-white">{item.description}</p>*/}
+              {/*</div>*/}
+              <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
                 <Button
                   onClick={() => onClickEdit(item)}
                   className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
