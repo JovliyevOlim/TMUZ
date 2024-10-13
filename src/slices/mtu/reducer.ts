@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllMtu, addNewMtu, updateMtu } from './thunk';
+import { getAllMtu, addNewMtu, updateMtu, deleteMtu } from './thunk';
 
 
 interface initialState {
@@ -36,7 +36,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllMtu.rejected, (state: any) => {
-        state.mtu = []
+        state.mtu = [];
         state.loading = false;
       });
 
@@ -67,7 +67,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+    // delete mtu
+    builder.addCase(deleteMtu.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteMtu.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteMtu.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

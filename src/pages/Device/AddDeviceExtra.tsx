@@ -1,18 +1,31 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewDevice, getDeviceByCategoryId, updateDevice } from '../../slices/device/thunk.ts';
+import {
+  addNewDevice, deleteDevice,
+  getDeviceByCategoryId,
+  getDeviceByPlotId,
+  getDeviceByStationId,
+  updateDevice
+} from '../../slices/device/thunk.ts';
 import { Button } from 'reactstrap';
 import { getStationByPlotId } from '../../slices/station/thunk.ts';
+import { DeviceQrCode } from './DeviceQrCode.tsx';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import DeleteModal from '../../components/DeleteModal.tsx';
+import { deleteCategory } from '../../slices/category/thunk.ts';
 
 
 export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
   const { loading, isAction, isSuccess, devices } = useSelector((state: any) => state.Device);
+  const [addOpen, setAddOpen] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
   const { stations } = useSelector((state: any) => state.Station);
   const { plot } = useSelector((state: any) => state.Plot);
   const [deviceItem, setDeviceItem] = useState<any>(null);
+  const [qrCodemodal, setQrCodeModal] = useState(false);
   const [initialValues, setInitialValues] = useState({
     name: '',
     station: true,
@@ -49,8 +62,26 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   };
 
 
+  const onClickQrCode = (data: any) => {
+    setQrCodeModal(true);
+    setDeviceItem(data);
+  };
+
+  const onClickDelete = (data: any) => {
+    setModalDelete(true);
+    setDeviceItem(data);
+  };
+
+  const deleteFunction = () => {
+    dispatch(deleteDevice(deviceItem?.id));
+    setModalDelete(false);
+  };
+
   function tog_standard() {
-    setModalOpen(!modalOpen);
+    setAddOpen(!addOpen);
+    setItem(null);
+    validation.resetForm();
+    setDeviceItem(null);
   }
 
   useEffect(() => {
@@ -75,7 +106,7 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
     initialValues: initialValues,
     validationSchema: Yup.object({
       name: Yup.string().required('Stansiya nomini kiriting!'),
-      description: Yup.string().required('Namuna ish!'),
+      stationId: Yup.string().required('Stansiya nomini kiriting!'),
       latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
       longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
     }),
@@ -93,15 +124,15 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
     if (isSuccess) {
       validation.resetForm();
       setDeviceItem(null);
+      setAddOpen(false);
       setInitialValues({
+        ...item,
         name: '',
         station: true,
         description: '',
         stationId: '',
         latitude: 0,
-        longitude: 0,
-        plotId: '',
-        categoryId: ''
+        longitude: 0
       });
     }
   }, [dispatch, isAction]);
@@ -109,9 +140,17 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   useEffect(() => {
     if (validation.values.plotId) {
       dispatch(getStationByPlotId(validation.values.plotId));
+      dispatch(getDeviceByPlotId(validation.values.plotId));
     }
   }, [validation.values.plotId]);
 
+  useEffect(() => {
+    if (validation.values.stationId) {
+      dispatch(getDeviceByStationId(validation.values.stationId));
+    }
+  }, [validation.values.stationId]);
+
+  console.log(item);
   useEffect(() => {
     if (item) {
       dispatch(getDeviceByCategoryId(item?.id));
@@ -119,279 +158,316 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   }, [item, isAction]);
 
   return (
-    modalOpen &&
-    <div
-      className="modal-container fixed z-50 flex top-25 bottom-5 backdrop-blur-sm bg-black bg-opacity-50"
-    >
-      <div
-        className="modal rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-auto">
-        <div className="py-4 px-4 dark:border-strokedark">
-          <div className="w-full flex justify-between">
-            <h4 className={'text-title-md2 font-semibold text-black dark:text-white'}>Qurilma tahrirlash</h4>
-            <strong className="text-xl align-center cursor-pointer "
-                    onClick={tog_standard}
-            >&times;</strong>
-          </div>
-          <div className="flex">
-            <div className="w-1/2">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  validation.handleSubmit();
-                  return false;
-                }}
-              >
-                <div className="p-6.5">
-                  <div className="mb-4.5">
-                    <div className="w-full">
-                      <label className="mb-2.5 block text-black dark:text-white">
-                        Qurilma nomi
-                      </label>
-                      <input
-                        onChange={validation.handleChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.name || ''}
-                        name="name"
-                        type="text"
-                        placeholder="Qurilma nomi"
-                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
-                    </div>
-                    <div className="w-full">
-                      <label className="mb-2.5 block text-black dark:text-white">
-                        Tavsif
-                      </label>
-                      <input
-                        onChange={validation.handleChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.description || ''}
-                        name="description"
-                        type="text"
-                        placeholder="description"
-                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
-                    </div>
-                    <div className="w-full">
-                      <label className="mb-2.5 block text-black dark:text-white">
-                        {' '}
-                        Uchastka tanlang
-                      </label>
+    <Dialog open={modalOpen} onClose={tog_standard} className="relative z-9999">
+      <DialogBackdrop
+        transition
+        className="fixed inset-0  bg-black bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-500 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+      />
 
-                      <div className="relative z-20 bg-transparent dark:bg-form-input">
-                        <select
-                          value={validation.values.plotId || ''}
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          name="plotId"
-                          className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
-                        >
-                          <option value="" className="text-body dark:text-bodydark">
-                            Uchastka tanlang
-                          </option>
-                          {
-                            plot.map((item: any) =>
-                              <option value={item.id} className="text-body dark:text-bodydark">
-                                {item.name}
-                              </option>
-                            )
-                          }
-                        </select>
-
-                        <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
-          <svg
-            className="fill-current"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          className="flex min-h-150 sm:min-h-full items-center sm:items-end sm:w-full justify-center p-4 text-center sm:items-center sm:p-0">
+          <DialogPanel
+            transition
+            className="relative transform w-full overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all
+             data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300
+             data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8
+             sm:w-full sm:max-w-6xl data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
-            <g opacity="0.8">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                fill=""
-              ></path>
-            </g>
-          </svg>
-        </span>
-                      </div>
-                    </div>
+            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <div className="divide-y divide-blue-200 flex justify-between align-middle py-4">
+                <h5 className={'text-title-md font-semibold text-black dark:text-white '}>Qurilmalar</h5>
+                <button
+                  onClick={() => setAddOpen(true)}
+                  className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Qurilma yaratish
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                       stroke="currentColor" className="size-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
 
-                    <div className="w-full">
-                      <label className="mb-2.5 block text-black dark:text-white">
-                        {' '}
-                        Stansiyani tanlang
-                      </label>
-
-                      <div className="relative z-20 bg-transparent dark:bg-form-input">
-                        <select
-                          value={validation.values.stationId || ''}
-                          onChange={validation.handleChange}
-                          onBlur={validation.handleBlur}
-                          name="stationId"
-                          className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary`}
-                        >
-                          <option value="" className="text-body dark:text-bodydark">
-                            Stansiya tanlang
-                          </option>
-                          {
-                            stations.map((item: any) =>
-                              <option value={item.id} className="text-body dark:text-bodydark">
-                                {item.name}
+                </button>
+              </div>
+              <div className="flex gap-4">
+                <div className={'basis-1/2 '}>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      validation.handleSubmit();
+                      return false;
+                    }}
+                  >
+                    <div>
+                      <div className={'my-2'}>
+                        <label htmlFor="plotId" className="block text-md font-medium leading-6 text-gray-900">
+                          Uchastka
+                        </label>
+                        <div className="mt-2">
+                          <div className="relative inline-block w-full">
+                            <select
+                              id="plotId"
+                              name="plotId"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.plotId}
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <option value="" className="text-body dark:text-bodydark">
+                                Tanlang
                               </option>
-                            )
-                          }
-                        </select>
-
-                        <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
-          <svg
-            className="fill-current"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g opacity="0.8">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                fill=""
-              ></path>
-            </g>
-          </svg>
-        </span>
+                              {
+                                plot.map((item: any) =>
+                                  <option value={item.id} className="text-body dark:text-bodydark">
+                                    {item.name}
+                                  </option>
+                                )
+                              }
+                            </select>
+                          </div>
+                        </div>
+                        {validation.touched.plotId && validation.errors.plotId ? (
+                          <h6 className="block text-md font-medium leading-6 text-red-900">
+                            {validation.errors.plotId}
+                          </h6>
+                        ) : null}
                       </div>
-                    </div>
-                    {/*<Button*/}
-                    {/*  onClick={getUserLocation}*/}
-                    {/*  className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"*/}
-                    {/*>*/}
-                    {/*  Qurilma koordinatasini olish(avtomatik)*/}
-                    {/*</Button>*/}
-                    <div className="w-full">
-                      <label className="mb-2.5 block text-black dark:text-white">
-                        Qurilma koordinatasi(latitude)
-                      </label>
-                      <input
-                        onChange={validation.handleChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.latitude || ''}
-                        name="latitude"
-                        type="number"
-                        placeholder="latitude"
-                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
-                    </div>
-                    <div className="w-full">
-                      <label className="mb-2.5 block text-black dark:text-white">
-                        Qurilma koordinatasi(longitude)
-                      </label>
-                      <input
-                        onChange={validation.handleChange}
-                        onBlur={validation.handleBlur}
-                        value={validation.values.longitude || ''}
-                        name="longitude"
-                        type="number"
-                        placeholder="longitude"
-                        className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
-                    </div>
+                      <div className={'my-2'}>
+                        <label htmlFor="stationId" className="block text-md font-medium leading-6 text-gray-900">
+                          Stansiya
+                        </label>
+                        <div className="mt-2">
+                          <div className="relative inline-block w-full">
+                            <select
+                              id="stationId"
+                              name="stationId"
+                              onChange={validation.handleChange}
+                              onBlur={validation.handleBlur}
+                              value={validation.values.stationId || ''}
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <option value="" className="text-body dark:text-bodydark">
+                                Tanlang
+                              </option>
+                              {
+                                stations.map((item: any) =>
+                                  <option value={item.id} className="text-body dark:text-bodydark">
+                                    {item.name}
+                                  </option>
+                                )
+                              }
+                            </select>
+                          </div>
+                        </div>
+                        {validation.touched.stationId && validation.errors.stationId ? (
+                          <h6 className="block text-md font-medium leading-6 text-red-900">
+                            {validation.errors.stationId}
+                          </h6>
+                        ) : null}
+                      </div>
+                      {
+                        addOpen && <>
+                          <div className={'my-2'}>
+                            <label htmlFor="name" className="block text-md font-medium leading-6 text-gray-900">
+                              Stansiya nomi
+                            </label>
+                            <div className="mt-2">
+                              <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                onChange={validation.handleChange}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.name || ''}
+                                placeholder="Stansiya nomi"
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              />
+                            </div>
+                            {validation.touched.name && validation.errors.name ? (
+                              <h6 className="block text-md font-medium leading-6 text-red-900">
+                                {validation.errors.name}
+                              </h6>
+                            ) : null}
+                          </div>
+                          <div className={'my-2'}>
+                            <label htmlFor="address" className="block text-md font-medium leading-6 text-gray-900">
+                              Manzil
+                            </label>
+                            <div className="mt-2">
+                              <input
+                                id="address"
+                                onChange={validation.handleChange}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.address || ''}
+                                name="address"
+                                type="text"
+                                placeholder="Manzil"
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              />
+                            </div>
+                            {validation.touched.address && validation.errors.address ? (
+                              <h6 className="block text-md font-medium leading-6 text-red-900">
+                                {validation.errors.address}
+                              </h6>
+                            ) : null}
+                          </div>
+                          <div className={' sm:flex  gap-3'}>
+                            <div className={'my-2 sm:w-1/2'}>
+                              <label htmlFor="latitude" className="block text-md font-medium leading-6 text-gray-900">
+                                Koordinata(latitude)
+                              </label>
+                              <div className="mt-2">
+                                <input
+                                  id="latitude"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.latitude || ''}
+                                  name="latitude"
+                                  type="number"
+                                  placeholder="latitude"
+                                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                              </div>
+                              {validation.touched.latitude && validation.errors.latitude ? (
+                                <h6 className="block text-md font-medium leading-6 text-red-900">
+                                  {validation.errors.latitude}
+                                </h6>
+                              ) : null}
+                            </div>
+                            <div className={'my-2 sm:w-1/2'}>
+                              <label htmlFor="longitude" className="block text-md font-medium leading-6 text-gray-900">
+                                Koordinata(longitude)
+                              </label>
+                              <div className="mt-2">
+                                <input
+                                  id="longitude"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.longitude || ''}
+                                  name="longitude"
+                                  type="number"
+                                  placeholder="longitude"
+                                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                              </div>
+                              {validation.touched.longitude && validation.errors.longitude ? (
+                                <h6 className="block text-md font-medium leading-6 text-red-900">
+                                  {validation.errors.longitude}
+                                </h6>
+                              ) : null}
+                            </div>
+                          </div>
+                          <div className={'my-2'}>
+                            <label htmlFor="description" className="block text-md font-medium leading-6 text-gray-900">
+                              Tavsif
+                            </label>
+                            <div className="mt-2">
+                              <input
+                                id="description"
+                                onChange={validation.handleChange}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.description || ''}
+                                name="description"
+                                type="text"
+                                placeholder="tavsif"
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                              />
+                            </div>
+                          </div>
+                        </>
+                      }
 
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading && true}
-                    className="w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                    </div>
                     {
-                      deviceItem ? 'Tahrirlash' : 'Saqlash'
+                      addOpen &&
+                      <div className="bg-gray-50 px-4 py-3 flex justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={tog_standard}
+                          className=" justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          disabled={loading}
+                          type="submit"
+                          className="flex justify-center rounded-md bg-blue-700 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-800 hover:bg-blue-600 sm:mt-0 sm:w-auto"
+                        >
+                          {deviceItem ? 'Edit' : 'Save'}
+                        </button>
+                      </div>
                     }
-                    {/*<svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">*/}
-                    {/*</svg>*/}
-                  </button>
+                  </form>
                 </div>
-              </form>
-            </div>
-            <div className="w-3/4">
-              <div
-                className="bg-white px-5 pt-6 pb-2.5 dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-                <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-                  Qurilmalar
-                </h4>
-
-                <div className="flex flex-col">
-                  <div className="grid grid-cols-4 rounded-sm bg-gray-2 dark:bg-meta-4">
-                    <div className="p-2.5 text-start xl:p-5">
-                      <h5 className="text-sm font-medium uppercase xsm:text-base">
-                        Nomi
-                      </h5>
-                    </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                      <h5 className="text-sm font-medium uppercase xsm:text-base">
-                        Tavsif
-                      </h5>
-                    </div>
-                    <div className="p-2.5 text-center  xl:p-5">
-                      <h5 className="text-sm font-medium uppercase xsm:text-base">
-                        Action
-                      </h5>
-                    </div>
+                <div className={'basis-3/4'}>
+                  <div className="flex flex-col  border-2 rounded-2xl border-graydark">
+                    <table className="table-fixed">
+                      <thead>
+                      <tr className="text-start text-sm font-medium uppercase xsm:text-base">
+                        <th className="p-2.5 text-start">Nomi</th>
+                        <th className="p-2.5 ext-start">Action</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {devices?.map((item: any, key: number) => (
+                        <tr key={key}>
+                          <td>
+                            <p style={{ cursor: 'pointer' }} onClick={() => onClickQrCode(item)}
+                               className="p-2.5  text-black dark:text-white sm:block">
+                              {item.name}
+                            </p>
+                          </td>
+                          <td>
+                            <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
+                              <button onClick={() => {
+                                setAddOpen(true);
+                                setDeviceItem(item);
+                              }}
+                                      className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     strokeWidth={1.5}
+                                     stroke="currentColor" className="size-6">
+                                  <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                </svg>
+                              </button>
+                              <button onClick={() => onClickDelete(item)}
+                                      className="flex items-center gap-2 justify-center rounded-md bg-red-600
+                            px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500
+                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     strokeWidth={1.5}
+                                     stroke="currentColor" className="size-6">
+                                  <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                      </tbody>
+                    </table>
                   </div>
-
-                  {devices?.map((item: any, key: number) => (
-                    <div
-                      className={`grid grid-cols-4 ${
-                        key === devices?.length - 1
-                          ? ''
-                          : 'border-b border-stroke dark:border-strokedark'
-                      }`}
-                      key={key}
-                    >
-                      <div style={{ cursor: 'pointer' }} className="flex items-center gap-3 p-2.5 xl:p-5">
-                        <p className="text-black dark:text-white sm:block">
-                          {item.name}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center justify-center p-2.5 xl:p-5">
-                        <p className="text-black dark:text-white">{item.description}</p>
-                      </div>
-                      <div className="flex flex-wrap items-center justify-center p-2.5  gap-2 xl:p-5">
-                        <Button
-                          onClick={() => setDeviceItem(item)}
-                          className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          // onClick={() => onClickQrCode(item)}
-                          className="inline-flex items-center justify-center gap-2.5 border border-success py-2 px-5 text-center font-semibold text-success hover:bg-opacity-90 lg:px-8 xl:px-10"
-                        >
-                          QrCode
-                        </Button>
-                        {/*<Button*/}
-                        {/*  onClick={() => dispatch((item?.id))}*/}
-                        {/*  className="inline-flex items-center justify-center gap-2.5 border border-danger py-2 px-5 text-center font-semibold text-danger hover:bg-opacity-90 lg:px-8 xl:px-10"*/}
-                        {/*>*/}
-                        {/*  Delete*/}
-                        {/*</Button>*/}
-                      </div>
-                    </div>
-                  ))}
                 </div>
               </div>
-
             </div>
-          </div>
-
+            <div className="bg-gray-50 px-4 py-1 flex justify-end gap-2  sm:px-6">
+              <button
+                type="button"
+                onClick={() => setModalOpen(false)}
+                className=" justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+              >
+                Cancel
+              </button>
+            </div>
+            <DeleteModal modalOpen={modalDelete} setModalOpen={setModalDelete} text={'Qurilma'} setItem={setDeviceItem}
+                         deleteFunction={deleteFunction} />
+            <DeviceQrCode modalOpen={qrCodemodal} setModalOpen={setQrCodeModal} item={deviceItem}
+                          setItem={setDeviceItem} />
+          </DialogPanel>
         </div>
-
       </div>
-    </div>
-
+    </Dialog>
   );
 };

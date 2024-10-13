@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllEnterprise, addNewEnterprise, updateEnterprise, getEnterpriseByMTU } from './thunk';
+import { getAllEnterprise, addNewEnterprise, updateEnterprise, getEnterpriseByMTU, deleteEnterprise } from './thunk';
 
 
 interface initialState {
@@ -38,7 +38,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getEnterpriseByMTU.rejected, (state: any) => {
-        state.enterpriseForSelect = []
+        state.enterpriseForSelect = [];
         state.loading = false;
       });
 
@@ -52,13 +52,13 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllEnterprise.rejected, (state: any) => {
-        state.enterprise = []
+        state.enterprise = [];
         state.loading = false;
       });
 
     // add new enterprise
     builder.addCase(addNewEnterprise.pending, (state: any) => {
-      state.loading= true;
+      state.loading = true;
     });
     builder.addCase(addNewEnterprise.fulfilled, (state: any) => {
       state.loading = false;
@@ -83,7 +83,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+    // delete enterprise
+    builder.addCase(deleteEnterprise.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteEnterprise.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteEnterprise.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

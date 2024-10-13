@@ -9,7 +9,8 @@ import {
   getStationByPlotId as getStationByPlotIdApi,
   getAllStation as getAllStationByApi,
   addNewStation as addNewStationApi,
-  updateStation as updateStationApi
+  updateStation as updateStationApi,
+  deleteStation as deleteStationApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllStation = createAsyncThunk('station/getAllStation', async () => {
@@ -52,5 +53,16 @@ export const updateStation = createAsyncThunk('station/updateStation', async (st
     return rejectWithValue(error);
   }
 });
-
+export const deleteStation = createAsyncThunk('station/deleteStation', async (station: any, { rejectWithValue }) => {
+  try {
+    const response = deleteStationApi(station);
+    const data = await response;
+    toast.success('Stansiya o\'chirildi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
 

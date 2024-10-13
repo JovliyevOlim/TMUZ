@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllCategory, addNewCategory, updateCategory } from './thunk';
+import { getAllCategory, addNewCategory, updateCategory, deleteCategory } from './thunk';
 
 
 interface initialState {
@@ -36,7 +36,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getAllCategory.rejected, (state: any) => {
-        state.category = []
+        state.category = [];
         state.loading = false;
       });
 
@@ -67,7 +67,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+      // delete category
+    builder.addCase(deleteCategory.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteCategory.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteCategory.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

@@ -8,7 +8,7 @@ import {
   getDeviceById,
   getAllSimpleDevice,
   getAllLevelCrossingDevice,
-  getDeviceByCategoryId
+  getDeviceByCategoryId, getDeviceByStationId, getDeviceByPlotId, deleteDevice
 } from './thunk';
 
 
@@ -57,7 +57,32 @@ const sliceOptions = {
         state.devices = [];
         state.loading = false;
       });
-
+    // get all device by station id
+    builder.addCase(getDeviceByStationId.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getDeviceByStationId.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getDeviceByStationId.rejected, (state: any) => {
+        state.devices = [];
+        state.loading = false;
+      });
+    // get all device by plot id
+    builder.addCase(getDeviceByPlotId.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getDeviceByPlotId.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getDeviceByPlotId.rejected, (state: any) => {
+        state.devices = [];
+        state.loading = false;
+      });
     // get all device
     builder.addCase(getAllDevice.pending, (state: any) => {
       state.loading = true;
@@ -167,7 +192,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+// delete enterprise
+    builder.addCase(deleteDevice.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteDevice.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteDevice.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

@@ -30,11 +30,12 @@ export const getAllStation = () => api.get(url.GET_ALL_STATION);
 export const getStationById = (station: any) => api.get(url.GET_STATION_BY_ID, station);
 // get station by plot id
 export const getStationByPlotId = (station: any) => api.get(url.GET_STATION_BY_PLOT_ID + '/' + station);
-// add New User
+// add New station
 export const addNewStation = (station: any) => api.create(url.ADD_NEW_STATION, station);
-// update  User
+// update  station
 export const updateStation = (station: any) => api.put(url.UPDATE_STATION + '/' + station.id, station);
-
+// delete  station
+export const deleteStation = (station: any) => api.delete(url.DELETE_STATION + '/' + station);
 
 // get action by user done
 export const getActionByUserDone = (action: any) => api.get(url.GET_ACTION_BY_USER + '/' + action);
@@ -53,7 +54,13 @@ export const getDeviceInfoForQr = (device: any) => api.get(url.GET_DEVICE_INFO_F
 // get device by id
 export const getDeviceById = (device: any) => api.get(url.GET_DEVICE_BY_ID, device);
 // get device by category id
-export const getDeviceCategoryId = (device: any) => api.get(url.GET_DEVICE_BY_CATEGORY_ID+"/"+device);
+export const getDeviceCategoryId = (device: any) => api.get(url.GET_DEVICE_BY_CATEGORY_ID + '/' + device);
+
+// get device by plot id
+export const getDevicePlotId = (device: any) => api.get(url.GET_DEVICE_BY_PLOT_ID + '/' + device);
+
+// get device by station id
+export const getDeviceStationId = (device: any) => api.get(url.GET_DEVICE_BY_STATION_ID + '/' + device);
 // get all device
 export const getAllDevice = () => api.get(url.GET_ALL_DEVICE);
 // get all simple device
@@ -66,6 +73,7 @@ export const getAllDeviceInfoActions = (device: any) => api.get(url.GET_ALL_DEVI
 export const addNewDevice = (device: any) => api.create(url.ADD_NEW_DEVICE, device);
 // update  device
 export const updateDevice = (device: any) => api.put(url.UPDATE_DEVICE + '/' + device.id, device);
+export const deleteDevice = (device: any) => api.delete(url.DELETE_DEVICE + '/' + device);
 
 
 // get mtu
@@ -76,6 +84,7 @@ export const getMtuById = (mtu: any) => api.get(url.GET_MTU_BY_ID, mtu);
 export const addNewMtu = (mtu: any) => api.create(url.ADD_NEW_MTU, mtu);
 // update  mtu
 export const updateMtu = (mtu: any) => api.put(url.UPDATE_MTU + '/' + mtu.id, mtu);
+export const deleteMtu = (mtu: any) => api.delete(url.DELETE_MTU + '/' + mtu);
 
 
 // get enterprise
@@ -88,6 +97,9 @@ export const getEnterpriseByMTU = (enterprise: any) => api.get(url.GET_ENTERPRIS
 export const addNewEnterprise = (enterprise: any) => api.create(url.ADD_NEW_ENTERPRISE, enterprise);
 // update  enterprise
 export const updateEnterprise = (enterprise: any) => api.put(url.UPDATE_ENTERPRISE + '/' + enterprise.id, enterprise);
+// delete enterprise
+export const deleteEnterprise = (enterprise: any) => api.delete(url.DELETE_ENTERPRISE + '/' + enterprise);
+
 
 // get plot
 export const getAllPlot = () => api.get(url.GET_ALL_PLOT);
@@ -99,6 +111,8 @@ export const getPlotByEnterprise = (plot: any) => api.get(url.GET_PLOT_BY_ENTERP
 export const addNewPlot = (plot: any) => api.create(url.ADD_NEW_PLOT, plot);
 // update  plot
 export const updatePlot = (plot: any) => api.put(url.UPDATE_PLOT + '/' + plot.id, plot);
+// delete  plot
+export const deletePlot = (plot: any) => api.delete(url.DELETE_PLOT + '/' + plot);
 
 // get level crossing
 export const getAllLevelCrossing = () => api.get(url.GET_ALL_LEVEL_CROSSING);
@@ -120,3 +134,5 @@ export const getCategoryById = (category: any) => api.get(url.GET_CATEGORY_BY_ID
 export const addNewCategory = (category: any) => api.create(url.ADD_NEW_CATEGORY, category);
 // update  category
 export const updateCategory = (category: any) => api.put(url.UPDATE_CATEGORY + '/' + category.id, category);
+// delete  category
+export const deleteCategory = (category: any) => api.delete(url.DELETE_CATEGORY + '/' + category);

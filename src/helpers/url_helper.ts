@@ -19,6 +19,7 @@ export const GET_ONE_JOB = '/job';
 // Stations
 export const ADD_NEW_STATION = '/station/create';
 export const UPDATE_STATION = '/station/edit';
+export const DELETE_STATION = '/station/delete';
 export const GET_ALL_STATION = '/station/get-all';
 export const GET_STATION_BY_ID = '/station/get-by-id';
 export const GET_STATION_BY_PLOT_ID = '/station/get-by-plot-id';
@@ -34,10 +35,13 @@ export const GET_ACTION_BY_USER_FALSE = '/action/get-by-user-done-is-false';
 // LevelCrossingDevice
 export const ADD_NEW_DEVICE = '/device/create';
 export const UPDATE_DEVICE = '/device/edit';
+export const DELETE_DEVICE = '/device';
 export const GET_DEVICE_INFO_FOR_QR = '/device/get-info-for-QR';
 export const GET_DEVICE_BY_ID = '/device/get-by-id';
 export const GET_ALL_DEVICE = '/device/get-all';
 export const GET_DEVICE_BY_CATEGORY_ID = '/device/get-by-category';
+export const GET_DEVICE_BY_PLOT_ID = '/device/get-by-plot';
+export const GET_DEVICE_BY_STATION_ID = '/device/get-by-stationId';
 export const GET_ALL_SIMPLE_DEVICE = '/device/get-by-isStation-true';
 export const GET_ALL_LEVEL_CROSSING_DEVICE = '/device/get-by-isStation-false';
 export const GET_ALL_DEVICE_INFO_ACTIONS = '/device/get-all-info-actions';
@@ -47,11 +51,13 @@ export const ADD_NEW_MTU = '/mtu/create';
 export const UPDATE_MTU = '/mtu/edit';
 export const GET_ALL_MTU = '/mtu/get-all';
 export const GET_MTU_BY_ID = '/mtu/get-by-id';
+export const DELETE_MTU = '/mtu/delete';
 
 
 // EnterPrise
 export const ADD_NEW_ENTERPRISE = '/enterprise/create';
 export const UPDATE_ENTERPRISE = '/enterprise/edit';
+export const DELETE_ENTERPRISE = '/enterprise/delete';
 export const GET_ALL_ENTERPRISE = '/enterprise/get-all';
 export const GET_ENTERPRISE_BY_ID = '/enterprise/get-by-id';
 export const GET_ENTERPRISE_BY_MTU = '/enterprise/get-by-mtu';
@@ -60,6 +66,7 @@ export const GET_ENTERPRISE_BY_MTU = '/enterprise/get-by-mtu';
 // plot
 export const ADD_NEW_PLOT = '/plot/create';
 export const UPDATE_PLOT = '/plot/edit';
+export const DELETE_PLOT = '/plot/delete';
 export const GET_ALL_PLOT = '/plot/get-all';
 export const GET_PLOT_BY_ID = '/plot/get-by-id';
 export const GET_PLOT_BY_ENTERPRISE = '/plot/get-by-enterprise';

@@ -7,7 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   addNewMtu as addNewMtuApi,
   updateMtu as updateMtuApi,
-  getAllMtu as getAllMtuApi
+  getAllMtu as getAllMtuApi,
+  deleteMtu as deleteMtuApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllMtu = createAsyncThunk('mtu/getAllMtu', async () => {
@@ -35,6 +36,18 @@ export const updateMtu = createAsyncThunk('Mtu/updateMtu', async (Mtu: any, { re
     const response = updateMtuApi(Mtu);
     const data = await response;
     toast.success('Mtu tahrirlandi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
+export const deleteMtu = createAsyncThunk('Mtu/deleteMtu', async (Mtu: any, { rejectWithValue }) => {
+  try {
+    const response = deleteMtuApi(Mtu);
+    const data = await response;
+    toast.success('Mtu o\'chirildi', { autoClose: 3000 });
     return data;
   } catch (error) {
     let message: any = error;

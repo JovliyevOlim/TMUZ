@@ -7,13 +7,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   getDeviceById as getDeviceByIdApi,
   getDeviceCategoryId as getDeviceCategoryIdApi,
+  getDeviceStationId as getDeviceStationIdApi,
+  getDevicePlotId as getDevicePlotIdApi,
   getDeviceInfoForQr as getDeviceInfoForQrApi,
   getAllDevice as getAllDeviceApi,
   getAllSimpleDevice as getAllSimpleDeviceApi,
   getAllLevelCrossingDevice as getAllLevelCrossingDeviceApi,
   getAllDeviceInfoActions as getAllDeviceInfoActionsApi,
   addNewDevice as addNewDeviceApi,
-  updateDevice as updateDeviceApi
+  updateDevice as updateDeviceApi,
+  deleteDevice as deleteDeviceApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllDevice = createAsyncThunk('device/getAllDevice', async () => {
@@ -24,9 +27,25 @@ export const getAllDevice = createAsyncThunk('device/getAllDevice', async () => 
     return error;
   }
 });
-export const getDeviceByCategoryId = createAsyncThunk('device/getDeviceByCategoryID', async (categoryId:string) => {
+export const getDeviceByCategoryId = createAsyncThunk('device/getDeviceByCategoryID', async (categoryId: string) => {
   try {
     const response = getDeviceCategoryIdApi(categoryId);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getDeviceByStationId = createAsyncThunk('device/getDeviceByStationID', async (categoryId: string) => {
+  try {
+    const response = getDeviceStationIdApi(categoryId);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getDeviceByPlotId = createAsyncThunk('device/getDeviceByPlotID', async (categoryId: string) => {
+  try {
+    const response = getDevicePlotIdApi(categoryId);
     return response;
   } catch (error) {
     return error;
@@ -89,6 +108,18 @@ export const updateDevice = createAsyncThunk('device/updateDevice', async (actio
     const response = updateDeviceApi(action);
     const data = await response;
     toast.success('Qurilma tahrirlandi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
+export const deleteDevice = createAsyncThunk('device/deleteDevice', async (device: any, { rejectWithValue }) => {
+  try {
+    const response = deleteDeviceApi(device);
+    const data = await response;
+    toast.success('Qurilma o\'chirildi', { autoClose: 3000 });
     return data;
   } catch (error) {
     let message: any = error;

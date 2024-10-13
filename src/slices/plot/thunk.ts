@@ -9,6 +9,7 @@ import {
   getPlotByEnterprise as getPlotByEnterpriseApi,
   addNewPlot as addNewPlotApi,
   updatePlot as updatePlotApi,
+  deletePlot as deletePlotApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllPlot = createAsyncThunk('Plot/getAllPlot', async () => {
@@ -51,5 +52,16 @@ export const updatePlot = createAsyncThunk('Plot/updatePlot', async (Plot: any, 
     return rejectWithValue(error);
   }
 });
-
+export const deletePlot = createAsyncThunk('Plot/deletePlot', async (Mtu: any, { rejectWithValue }) => {
+  try {
+    const response = deletePlotApi(Mtu);
+    const data = await response;
+    toast.success('Uchastka o\'chirildi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
 

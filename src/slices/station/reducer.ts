@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllStation, addNewStation, updateStation, getStationByPlotId } from './thunk';
+import { getAllStation, addNewStation, updateStation, getStationByPlotId, deleteStation } from './thunk';
 
 
 interface initialState {
@@ -39,7 +39,7 @@ const sliceOptions = {
         state.loading = false;
       });
 
-    // get all user
+    // get all station
     builder.addCase(getAllStation.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
@@ -53,7 +53,7 @@ const sliceOptions = {
         state.loading = false;
       });
 
-    // add new users
+    // add new station
     builder.addCase(addNewStation.pending, (state: any) => {
       state.loadingTrade = true;
     });
@@ -68,7 +68,7 @@ const sliceOptions = {
       state.isAction = !state.isAction;
     });
 
-    //update user
+    //update station
     builder.addCase(updateStation.pending, (state: any) => {
       state.loading = true;
     }).addCase(updateStation.fulfilled, (state: any) => {
@@ -80,7 +80,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+    // delete station
+    builder.addCase(deleteStation.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteStation.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteStation.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllPlot, addNewPlot, updatePlot, getPlotByEnterprise } from './thunk';
+import { getAllPlot, addNewPlot, updatePlot, getPlotByEnterprise, deletePlot } from './thunk';
 
 
 interface initialState {
@@ -83,7 +83,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+    // delete plot
+    builder.addCase(deletePlot.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deletePlot.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deletePlot.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

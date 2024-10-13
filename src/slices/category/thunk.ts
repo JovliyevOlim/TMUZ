@@ -7,7 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import {
   addNewCategory as addNewCategoryApi,
   updateCategory as updateCategoryApi,
-  getAllCategory as getAllCategoryApi
+  getAllCategory as getAllCategoryApi,
+  deleteCategory as deleteCategoryApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllCategory = createAsyncThunk('Category/getAllCategory', async () => {
@@ -42,5 +43,16 @@ export const updateCategory = createAsyncThunk('Category/updateCategory', async 
     return rejectWithValue(error);
   }
 });
-
+export const deleteCategory = createAsyncThunk('Category/deleteCategory', async (Mtu: any, { rejectWithValue }) => {
+  try {
+    const response = deleteCategoryApi(Mtu);
+    const data = await response;
+    toast.success('Qurilma turi o\'chirildi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
 
