@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllLevelCrossing, addNewLevelCrossing, updateLevelCrossing, getLevelCrossingByPlot } from './thunk';
+import {
+  getAllLevelCrossing,
+  addNewLevelCrossing,
+  updateLevelCrossing,
+  getLevelCrossingByPlot,
+  deleteLevelCrossing
+} from './thunk';
 
 
 interface initialState {
@@ -83,7 +89,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+    // delete  LevelCrossing
+    builder.addCase(deleteLevelCrossing.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteLevelCrossing.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteLevelCrossing.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

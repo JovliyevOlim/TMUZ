@@ -75,6 +75,7 @@ export const GET_PLOT_BY_ENTERPRISE = '/plot/get-by-enterprise';
 // levelCrossing
 export const ADD_NEW_LEVEL_CROSSING = '/level-crossing';
 export const UPDATE_LEVEL_CROSSING = '/level-crossing';
+export const DELETE_LEVEL_CROSSING = '/level-crossing/delete';
 export const GET_ALL_LEVEL_CROSSING = '/level-crossing';
 export const GET_LEVEL_CROSSING_BY_ID = '/level-crossing';
 export const GET_LEVEL_CROSSING_BY_PLOT = '/level-crossing/get-by-plot';

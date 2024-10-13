@@ -49,6 +49,7 @@ const sliceOptions = {
       })
       .addCase(getActionByUserDone.rejected, (state: any) => {
         state.loading = false;
+        state.actions = [];
       });
 
     // get action by user done false
@@ -62,6 +63,7 @@ const sliceOptions = {
       })
       .addCase(getActionByUserDoneFalse.rejected, (state: any) => {
         state.loading = false;
+        state.actions = [];
       });
 
     // add new action

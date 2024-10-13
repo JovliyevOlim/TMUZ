@@ -13,7 +13,8 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
 
   const [initialValues, setInitialValues] = useState({
     name: '',
-    description: ''
+    description: '',
+    checkDay: 0
   });
 
 
@@ -21,7 +22,8 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     setModalOpen(!modalOpen);
     setInitialValues({
       name: '',
-      description: ''
+      description: '',
+      checkDay: 0
     });
     validation.resetForm();
     setItem(null);
@@ -31,7 +33,8 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     if (item) {
       setInitialValues({
         name: item?.name,
-        description: item?.description
+        description: item?.description,
+        checkDay: item?.checkDay
       });
     }
   }, [item]);
@@ -61,7 +64,8 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       setItem(null);
       setInitialValues({
         name: '',
-        description: ''
+        description: '',
+        checkDay: 0
       });
     }
   }, [dispatch, isAction]);
@@ -114,6 +118,23 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     </h6>
                   ) : null}
 
+                </div>
+                <div className={'my-2'}>
+                  <label htmlFor="checkDay" className="block text-md font-medium leading-6 text-gray-900">
+                    Tekshirish kuni
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="checkDay"
+                      onChange={validation.handleChange}
+                      onBlur={validation.handleBlur}
+                      value={validation.values.checkDay || ''}
+                      name="checkDay"
+                      type="number"
+                      placeholder="Tekshirish kuni"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
                 </div>
                 <div className={'my-2'}>
                   <label htmlFor="description" className="block text-md font-medium leading-6 text-gray-900">

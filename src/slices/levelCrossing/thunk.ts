@@ -8,7 +8,8 @@ import {
   getAllLevelCrossing as getAllLevelCrossingApi,
   getLevelCrossingByPlot as getLevelCrossingByPlotApi,
   addNewLevelCrossing as addNewLevelCrossingApi,
-  updateLevelCrossing as updateLevelCrossingApi
+  updateLevelCrossing as updateLevelCrossingApi,
+  deleteLevelCrossing as deleteLevelCrossingApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllLevelCrossing = createAsyncThunk('LevelCrossingDevice/getAllLevelCrossing', async () => {
@@ -51,5 +52,16 @@ export const updateLevelCrossing = createAsyncThunk('LevelCrossingDevice/updateL
     return rejectWithValue(error);
   }
 });
-
+export const deleteLevelCrossing = createAsyncThunk('LevelCrossingDevice/deleteLevelCrossing', async (Mtu: any, { rejectWithValue }) => {
+  try {
+    const response = deleteLevelCrossingApi(Mtu);
+    const data = await response;
+    toast.success('Qurilma o\'chirildi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
 

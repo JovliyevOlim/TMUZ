@@ -124,6 +124,9 @@ export const getLevelCrossingByPlot = (levelCrossing: any) => api.get(url.GET_LE
 export const addNewLevelCrossing = (levelCrossing: any) => api.create(url.ADD_NEW_LEVEL_CROSSING, levelCrossing);
 // update  level crossing
 export const updateLevelCrossing = (levelCrossing: any) => api.put(url.UPDATE_LEVEL_CROSSING + '/' + levelCrossing.id, levelCrossing);
+// delete level crossing
+export const deleteLevelCrossing = (levelCrossing: any) => api.delete(url.DELETE_LEVEL_CROSSING+ '/' + levelCrossing);
+
 
 // get category
 export const getAllCategory = () => api.get(url.GET_ALL_CATEGORY);

@@ -105,10 +105,10 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
 
     initialValues: initialValues,
     validationSchema: Yup.object({
-      name: Yup.string().required('Stansiya nomini kiriting!'),
+      name: Yup.string().required('Qurilma nomini kiriting!'),
       stationId: Yup.string().required('Stansiya nomini kiriting!'),
-      latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
-      longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
+      latitude: Yup.string().required('Qurilma koordinatasini kiriting!'),
+      longitude: Yup.string().required('Qurilma koordinatasini kiriting!')
     }),
     onSubmit: (values) => {
       if (deviceItem) {
@@ -268,7 +268,7 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                         addOpen && <>
                           <div className={'my-2'}>
                             <label htmlFor="name" className="block text-md font-medium leading-6 text-gray-900">
-                              Stansiya nomi
+                              Qurilma nomi
                             </label>
                             <div className="mt-2">
                               <input
@@ -278,7 +278,7 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                                 onChange={validation.handleChange}
                                 onBlur={validation.handleBlur}
                                 value={validation.values.name || ''}
-                                placeholder="Stansiya nomi"
+                                placeholder="Qurilma nomi"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                               />
@@ -412,10 +412,20 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                       {devices?.map((item: any, key: number) => (
                         <tr key={key}>
                           <td>
-                            <p style={{ cursor: 'pointer' }} onClick={() => onClickQrCode(item)}
-                               className="p-2.5  text-black dark:text-white sm:block">
-                              {item.name}
-                            </p>
+                            <div className={'flex items-center'}>
+                              <p style={{ cursor: 'pointer' }} onClick={() => onClickQrCode(item)}
+                                 className={`${item.check ? 'text-black' : 'text-danger'} p-2.5 text-black dark:text-white sm:block`}>
+                                {item.name}
+                              </p>
+                              {
+                                !item.check && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    strokeWidth={1.5}
+                                                    stroke="currentColor" className="size-5 text-danger">
+                                  <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                </svg>
+                              }
+                            </div>
                           </td>
                           <td>
                             <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">

@@ -54,8 +54,8 @@ const DeviceInfo = () => {
       dispatch(checkDeviceForAction({
         // lon: userLocation?.longitude,
         // lat: userLocation?.latitude,
-        latitude: 41.30579777333337,
-        longitude: 69.27896333550243,
+        latitude: 41.3106176,
+        longitude: 69.3141504,
         deviceId: id
       }));
     }, 500);

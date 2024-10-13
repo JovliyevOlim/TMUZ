@@ -66,6 +66,7 @@ const Device = () => {
             <thead>
             <tr className="text-start text-sm font-medium uppercase xsm:text-base">
               <th className="p-2.5 text-start">Nomi</th>
+              <th className="p-2.5 text-start">Tekshirish kuni</th>
               <th className="p-2.5 ext-start">Action</th>
             </tr>
             </thead>
@@ -76,6 +77,12 @@ const Device = () => {
                   <p onClick={() => onClickEditStation(item)} style={{ cursor: 'pointer' }}
                      className="p-2.5  text-black dark:text-white sm:block">
                     {item.name}
+                  </p>
+                </td>
+                <td>
+                  <p style={{ cursor: 'pointer' }}
+                     className="p-2.5  text-black dark:text-white sm:block">
+                    {item.checkDay} kun
                   </p>
                 </td>
                 <td>
