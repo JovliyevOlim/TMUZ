@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,12 +9,10 @@ import {
   getDeviceByStationId,
   updateDevice
 } from '../../slices/device/thunk.ts';
-import { Button } from 'reactstrap';
 import { getStationByPlotId } from '../../slices/station/thunk.ts';
 import { DeviceQrCode } from './DeviceQrCode.tsx';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import DeleteModal from '../../components/DeleteModal.tsx';
-import { deleteCategory } from '../../slices/category/thunk.ts';
 
 
 export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) => {
@@ -38,28 +36,28 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   });
 
 
-  const getUserLocation = () => {
-    console.log('ewef');
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          let formValues = initialValues;
-          formValues.latitude = latitude;
-          formValues.longitude = longitude;
-          let a = { ...formValues };
-          console.log(a);
-          setInitialValues(a);
-        },
-
-        (error) => {
-          console.error('Error get user location: ', error);
-        }
-      );
-    } else {
-      console.log('Geolocation is not supported by this browser');
-    }
-  };
+  // const getUserLocation = () => {
+  //   console.log('ewef');
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords;
+  //         let formValues = initialValues;
+  //         formValues.latitude = latitude;
+  //         formValues.longitude = longitude;
+  //         let a = { ...formValues };
+  //         console.log(a);
+  //         setInitialValues(a);
+  //       },
+  //
+  //       (error) => {
+  //         console.error('Error get user location: ', error);
+  //       }
+  //     );
+  //   } else {
+  //     console.log('Geolocation is not supported by this browser');
+  //   }
+  // };
 
 
   const onClickQrCode = (data: any) => {

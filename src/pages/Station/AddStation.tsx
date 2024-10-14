@@ -33,28 +33,28 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     setItem(null);
   }
 
-  const getUserLocation = () => {
-    console.log('ewef');
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          let formValues = initialValues;
-          formValues.latitude = latitude;
-          formValues.longitude = longitude;
-          let a = { ...formValues };
-          console.log(a);
-          setInitialValues(a);
-        },
-
-        (error) => {
-          console.error('Error get user location: ', error);
-        }
-      );
-    } else {
-      console.log('Geolocation is not supported by this browser');
-    }
-  };
+  // const getUserLocation = () => {
+  //   console.log('ewef');
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords;
+  //         let formValues = initialValues;
+  //         formValues.latitude = latitude;
+  //         formValues.longitude = longitude;
+  //         let a = { ...formValues };
+  //         console.log(a);
+  //         setInitialValues(a);
+  //       },
+  //
+  //       (error) => {
+  //         console.error('Error get user location: ', error);
+  //       }
+  //     );
+  //   } else {
+  //     console.log('Geolocation is not supported by this browser');
+  //   }
+  // };
 
   useEffect(() => {
     if (item) {

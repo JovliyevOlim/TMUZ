@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'reactstrap';
 import { addNewLevelCrossing, updateLevelCrossing } from '../../slices/levelCrossing/thunk.ts';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 

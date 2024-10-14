@@ -27,10 +27,7 @@ const Device = () => {
     setModalStation(true);
     setEditData(data);
   };
-  const onClickQrCode = (data: any) => {
-    setQrCodeModal(true);
-    setEditData(data);
-  };
+
 
   const onClickDelete = (data: any) => {
     setModalDelete(true);

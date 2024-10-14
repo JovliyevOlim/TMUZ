@@ -6,7 +6,6 @@ import { deleteAction, getActionByUserDone, getActionByUserDoneFalse } from '../
 import moment from 'moment/moment';
 import { AddNewAction } from './AddNewAction.tsx';
 import DeleteModal from '../../components/DeleteModal.tsx';
-import { deleteStation } from '../../slices/station/thunk.ts';
 
 const Actions = () => {
 
