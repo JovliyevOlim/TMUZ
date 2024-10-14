@@ -158,7 +158,7 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   }, [item, isAction]);
 
   return (
-    <Dialog open={modalOpen} onClose={tog_standard} className="relative z-9999">
+    <Dialog open={modalOpen} onClose={() => setModalOpen(false)} className="relative z-9999">
       <DialogBackdrop
         transition
         className="fixed inset-0  bg-black bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-500 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"

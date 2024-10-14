@@ -66,6 +66,16 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
         longitude: item?.longitude,
         plotId: item?.plotId
       });
+    } else {
+      setInitialValues({
+        name: '',
+        plotId: '',
+        description: '',
+        address: '',
+        latitude: 0,
+        longitude: 0
+      });
+      validation.resetForm();
     }
   }, [item]);
 
@@ -145,7 +155,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                       onBlur={validation.handleBlur}
                       value={validation.values.name || ''}
                       placeholder="Stansiya nomi"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -168,7 +178,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                       name="address"
                       type="text"
                       placeholder="Manzil"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                   {validation.touched.address && validation.errors.address ? (
@@ -189,7 +199,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.plotId || ''}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                        className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         <option value="" className="text-body dark:text-bodydark">
                           Tanlang
@@ -224,7 +234,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                         name="latitude"
                         type="number"
                         placeholder="latitude"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                     {validation.touched.latitude && validation.errors.latitude ? (
@@ -246,7 +256,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                         name="longitude"
                         type="number"
                         placeholder="longitude"
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
                     {validation.touched.longitude && validation.errors.longitude ? (
@@ -270,7 +280,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                       name="description"
                       type="text"
                       placeholder="tavsif"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>

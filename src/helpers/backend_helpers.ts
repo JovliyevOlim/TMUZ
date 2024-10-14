@@ -45,6 +45,8 @@ export const getActionByUserDoneFalse = (action: any) => api.get(url.GET_ACTION_
 export const addNewAction = (action: any) => api.create(url.ADD_NEW_ACTION, action);
 // update  Action
 export const updateAction = (action: any) => api.put(url.UPDATE_ACTION + '/' + action.id, action);
+// delete  Action
+export const deleteAction = (action: any) => api.delete(url.DELETE_ACTION + '/' + action);
 // check device for  Action
 export const checkDeviceForAction = (action: any) => api.create(url.CHECK_DEVICE_FOR_ACTION, action);
 
@@ -125,7 +127,7 @@ export const addNewLevelCrossing = (levelCrossing: any) => api.create(url.ADD_NE
 // update  level crossing
 export const updateLevelCrossing = (levelCrossing: any) => api.put(url.UPDATE_LEVEL_CROSSING + '/' + levelCrossing.id, levelCrossing);
 // delete level crossing
-export const deleteLevelCrossing = (levelCrossing: any) => api.delete(url.DELETE_LEVEL_CROSSING+ '/' + levelCrossing);
+export const deleteLevelCrossing = (levelCrossing: any) => api.delete(url.DELETE_LEVEL_CROSSING + '/' + levelCrossing);
 
 
 // get category

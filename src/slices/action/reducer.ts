@@ -4,7 +4,7 @@ import {
   getActionByUserDone,
   addNewAction,
   updateAction,
-  checkDeviceForAction
+  checkDeviceForAction, deleteAction
 } from './thunk';
 
 
@@ -108,7 +108,19 @@ const sliceOptions = {
       state.isSuccess = false;
       state.isAction = !state.isAction;
     });
-
+    // delete action
+    builder.addCase(deleteAction.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteAction.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteAction.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+      // state.error = action.payload.error || null;
+    });
   }
 };
 

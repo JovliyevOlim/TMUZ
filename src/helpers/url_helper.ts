@@ -28,6 +28,7 @@ export const GET_STATION_BY_PLOT_ID = '/station/get-by-plot-id';
 // Action
 export const ADD_NEW_ACTION = '/action/create';
 export const UPDATE_ACTION = '/action/edit-done';
+export const DELETE_ACTION = '/action/delete';
 export const CHECK_DEVICE_FOR_ACTION = '/action/check-user';
 export const GET_ACTION_BY_USER = '/action/get-by-user-done';
 export const GET_ACTION_BY_USER_FALSE = '/action/get-by-user-done-is-false';

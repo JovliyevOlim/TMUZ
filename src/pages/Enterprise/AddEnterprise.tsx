@@ -35,6 +35,13 @@ export const AddEnterprise = ({ modalOpen, setModalOpen, item, setItem }: any) =
         description: item?.description,
         mtuId: item?.mtuId
       });
+    } else {
+      setInitialValues({
+        name: '',
+        description: '',
+        mtuId: ''
+      });
+      validation.resetForm();
     }
   }, [item]);
 
@@ -108,7 +115,7 @@ export const AddEnterprise = ({ modalOpen, setModalOpen, item, setItem }: any) =
                       onBlur={validation.handleBlur}
                       value={validation.values.name || ''}
                       placeholder="Korxona nomi"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -131,7 +138,7 @@ export const AddEnterprise = ({ modalOpen, setModalOpen, item, setItem }: any) =
                         onChange={validation.handleChange}
                         onBlur={validation.handleBlur}
                         value={validation.values.mtuId || ''}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                        className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         <option value="" className="text-body dark:text-bodydark">
                           Tanlang
@@ -166,7 +173,7 @@ export const AddEnterprise = ({ modalOpen, setModalOpen, item, setItem }: any) =
                       name="description"
                       type="text"
                       placeholder="tavsif"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
