@@ -8,7 +8,7 @@ import {
   getDeviceById,
   getAllSimpleDevice,
   getAllLevelCrossingDevice,
-  getDeviceByCategoryId, getDeviceByStationId, getDeviceByPlotId, deleteDevice
+  getDeviceByCategoryId, getDeviceByStationId, getDeviceByPlotId, deleteDevice,getDeviceByLevelCrossingId
 } from './thunk';
 
 
@@ -67,6 +67,19 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getDeviceByStationId.rejected, (state: any) => {
+        state.devices = [];
+        state.loading = false;
+      });
+    // get all device by levelCrossing id
+    builder.addCase(getDeviceByLevelCrossingId.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getDeviceByLevelCrossingId.fulfilled, (state: any, action: any) => {
+        state.devices = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getDeviceByLevelCrossingId.rejected, (state: any) => {
         state.devices = [];
         state.loading = false;
       });

@@ -104,7 +104,7 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
     initialValues: initialValues,
     validationSchema: Yup.object({
       name: Yup.string().required('Qurilma nomini kiriting!'),
-      stationId: Yup.string().required('Stansiya nomini kiriting!'),
+      stationId: Yup.string().required('Stansiyani tanlang!'),
       latitude: Yup.string().required('Qurilma koordinatasini kiriting!'),
       longitude: Yup.string().required('Qurilma koordinatasini kiriting!')
     }),
@@ -148,7 +148,6 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
     }
   }, [validation.values.stationId]);
 
-  console.log(item);
   useEffect(() => {
     if (item) {
       dispatch(getDeviceByCategoryId(item?.id));

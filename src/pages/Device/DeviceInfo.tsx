@@ -13,7 +13,7 @@ const DeviceInfo = () => {
   const { deviceQrCodeInfo } = useSelector((state: any) => state.Device);
   const { checkUser, isAction } = useSelector((state: any) => state.Action);
   const dispatch: any = useDispatch();
-  const { id }:any = useParams();
+  const { id }: any = useParams();
   const [modal, setModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [userLocation, setUserLocation] = useState<{
@@ -88,9 +88,15 @@ const DeviceInfo = () => {
             </h5>
           </div>
           <div className="p-2.5 text-start xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              <strong>Stansiya:</strong> {deviceQrCodeInfo?.deviceDto?.stationName}
-            </h5>
+            {
+              deviceQrCodeInfo?.deviceDto?.stationName ?
+                <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  <strong>Stansiya:</strong> {deviceQrCodeInfo?.deviceDto?.stationName}
+                </h5> : <h5 className="text-sm font-medium uppercase xsm:text-base">
+                  <strong>Kesishma:</strong> {deviceQrCodeInfo?.deviceDto?.levelCrossingName}
+                </h5>
+            }
+
           </div>
           <Button
             onClick={addNewActionForCheck}

@@ -43,6 +43,7 @@ export const GET_ALL_DEVICE = '/device/get-all';
 export const GET_DEVICE_BY_CATEGORY_ID = '/device/get-by-category';
 export const GET_DEVICE_BY_PLOT_ID = '/device/get-by-plot';
 export const GET_DEVICE_BY_STATION_ID = '/device/get-by-stationId';
+export const GET_DEVICE_BY_LEVELCROSSING_ID = '/device/get-by-levelCrossingId';
 export const GET_ALL_SIMPLE_DEVICE = '/device/get-by-isStation-true';
 export const GET_ALL_LEVEL_CROSSING_DEVICE = '/device/get-by-isStation-false';
 export const GET_ALL_DEVICE_INFO_ACTIONS = '/device/get-all-info-actions';

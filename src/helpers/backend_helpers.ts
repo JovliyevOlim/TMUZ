@@ -63,6 +63,8 @@ export const getDevicePlotId = (device: any) => api.get(url.GET_DEVICE_BY_PLOT_I
 
 // get device by station id
 export const getDeviceStationId = (device: any) => api.get(url.GET_DEVICE_BY_STATION_ID + '/' + device);
+// get device by levelCrossing id
+export const getDeviceLevelCrossingId = (device: any) => api.get(url.GET_DEVICE_BY_LEVELCROSSING_ID + '/' + device);
 // get all device
 export const getAllDevice = () => api.get(url.GET_ALL_DEVICE);
 // get all simple device

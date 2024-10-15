@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AddDevice } from './AddDevice.tsx';
 import { getAllStation } from '../../slices/station/thunk.ts';
-import { DeviceQrCode } from './DeviceQrCode.tsx';
 import { AddDeviceExtra } from './AddDeviceExtra.tsx';
 import { deleteCategory, getAllCategory } from '../../slices/category/thunk.ts';
 import DeleteModal from '../../components/DeleteModal.tsx';
@@ -14,7 +13,6 @@ const Device = () => {
   const [modal, setModal] = useState(false);
   const [modalStation, setModalStation] = useState<any>(false);
   const [modalDelete, setModalDelete] = useState(false);
-  const [qrCodemodal, setQrCodeModal] = useState(false);
   const [editData, setEditData] = useState<any>(null);
   const { category, isAction } = useSelector((state: any) => state.Category);
   const dispatch: any = useDispatch();
@@ -116,7 +114,6 @@ const Device = () => {
       </div>
       <AddDevice modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
       <AddDeviceExtra modalOpen={modalStation} setModalOpen={setModalStation} item={editData} setItem={setEditData} />
-      <DeviceQrCode modalOpen={qrCodemodal} setModalOpen={setQrCodeModal} item={editData} setItem={setEditData} />
       <DeleteModal modalOpen={modalDelete} setModalOpen={setModalDelete} text={'Qurilma turini'} setItem={setEditData}
                    deleteFunction={deleteFunction} />
     </>
