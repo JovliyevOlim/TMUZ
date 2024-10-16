@@ -13,7 +13,8 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const [initialValues, setInitialValues] = useState({
     name: '',
     description: '',
-    checkDay: 0
+    checkDay: 0,
+    station: true
   });
 
 
@@ -22,7 +23,8 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     setInitialValues({
       name: '',
       description: '',
-      checkDay: 0
+      checkDay: 0,
+      station: true
     });
     validation.resetForm();
     setItem(null);
@@ -33,14 +35,15 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       setInitialValues({
         name: item?.name,
         description: item?.description,
-        checkDay: item?.checkDay
+        checkDay: item?.checkDay,
+        station: true
       });
-    }
-    else {
+    } else {
       setInitialValues({
         name: '',
         description: '',
-        checkDay: 0
+        checkDay: 0,
+        station: true
       });
       validation.resetForm();
     }
@@ -72,7 +75,8 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       setInitialValues({
         name: '',
         description: '',
-        checkDay: 0
+        checkDay: 0,
+        station: true
       });
     }
   }, [dispatch, isAction]);

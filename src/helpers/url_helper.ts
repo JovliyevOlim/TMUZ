@@ -80,11 +80,11 @@ export const UPDATE_LEVEL_CROSSING = '/level-crossing';
 export const DELETE_LEVEL_CROSSING = '/level-crossing/delete';
 export const GET_ALL_LEVEL_CROSSING = '/level-crossing';
 export const GET_LEVEL_CROSSING_BY_ID = '/level-crossing';
-export const GET_LEVEL_CROSSING_BY_PLOT = '/level-crossing/get-by-plot';
+export const GET_LEVEL_CROSSING_BY_PLOT = '/level-crossing/get-by-plot-id';
 
 // category
 export const ADD_NEW_CATEGORY = '/category/create';
 export const UPDATE_CATEGORY = '/category/edit';
-export const GET_ALL_CATEGORY = '/category';
+export const GET_ALL_CATEGORY = '/category/get-by-is-station';
 export const GET_CATEGORY_BY_ID = '/category/get-by-id';
 export const DELETE_CATEGORY = '/category/delete';

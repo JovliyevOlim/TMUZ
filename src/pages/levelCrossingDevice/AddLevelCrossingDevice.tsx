@@ -13,7 +13,8 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
   const [initialValues, setInitialValues] = useState({
     name: '',
     description: '',
-    checkDay: 0
+    checkDay: 0,
+    station: false
   });
 
 
@@ -22,7 +23,8 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
     setInitialValues({
       name: '',
       description: '',
-      checkDay: 0
+      checkDay: 0,
+      station: false
     });
     validation.resetForm();
     setItem(null);
@@ -33,13 +35,15 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
       setInitialValues({
         name: item?.name,
         description: item?.description,
-        checkDay: item?.checkDay
+        checkDay: item?.checkDay,
+        station: false
       });
     } else {
       setInitialValues({
         name: '',
         description: '',
-        checkDay: 0
+        checkDay: 0,
+        station: false
       });
       validation.resetForm();
     }
@@ -71,7 +75,8 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
       setInitialValues({
         name: '',
         description: '',
-        checkDay: 0
+        checkDay: 0,
+        station: false
       });
     }
   }, [dispatch, isAction]);

@@ -7,7 +7,6 @@ import {
   addNewDevice,
   deleteDevice, getDeviceByCategoryId, getDeviceByLevelCrossingId,
   getDeviceByPlotId,
-  getDeviceByStationId,
   updateDevice
 } from '../../slices/device/thunk.ts';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
@@ -104,7 +103,7 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
 
     initialValues: initialValues,
     validationSchema: Yup.object({
-      name: Yup.string().required('Stansiya nomini kiriting!'),
+      name: Yup.string().required('Qurilma nomini kiriting!'),
       levelCrossingId: Yup.string().required('Kesishmani tanlang!'),
       latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
       longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
@@ -141,7 +140,10 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
   useEffect(() => {
     if (validation.values.plotId) {
       dispatch(getLevelCrossingByPlot(validation.values.plotId));
-      dispatch(getDeviceByPlotId(validation.values.plotId));
+      dispatch(getDeviceByPlotId({
+        plotId: validation.values.plotId,
+        isStation: false
+      }));
     }
   }, [validation.values.plotId]);
 

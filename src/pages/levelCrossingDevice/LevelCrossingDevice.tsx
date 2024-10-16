@@ -40,7 +40,7 @@ const LevelCrossingDevice = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllCategory());
+    dispatch(getAllCategory(false));
     dispatch(getAllPlot());
   }, [isAction]);
   return (

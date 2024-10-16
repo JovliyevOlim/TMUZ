@@ -52,9 +52,9 @@ export const getDeviceByLevelCrossingId = createAsyncThunk('device/getDeviceByLe
     return error;
   }
 });
-export const getDeviceByPlotId = createAsyncThunk('device/getDeviceByPlotID', async (categoryId: string) => {
+export const getDeviceByPlotId = createAsyncThunk('device/getDeviceByPlotID', async (devices: any) => {
   try {
-    const response = getDevicePlotIdApi(categoryId);
+    const response = getDevicePlotIdApi(devices);
     return response;
   } catch (error) {
     return error;

@@ -59,7 +59,7 @@ export const getDeviceById = (device: any) => api.get(url.GET_DEVICE_BY_ID, devi
 export const getDeviceCategoryId = (device: any) => api.get(url.GET_DEVICE_BY_CATEGORY_ID + '/' + device);
 
 // get device by plot id
-export const getDevicePlotId = (device: any) => api.get(url.GET_DEVICE_BY_PLOT_ID + '/' + device);
+export const getDevicePlotId = (device: any) => api.get(url.GET_DEVICE_BY_PLOT_ID + '/' + device.plotId + '/' + device.isStation);
 
 // get device by station id
 export const getDeviceStationId = (device: any) => api.get(url.GET_DEVICE_BY_STATION_ID + '/' + device);
@@ -133,7 +133,7 @@ export const deleteLevelCrossing = (levelCrossing: any) => api.delete(url.DELETE
 
 
 // get category
-export const getAllCategory = () => api.get(url.GET_ALL_CATEGORY);
+export const getAllCategory = (params: any) => api.get(url.GET_ALL_CATEGORY + '/' + params);
 // get category by id
 export const getCategoryById = (category: any) => api.get(url.GET_CATEGORY_BY_ID, category);
 // get category by mtu

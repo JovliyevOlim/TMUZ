@@ -11,9 +11,9 @@ import {
   deleteCategory as deleteCategoryApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getAllCategory = createAsyncThunk('Category/getAllCategory', async () => {
+export const getAllCategory = createAsyncThunk('Category/getAllCategory', async (params: any) => {
   try {
-    const response = getAllCategoryApi();
+    const response = getAllCategoryApi(params);
     return response;
   } catch (error) {
     return error;

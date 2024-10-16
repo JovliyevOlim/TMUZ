@@ -37,7 +37,7 @@ const Device = () => {
     setModalDelete(false);
   };
   useEffect(() => {
-    dispatch(getAllCategory());
+    dispatch(getAllCategory(true));
     dispatch(getAllStation());
   }, [isAction]);
   return (

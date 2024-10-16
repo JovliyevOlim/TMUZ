@@ -138,7 +138,10 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   useEffect(() => {
     if (validation.values.plotId) {
       dispatch(getStationByPlotId(validation.values.plotId));
-      dispatch(getDeviceByPlotId(validation.values.plotId));
+      dispatch(getDeviceByPlotId({
+        plotId: validation.values.plotId,
+        isStation: true
+      }));
     }
   }, [validation.values.plotId]);
 
