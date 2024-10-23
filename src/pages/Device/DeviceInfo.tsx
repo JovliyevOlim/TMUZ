@@ -57,7 +57,7 @@ const DeviceInfo = () => {
         deviceId: id
       }));
     }
-  }, []);
+  }, [userLocation]);
 
 
   console.log(userLocation);
