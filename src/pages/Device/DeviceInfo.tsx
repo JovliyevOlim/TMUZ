@@ -47,10 +47,8 @@ const DeviceInfo = () => {
     }
   }, [checkUser]);
 
-
-  function addNewActionForCheck() {
-    getUserLocation();
-    setTimeout(() => {
+  useEffect(() => {
+    if (userLocation) {
       dispatch(checkDeviceForAction({
         lon: userLocation?.longitude,
         lat: userLocation?.latitude,
@@ -58,8 +56,11 @@ const DeviceInfo = () => {
         // longitude: 69.3141504,
         deviceId: id
       }));
-    }, 500);
-  }
+    }
+  }, []);
+
+
+  console.log(userLocation);
 
   useEffect(() => {
     dispatch(getDeviceInfoForQr(id));
@@ -99,7 +100,7 @@ const DeviceInfo = () => {
 
           </div>
           <Button
-            onClick={addNewActionForCheck}
+            onClick={getUserLocation}
             className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Yangi ish qilish
