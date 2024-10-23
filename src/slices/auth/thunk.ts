@@ -3,6 +3,7 @@
 
 import { loginSuccess, logoutUserSuccess, apiError, reset_login_flag } from './reducer';
 import { postLogin } from '../../helpers/backend_helpers.ts';
+import { toast } from 'react-toastify';
 
 export const loginUser = (user: any, navigate: any) => async (dispatch: any) => {
 
@@ -24,6 +25,7 @@ export const loginUser = (user: any, navigate: any) => async (dispatch: any) => 
     }
   } catch (error) {
     dispatch(apiError(error));
+    toast.error(error, { autoClose: 3000 });
   }
 };
 
