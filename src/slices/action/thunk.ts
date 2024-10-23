@@ -61,7 +61,7 @@ export const checkDeviceForAction = createAsyncThunk<any, any>('action/checkDevi
     return data;
   } catch (error) {
     let message: any = error;
-    toast.error(message, { autoClose: 3000 });
+    window.location.href = '/login';
     return rejectWithValue(error);
   }
 });
