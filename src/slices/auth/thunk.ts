@@ -6,7 +6,6 @@ import { postLogin } from '../../helpers/backend_helpers.ts';
 import { toast } from 'react-toastify';
 
 export const loginUser = (user: any, navigate: any) => async (dispatch: any) => {
-
   try {
     let response;
     response = postLogin({
@@ -19,6 +18,28 @@ export const loginUser = (user: any, navigate: any) => async (dispatch: any) => 
       if (data.success) {
         dispatch(loginSuccess(data.data));
         navigate('/dashboard');
+      } else {
+        dispatch(apiError(data.data));
+      }
+    }
+  } catch (error) {
+    dispatch(apiError(error));
+    toast.error(error, { autoClose: 3000 });
+  }
+};
+
+export const loginUserOther = (user: any) => async (dispatch: any) => {
+  try {
+    let response;
+    response = postLogin({
+      username: user.username,
+      password: user.password
+    });
+    var data: any = await response;
+    if (data) {
+      localStorage.setItem('authUser', JSON.stringify(data.data));
+      if (data.success) {
+        dispatch(loginSuccess(data.data));
       } else {
         dispatch(apiError(data.data));
       }

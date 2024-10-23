@@ -87,8 +87,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     validationSchema: Yup.object({
       name: Yup.string().required('Stansiya nomini kiriting!'),
       plotId: Yup.string().required('Uchastkani  tanlang!'),
-      latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
-      longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
+
     }),
     onSubmit: (values) => {
       if (item) {
@@ -253,23 +252,23 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                   </div>
                 </div>
 
-                <div className={'my-2'}>
-                  <label htmlFor="description" className="block text-md font-medium leading-6 text-gray-900">
-                    Tavsif
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="description"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.description || ''}
-                      name="description"
-                      type="text"
-                      placeholder="tavsif"
-                      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
+                {/*<div className={'my-2'}>*/}
+                {/*  <label htmlFor="description" className="block text-md font-medium leading-6 text-gray-900">*/}
+                {/*    Tavsif*/}
+                {/*  </label>*/}
+                {/*  <div className="mt-2">*/}
+                {/*    <input*/}
+                {/*      id="description"*/}
+                {/*      onChange={validation.handleChange}*/}
+                {/*      onBlur={validation.handleBlur}*/}
+                {/*      value={validation.values.description || ''}*/}
+                {/*      name="description"*/}
+                {/*      type="text"*/}
+                {/*      placeholder="tavsif"*/}
+                {/*      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"*/}
+                {/*    />*/}
+                {/*  </div>*/}
+                {/*</div>*/}
 
 
               </div>

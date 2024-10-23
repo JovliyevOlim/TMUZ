@@ -8,7 +8,8 @@ export const initialState = {
   error: '', // for error message
   loading: false,
   isUserLogout: false,
-  errorMsg: false // for error
+  errorMsg: false, // for error,
+  isAction: false
 };
 
 const loginSlice = createSlice({
@@ -27,9 +28,7 @@ const loginSlice = createSlice({
       state.userId = action.payload.user.id;
       state.loading = false;
       state.errorMsg = false;
-      if (window.location.pathname !== 'login') {
-        window.history.back();
-      }
+      state.isAction = !state.isAction;
     },
     logoutUserSuccess(state) {
       state.isUserLogout = true;

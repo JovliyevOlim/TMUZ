@@ -89,10 +89,6 @@ export const AddLevelCrossing = ({ modalOpen, setModalOpen, item, setItem }: any
     initialValues: initialValues,
     validationSchema: Yup.object({
       name: Yup.string().required('Stansiya nomini kiriting!'),
-      description: Yup.string().required('Namuna ish!'),
-      address: Yup.string().required('Manzilni kiriting!'),
-      latitude: Yup.string().required('Stansiya koordinatasini kiriting!'),
-      longitude: Yup.string().required('Stansiya koordinatasini kiriting!')
     }),
     onSubmit: (values) => {
       if (item) {

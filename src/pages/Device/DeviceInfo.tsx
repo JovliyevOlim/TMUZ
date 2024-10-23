@@ -7,14 +7,17 @@ import moment from 'moment';
 import { Button } from 'reactstrap';
 import { AddNewAction } from './AddNewAction.tsx';
 import { checkDeviceForAction } from '../../slices/action/thunk.ts';
+import { Login } from '../Authentication/Login.tsx';
 
 const DeviceInfo = () => {
 
   const { deviceQrCodeInfo } = useSelector((state: any) => state.Device);
   const { checkUser, isAction } = useSelector((state: any) => state.Action);
+  const { users } = useSelector((state: any) => state.Login);
   const dispatch: any = useDispatch();
   const { id }: any = useParams();
   const [modal, setModal] = useState(false);
+  const [modalLogin, setModalLogin] = useState(false);
   const [editData, setEditData] = useState(null);
   const [userLocation, setUserLocation] = useState<{
     latitude: number;
@@ -39,7 +42,6 @@ const DeviceInfo = () => {
   };
 
   useEffect(() => {
-    console.log('check use', checkUser);
     if (checkUser) {
       setModal(true);
     } else {
@@ -60,7 +62,6 @@ const DeviceInfo = () => {
   }, [userLocation]);
 
 
-  console.log(userLocation);
 
   useEffect(() => {
     dispatch(getDeviceInfoForQr(id));
@@ -99,13 +100,23 @@ const DeviceInfo = () => {
             }
 
           </div>
-          <Button
-            onClick={getUserLocation}
-            className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-          >
-            Yangi ish qilish
-          </Button>
+          {
+            users?.user ? <Button
+                onClick={getUserLocation}
+                className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                Yangi ish qilish
+              </Button>
+              : <Button
+                onClick={() => setModalLogin(true)}
+                className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                Login
+              </Button>
+          }
+
           <AddNewAction modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
+          <Login modalOpen={modalLogin} setModalOpen={setModalLogin} />
         </div>
       </div>
       <div
