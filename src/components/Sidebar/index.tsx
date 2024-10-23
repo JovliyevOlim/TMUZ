@@ -66,9 +66,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
         <NavLink to="/" className={'flex items-center justify-between'}>
           <img src={Logo} alt="Logo" width={44} height={44} />
-          <h1 className="ml-4 text-xl font-semibold text-bodydark2">
-            Temiryo'l
-          </h1>
+          <h3 className="ml-4 text-xl font-semibold text-bodydark2">
+            Texnologik Jarayonlarning elektron nazorati
+          </h3>
         </NavLink>
 
         <button

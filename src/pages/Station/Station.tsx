@@ -59,7 +59,7 @@ const Stations = () => {
               <thead>
               <tr className="text-start text-sm font-medium uppercase xsm:text-base">
                 <th className="p-2.5 text-start">Nomi</th>
-                <th className="p-2.5 text-start">Tavsif</th>
+                <th className="p-2.5 text-start">Uchastka</th>
                 <th className="p-2.5 ext-start">Action</th>
               </tr>
               </thead>
@@ -72,7 +72,7 @@ const Stations = () => {
                     </p>
                   </td>
                   <td>
-                    <p className="p-2.5 text-black dark:text-white">{item.description}</p>
+                    <p className="p-2.5 text-black dark:text-white">{item?.stationName}</p>
                   </td>
                   <td>
                     <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
