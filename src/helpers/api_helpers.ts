@@ -2,7 +2,7 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 
 // export const localUrl = 'http://192.168.1.84:5173';
-export const localUrl = 'https://railway-3187acae3c60.herokuapp.com/';
+export const localUrl = 'https://railway-3187acae3c60.herokuapp.com';
 // default
 // axios.defaults.baseURL = 'http://192.168.1.50:8080/api';
 axios.defaults.baseURL = 'https://railway-3187acae3c60.herokuapp.com/api';
