@@ -164,28 +164,6 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     </h6>
                   ) : null}
                 </div>
-                {/*<div className={'my-2'}>*/}
-                {/*  <label htmlFor="address" className="block text-md font-medium leading-6 text-gray-900">*/}
-                {/*    Manzil*/}
-                {/*  </label>*/}
-                {/*  <div className="mt-2">*/}
-                {/*    <input*/}
-                {/*      id="address"*/}
-                {/*      onChange={validation.handleChange}*/}
-                {/*      onBlur={validation.handleBlur}*/}
-                {/*      value={validation.values.address || ''}*/}
-                {/*      name="address"*/}
-                {/*      type="text"*/}
-                {/*      placeholder="Manzil"*/}
-                {/*      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"*/}
-                {/*    />*/}
-                {/*  </div>*/}
-                {/*  {validation.touched.address && validation.errors.address ? (*/}
-                {/*    <h6 className="block text-md font-medium leading-6 text-red-900">*/}
-                {/*      {validation.errors.address}*/}
-                {/*    </h6>*/}
-                {/*  ) : null}*/}
-                {/*</div>*/}
                 <div className={'my-2'}>
                   <label htmlFor="plotId" className="block text-md font-medium leading-6 text-gray-900">
                     Uchastka
@@ -223,7 +201,7 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                   <button
                     type="button"
                     onClick={getUserLocation}
-                    className=" justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                    className=" justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                   >
                     Koordinatani avtomatik olish
                   </button>

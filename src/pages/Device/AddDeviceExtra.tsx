@@ -36,28 +36,28 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   });
 
 
-  // const getUserLocation = () => {
-  //   console.log('ewef');
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         const { latitude, longitude } = position.coords;
-  //         let formValues = initialValues;
-  //         formValues.latitude = latitude;
-  //         formValues.longitude = longitude;
-  //         let a = { ...formValues };
-  //         console.log(a);
-  //         setInitialValues(a);
-  //       },
-  //
-  //       (error) => {
-  //         console.error('Error get user location: ', error);
-  //       }
-  //     );
-  //   } else {
-  //     console.log('Geolocation is not supported by this browser');
-  //   }
-  // };
+  const getUserLocation = () => {
+    console.log('ewef');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          let formValues = initialValues;
+          formValues.latitude = latitude;
+          formValues.longitude = longitude;
+          let a = { ...formValues };
+          console.log(a);
+          setInitialValues(a);
+        },
+
+        (error) => {
+          console.error('Error get user location: ', error);
+        }
+      );
+    } else {
+      console.log('Geolocation is not supported by this browser');
+    }
+  };
 
 
   const onClickQrCode = (data: any) => {
@@ -310,6 +310,15 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                                 {validation.errors.address}
                               </h6>
                             ) : null}
+                          </div>
+                          <div className={'my-2 sm:w-1/2'}>
+                            <button
+                              type="button"
+                              onClick={getUserLocation}
+                              className=" justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                            >
+                              Koordinatani avtomatik olish
+                            </button>
                           </div>
                           <div className={' sm:flex  gap-3'}>
                             <div className={'my-2 sm:w-1/2'}>

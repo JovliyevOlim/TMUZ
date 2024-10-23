@@ -313,6 +313,15 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
                               </h6>
                             ) : null}
                           </div>
+                          <div className={'my-2 sm:w-1/2'}>
+                            <button
+                              type="button"
+                              onClick={getUserLocation}
+                              className=" justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                            >
+                              Koordinatani avtomatik olish
+                            </button>
+                          </div>
                           <div className={' sm:flex  gap-3'}>
                             <div className={'my-2 sm:w-1/2'}>
                               <label htmlFor="latitude" className="block text-md font-medium leading-6 text-gray-900">
