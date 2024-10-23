@@ -35,7 +35,7 @@ axios.interceptors.response.use(
         message = 'Invalid credentials';
         break;
       case 404:
-        message = 'Sorry! the data you are looking for could not be found';
+        window.location.href = '/login';
         break;
       case 409:
         message = error.response.data.message;

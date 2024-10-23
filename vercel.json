@@ -1,8 +1,5 @@
 {
   "rewrites": [
-    {
-      "source": "/deviceInfo/:id",
-      "destination": "/index.html"
-    }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
