@@ -33,28 +33,28 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     setItem(null);
   }
 
-  // const getUserLocation = () => {
-  //   console.log('ewef');
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         const { latitude, longitude } = position.coords;
-  //         let formValues = initialValues;
-  //         formValues.latitude = latitude;
-  //         formValues.longitude = longitude;
-  //         let a = { ...formValues };
-  //         console.log(a);
-  //         setInitialValues(a);
-  //       },
-  //
-  //       (error) => {
-  //         console.error('Error get user location: ', error);
-  //       }
-  //     );
-  //   } else {
-  //     console.log('Geolocation is not supported by this browser');
-  //   }
-  // };
+  const getUserLocation = () => {
+    console.log('ewef');
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          let formValues = initialValues;
+          formValues.latitude = latitude;
+          formValues.longitude = longitude;
+          let a = { ...formValues };
+          console.log(a);
+          setInitialValues(a);
+        },
+
+        (error) => {
+          console.error('Error get user location: ', error);
+        }
+      );
+    } else {
+      console.log('Geolocation is not supported by this browser');
+    }
+  };
 
   useEffect(() => {
     if (item) {
@@ -219,7 +219,16 @@ export const AddStation = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     </h6>
                   ) : null}
                 </div>
-                <div className={' sm:flex  gap-3'}>
+                <div className={'my-2 sm:w-1/2'}>
+                  <button
+                    type="button"
+                    onClick={getUserLocation}
+                    className=" justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                  >
+                    Koordinatani avtomatik olish
+                  </button>
+                </div>
+                <div className={'sm:flex  gap-3'}>
                   <div className={'my-2 sm:w-1/2'}>
                     <label htmlFor="latitude" className="block text-md font-medium leading-6 text-gray-900">
                       Koordinata (latitude)

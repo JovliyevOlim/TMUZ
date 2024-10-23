@@ -52,10 +52,10 @@ const DeviceInfo = () => {
     getUserLocation();
     setTimeout(() => {
       dispatch(checkDeviceForAction({
-        // lon: userLocation?.longitude,
-        // lat: userLocation?.latitude,
-        latitude: 41.3106176,
-        longitude: 69.3141504,
+        lon: userLocation?.longitude,
+        lat: userLocation?.latitude,
+        // latitude: 41.3106176,
+        // longitude: 69.3141504,
         deviceId: id
       }));
     }, 500);
