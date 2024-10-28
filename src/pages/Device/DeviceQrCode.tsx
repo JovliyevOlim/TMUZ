@@ -51,7 +51,7 @@ export const DeviceQrCode = ({ modalOpen, setModalOpen, item, setItem }: any) =>
     });
   };
 
-  console.log(localUrl + '/deviceInfo/' + item?.id);
+  // console.log(localUrl + '/deviceInfo/' + item?.id);
 
   return (
     <Dialog open={modalOpen} onClose={tog_standard} className="relative z-9999">

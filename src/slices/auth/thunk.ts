@@ -17,7 +17,11 @@ export const loginUser = (user: any, navigate: any) => async (dispatch: any) => 
       localStorage.setItem('authUser', JSON.stringify(data.data));
       if (data.success) {
         dispatch(loginSuccess(data.data));
-        navigate('/dashboard');
+        if (window.location.pathname === '/login') {
+          window.history.back();
+        } else {
+          navigate('/dashboard');
+        }
       } else {
         dispatch(apiError(data.data));
       }
