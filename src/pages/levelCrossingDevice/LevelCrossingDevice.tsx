@@ -6,7 +6,7 @@ import { AddLevelCrossingDevice } from './AddLevelCrossingDevice.tsx';
 import { getAllPlot } from '../../slices/plot/thunk.ts';
 import { AddLevelCrossingDeviceExtra } from './AddLevelCrossingDeviceExtra.tsx';
 import { DeviceQrCode } from '../Device/DeviceQrCode.tsx';
-import { deleteCategory, getAllCategory } from '../../slices/category/thunk.ts';
+import { deleteCategory, getAllCategoryFalse } from '../../slices/category/thunk.ts';
 import DeleteModal from '../../components/DeleteModal.tsx';
 
 const LevelCrossingDevice = () => {
@@ -17,7 +17,7 @@ const LevelCrossingDevice = () => {
 
   const [qrCodemodal, setQrCodeModal] = useState(false);
   const [editData, setEditData] = useState<any>(null);
-  const { category, isAction } = useSelector((state: any) => state.Category);
+  const { categoryFalse, isAction } = useSelector((state: any) => state.Category);
   const dispatch: any = useDispatch();
 
 
@@ -40,7 +40,7 @@ const LevelCrossingDevice = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllCategory(false));
+    dispatch(getAllCategoryFalse());
     dispatch(getAllPlot());
   }, [isAction]);
   return (
@@ -71,7 +71,7 @@ const LevelCrossingDevice = () => {
               </tr>
               </thead>
               <tbody>
-              {category?.map((item: any, key: number) => (
+              {categoryFalse?.map((item: any, key: number) => (
                 <tr key={key}>
                   <td>
                     <p onClick={() => onClickEditStation(item)} style={{ cursor: 'pointer' }}

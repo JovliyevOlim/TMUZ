@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AddDevice } from './AddDevice.tsx';
 import { getAllStation } from '../../slices/station/thunk.ts';
 import { AddDeviceExtra } from './AddDeviceExtra.tsx';
-import { deleteCategory, getAllCategory } from '../../slices/category/thunk.ts';
+import {
+  deleteCategory,
+  getAllCategory,
+  getAllCategoryFalse,
+  getAllCategoryTrue
+} from '../../slices/category/thunk.ts';
 import DeleteModal from '../../components/DeleteModal.tsx';
 
 const Device = () => {
@@ -14,7 +19,7 @@ const Device = () => {
   const [modalStation, setModalStation] = useState<any>(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [editData, setEditData] = useState<any>(null);
-  const { category, isAction } = useSelector((state: any) => state.Category);
+  const { categoryTrue, isAction } = useSelector((state: any) => state.Category);
   const dispatch: any = useDispatch();
 
   const onClickEdit = (data: any) => {
@@ -37,7 +42,7 @@ const Device = () => {
     setModalDelete(false);
   };
   useEffect(() => {
-    dispatch(getAllCategory(true));
+    dispatch(getAllCategoryTrue);
     dispatch(getAllStation());
   }, [isAction]);
   return (
@@ -67,7 +72,7 @@ const Device = () => {
               </tr>
               </thead>
               <tbody>
-              {category?.map((item: any, key: number) => (
+              {categoryTrue?.map((item: any, key: number) => (
                 <tr key={key}>
                   <td>
                     <p onClick={() => onClickEditStation(item)} style={{ cursor: 'pointer' }}

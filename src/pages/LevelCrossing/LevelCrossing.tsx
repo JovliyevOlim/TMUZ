@@ -47,7 +47,7 @@ const LevelCrossing = () => {
       <div
         className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-          Temiryo' kesishmasi
+          Temiryo'l kesishmasi
         </h4>
         <div className="flex flex-col">
           <div className="overflow-x-auto">
@@ -56,7 +56,7 @@ const LevelCrossing = () => {
               <tr className="text-start text-sm font-medium uppercase xsm:text-base">
                 <th className="p-2.5 text-start">Nomi</th>
                 <th className="p-2.5 text-start">Uchastka</th>
-                <th className="p-2.5 text-start">Tavsif</th>
+                {/*<th className="p-2.5 text-start">Tavsif</th>*/}
                 <th className="p-2.5 ext-start">Action</th>
               </tr>
               </thead>
@@ -69,11 +69,11 @@ const LevelCrossing = () => {
                     </p>
                   </td>
                   <td>
-                    <p className="p-2.5 text-black dark:text-white">{item.address}</p>
+                    <p className="p-2.5 text-black dark:text-white">{item.plotName}</p>
                   </td>
-                  <td>
-                    <p className="p-2.5 text-black dark:text-white">{item.description}</p>
-                  </td>
+                  {/*<td>*/}
+                  {/*  <p className="p-2.5 text-black dark:text-white">{item.description}</p>*/}
+                  {/*</td>*/}
                   <td>
                     <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
                       <button onClick={() => onClickEdit(item)}

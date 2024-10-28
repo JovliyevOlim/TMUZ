@@ -72,7 +72,7 @@ const Stations = () => {
                     </p>
                   </td>
                   <td>
-                    <p className="p-2.5 text-black dark:text-white">{item?.stationName}</p>
+                    <p className="p-2.5 text-black dark:text-white">{item?.plotName}</p>
                   </td>
                   <td>
                     <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">

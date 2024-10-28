@@ -1,6 +1,8 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCategory, getAllCategoryFalse } from '../../slices/category/thunk.ts';
 
 
 interface ChartTwoState {
@@ -10,9 +12,14 @@ interface ChartTwoState {
   }[];
 }
 
-const ChartTwo: React.FC = ({ text, category }: any) => {
+const LevelCrossingDeviceChart: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const { categoryFalse, isAction } = useSelector((state: any) => state.Category);
   const [row, setRow] = useState<any>([]);
 
+  useEffect(() => {
+    dispatch(getAllCategoryFalse);
+  }, [isAction]);
   // useEffect(() => {
   //   let testRow: any = [];
   //   seriesRow?.map((item: any) => {
@@ -101,15 +108,13 @@ const ChartTwo: React.FC = ({ text, category }: any) => {
   handleReset;
 
 
-  console.log(category);
-
   return (
     <div
       className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            {text}
+            Kesishmadagi qurilmalar
           </h4>
         </div>
         <div>
@@ -120,9 +125,9 @@ const ChartTwo: React.FC = ({ text, category }: any) => {
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
               {
-                category?.map((item: any) => {
-                  <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>;
-                })
+                categoryFalse?.map((item: any) =>
+                  <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
+                )
               }
             </select>
           </div>
@@ -143,4 +148,4 @@ const ChartTwo: React.FC = ({ text, category }: any) => {
   );
 };
 
-export default ChartTwo;
+export default LevelCrossingDeviceChart;

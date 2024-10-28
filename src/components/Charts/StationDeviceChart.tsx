@@ -1,6 +1,8 @@
 import { ApexOptions } from 'apexcharts';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCategoryTrue } from '../../slices/category/thunk.ts';
 
 
 interface ChartTwoState {
@@ -10,8 +12,16 @@ interface ChartTwoState {
   }[];
 }
 
-const ChartTwo: React.FC = ({ text, category }: any) => {
+const StationDeviceChart: React.FC = () => {
+  const dispatch: any = useDispatch();
+
+  const { categoryTrue, isAction } = useSelector((state: any) => state.Category);
+
   const [row, setRow] = useState<any>([]);
+
+  useEffect(() => {
+    dispatch(getAllCategoryTrue);
+  }, [isAction]);
 
   // useEffect(() => {
   //   let testRow: any = [];
@@ -101,7 +111,7 @@ const ChartTwo: React.FC = ({ text, category }: any) => {
   handleReset;
 
 
-  console.log(category);
+
 
   return (
     <div
@@ -109,7 +119,7 @@ const ChartTwo: React.FC = ({ text, category }: any) => {
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            {text}
+            Stansiyada qurilmalar
           </h4>
         </div>
         <div>
@@ -120,9 +130,9 @@ const ChartTwo: React.FC = ({ text, category }: any) => {
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
               {
-                category?.map((item: any) => {
-                  <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>;
-                })
+                categoryTrue?.map((item: any) =>
+                  <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
+                )
               }
             </select>
           </div>
@@ -143,4 +153,4 @@ const ChartTwo: React.FC = ({ text, category }: any) => {
   );
 };
 
-export default ChartTwo;
+export default StationDeviceChart;

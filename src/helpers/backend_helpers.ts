@@ -59,7 +59,7 @@ export const getDeviceById = (device: any) => api.get(url.GET_DEVICE_BY_ID, devi
 export const getDeviceCategoryId = (device: any) => api.get(url.GET_DEVICE_BY_CATEGORY_ID + '/' + device);
 
 // get device by plot id
-export const getDevicePlotId = (device: any) => api.get(url.GET_DEVICE_BY_PLOT_ID + '/' + device.plotId + '/' + device.isStation);
+export const getDevicePlotId = (device: any) => api.get(url.GET_DEVICE_BY_CATEGORY_ID_PLOT_ID + '/' + device.categoryId + '/' + device.plotId);
 
 // get device by station id
 export const getDeviceStationId = (device: any) => api.get(url.GET_DEVICE_BY_STATION_ID + '/' + device);
