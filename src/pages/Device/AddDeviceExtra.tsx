@@ -139,16 +139,12 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
       dispatch(getStationByPlotId(validation.values.plotId));
       dispatch(getDeviceByPlotId({
         plotId: validation.values.plotId,
-        categoryId: item.id
+        categoryId: item.id,
+        stationId: validation.values.stationId
       }));
     }
-  }, [validation.values.plotId]);
+  }, [validation.values.plotId, validation.values.stationId]);
 
-  useEffect(() => {
-    if (validation.values.stationId) {
-      dispatch(getDeviceByStationId(validation.values.stationId));
-    }
-  }, [validation.values.stationId]);
 
   useEffect(() => {
     if (item) {
