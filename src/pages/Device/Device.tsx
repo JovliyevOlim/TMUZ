@@ -42,7 +42,7 @@ const Device = () => {
     setModalDelete(false);
   };
   useEffect(() => {
-    dispatch(getAllCategoryTrue);
+    dispatch(getAllCategoryTrue());
     dispatch(getAllStation());
   }, [isAction]);
   return (
