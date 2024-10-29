@@ -100,10 +100,10 @@ const ECommerce: React.FC = () => {
         {/*<ChartOne />*/}
         <StationDeviceChart />
         <LevelCrossingDeviceChart />
-        <ChartThree />
+        {/*<ChartThree />*/}
         {/*<MapOne />*/}
         <div className="col-span-12 mt-4 xl:col-span-8">
-          <TableOne />
+          {/*<TableOne />*/}
         </div>
         {/*<ChatCard />*/}
       </div>

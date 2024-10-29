@@ -127,6 +127,8 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
         name: '',
         station: true,
         description: '',
+
+
         stationId: stationId,
         plotId: plotId,
         latitude: 0,

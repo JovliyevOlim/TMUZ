@@ -17,12 +17,13 @@ export const loginUser = (user: any, navigate: any) => async (dispatch: any) => 
       localStorage.setItem('authUser', JSON.stringify(data.data));
       if (data.success) {
         dispatch(loginSuccess(data.data));
-        // if (window.location.pathname === '/login') {
-        //   window.history.back();
-        // } else {
-        //
-        // }
-        navigate('/dashboard');
+        if (document.referrer == '/singIn') {
+          if (window.location.pathname == '/singIn') {
+            window.history.back();
+          }
+        } else {
+          navigate('/dashboard');
+        }
       } else {
         dispatch(apiError(data.data));
       }

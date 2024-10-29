@@ -29,6 +29,11 @@ const loginSlice = createSlice({
       state.loading = false;
       state.errorMsg = false;
       state.isAction = !state.isAction;
+      if (document.referrer !== 'login') {
+        if (window.location.pathname !== 'login') {
+          window.history.back();
+        }
+      }
     },
     logoutUserSuccess(state) {
       state.isUserLogout = true;

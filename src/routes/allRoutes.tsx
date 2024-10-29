@@ -89,8 +89,8 @@ const authProtectedRoutes = [
 
 const publicRoutes = [
   // Authentication Page
+  { path: '/signIn', component: <SignIn /> },
   { path: '/login', component: <SignIn /> },
-  { path: '/signIn', component: <ReloadSignIn /> },
   { path: '/register', component: <SignUp /> },
   //LevelCrossingDevice
   { path: '/deviceInfo/:id', component: <DeviceInfo /> }

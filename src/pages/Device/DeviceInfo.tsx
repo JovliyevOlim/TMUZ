@@ -7,6 +7,7 @@ import moment from 'moment';
 import { Button } from 'reactstrap';
 import { AddNewAction } from './AddNewAction.tsx';
 import { checkDeviceForAction } from '../../slices/action/thunk.ts';
+import { toast } from 'react-toastify';
 
 const DeviceInfo = () => {
 
@@ -21,7 +22,15 @@ const DeviceInfo = () => {
     longitude: number;
   } | null>(null);
 
+
+  function getLocation() {
+    getUserLocation();
+    console.log('fewfewp');
+  }
+
+  console.log(userLocation);
   const getUserLocation = () => {
+    console.log('location');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -30,11 +39,11 @@ const DeviceInfo = () => {
         },
 
         (error) => {
-          console.error('Error get user location: ', error);
+          toast.error(error);
         }
       );
     } else {
-      console.log('Geolocation is not supported by this browser');
+      toast.error('Geolocation is not supported by this browser');
     }
   };
 
@@ -48,20 +57,15 @@ const DeviceInfo = () => {
   }, [checkUser]);
 
   useEffect(() => {
-    if (userLocation){
-        dispatch(checkDeviceForAction({
-          lon: userLocation?.longitude,
-          lat: userLocation?.latitude,
-          // latitude: 41.3106176,
-          // longitude: 69.3141504,
-          deviceId: id
-        }));
+    if (userLocation) {
+      dispatch(checkDeviceForAction({
+        longitude: userLocation?.longitude,
+        latitude: userLocation?.latitude,
+        deviceId: id
+      }));
     }
   }, [userLocation]);
 
-
-
-  console.log(userLocation);
 
   useEffect(() => {
     dispatch(getDeviceInfoForQr(id));
@@ -101,7 +105,7 @@ const DeviceInfo = () => {
 
           </div>
           <Button
-            onClick={getUserLocation}
+            onClick={getLocation}
             className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
           >
             Yangi ish qilish
