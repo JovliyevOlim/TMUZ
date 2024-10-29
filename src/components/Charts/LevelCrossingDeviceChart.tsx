@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCategory, getAllCategoryFalse } from '../../slices/category/thunk.ts';
+import { getAllDevice } from '../../slices/device/thunk.ts';
+import { generateChartDataByCategory, generateSeriesData } from '../../helpers/utils.tsx';
 
 
 interface ChartTwoState {
@@ -15,18 +17,17 @@ interface ChartTwoState {
 const LevelCrossingDeviceChart: React.FC = () => {
   const dispatch: any = useDispatch();
   const { categoryFalse, isAction } = useSelector((state: any) => state.Category);
+  const { devices } = useSelector((state: any) => state.Device);
+
+
   const [row, setRow] = useState<any>([]);
+  const [categoryId, setCategoryId] = useState<string>(categoryFalse[0]?.id);
 
   useEffect(() => {
-    dispatch(getAllCategoryFalse);
+    dispatch(getAllCategoryFalse());
+    dispatch(getAllDevice());
   }, [isAction]);
-  // useEffect(() => {
-  //   let testRow: any = [];
-  //   seriesRow?.map((item: any) => {
-  //     testRow.push(item?.name);
-  //   });
-  //   setRow(testRow);
-  // }, [seriesRow]);
+
   const [state, setState] = useState<ChartTwoState>({
     series: [
       {
@@ -39,6 +40,14 @@ const LevelCrossingDeviceChart: React.FC = () => {
       }
     ]
   });
+
+  useEffect(() => {
+    const result = generateChartDataByCategory(devices, categoryId);
+    setRow(result.xaxis.levelCrossingCategories);
+    state.series = result.levelCrossingSeries;
+    let a = { ...state };
+    setState(a);
+  }, [categoryId]);
 
   const options: ApexOptions = {
     colors: ['#d20404', '#03d907'],
@@ -122,6 +131,8 @@ const LevelCrossingDeviceChart: React.FC = () => {
             <select
               name="#"
               id="#"
+              value={categoryId}
+              onChange={(e: any) => setCategoryId(e)}
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
               {

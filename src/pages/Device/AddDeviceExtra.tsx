@@ -6,7 +6,6 @@ import {
   addNewDevice, deleteDevice,
   getDeviceByCategoryId,
   getDeviceByPlotId,
-  getDeviceByStationId,
   updateDevice
 } from '../../slices/device/thunk.ts';
 import { getStationByPlotId } from '../../slices/station/thunk.ts';
@@ -80,7 +79,6 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   function tog_standard() {
     setAddOpen(!addOpen);
     setItem(null);
-    validation.resetForm();
     setDeviceItem(null);
   }
 

@@ -26,7 +26,6 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
   const [initialValues, setInitialValues] = useState({
     name: '',
     description: '',
-    address: '',
     plotId: '',
     levelCrossingId: '',
     categoryId: '',
@@ -77,7 +76,6 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
   function tog_standard() {
     setAddOpen(!addOpen);
     setItem(null);
-    validation.resetForm();
     setDeviceItem(null);
   }
 
@@ -86,7 +84,6 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
       setInitialValues({
         name: deviceItem?.name,
         station: false,
-        address: '',
         description: deviceItem?.description,
         levelCrossingId: deviceItem?.levelCrossingId,
         categoryId: deviceItem?.id,
@@ -126,7 +123,6 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
       setInitialValues({
         name: '',
         description: '',
-        address: '',
         plotId: '',
         station: false,
         levelCrossingId: '',
