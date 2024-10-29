@@ -85,21 +85,21 @@ export function generateChartDataByCategory(data: Device[], categoryId: string):
   return {
     stationSeries: [
       {
-        name: 'Qurilma ko\'rikdan o\'tkazilmagan (Station)',
+        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
         data: stationUncheckedData
       },
       {
-        name: 'Qurilma ko\'rikdan o\'tkazilgan (Station)',
+        name: 'Qurilma ko\'rikdan o\'tkazilgan',
         data: stationCheckedData
       }
     ],
     levelCrossingSeries: [
       {
-        name: 'Qurilma ko\'rikdan o\'tkazilmagan (Level Crossing)',
+        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
         data: levelCrossingUncheckedData
       },
       {
-        name: 'Qurilma ko\'rikdan o\'tkazilgan (Level Crossing)',
+        name: 'Qurilma ko\'rikdan o\'tkazilgan',
         data: levelCrossingCheckedData
       }
     ],
