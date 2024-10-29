@@ -36,6 +36,7 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getStationByPlotId.rejected, (state: any) => {
+        state.stations = []
         state.loading = false;
       });
 

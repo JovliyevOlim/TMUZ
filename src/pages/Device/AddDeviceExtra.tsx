@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addNewDevice, deleteDevice,
   getDeviceByCategoryId,
-  getDeviceByPlotId,
   updateDevice
 } from '../../slices/device/thunk.ts';
 import { getStationByPlotId } from '../../slices/station/thunk.ts';
@@ -38,7 +37,6 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
 
 
   const getUserLocation = () => {
-    console.log('ewef');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -80,6 +78,9 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
     setAddOpen(!addOpen);
     setItem(null);
     setDeviceItem(null);
+    setStationId(null);
+    setPlotId(null);
+    validation.reset();
   }
 
   useEffect(() => {
@@ -127,41 +128,36 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
         name: '',
         station: true,
         description: '',
-
-
-        stationId: stationId,
-        plotId: plotId,
+        stationId: '',
+        plotId: '',
         latitude: 0,
         longitude: 0
       });
     }
   }, [dispatch, isAction]);
 
-  useEffect(() => {
-    if (plotId) {
-      dispatch(getStationByPlotId(plotId));
-    }
-  }, [plotId]);
+  const filterByDynamicCriteria = (criteria: any) => {
+    return devices.filter((item: any) =>
+      Object.keys(criteria).every(key =>
+        criteria[key] == null || item[key] === criteria[key]
+      )
+    );
+  };
+
 
   useEffect(() => {
     if (item) {
-      if (plotId) {
-        dispatch(getDeviceByPlotId({
-          plotId: plotId,
-          categoryId: item.id,
-          params: {
-            stationId: stationId
-          }
-        }));
-      } else {
-        dispatch(getDeviceByCategoryId(item?.id));
-      }
+      dispatch(getDeviceByCategoryId(item?.id));
     }
-  }, [item, isAction, stationId, plotId]);
+  }, [item, isAction]);
 
 
   return (
-    <Dialog open={modalOpen} onClose={() => setModalOpen(false)} className="relative z-9999">
+    <Dialog open={modalOpen} onClose={() => {
+      setPlotId(null);
+      setStationId(null);
+      setModalOpen(false);
+    }} className="relative z-9999">
       <DialogBackdrop
         transition
         className="fixed inset-0  bg-black bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-500 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -213,6 +209,9 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                               onChange={(e: any) => {
                                 validation.handleChange(e);
                                 setPlotId(e.target.value);
+                                if (e.target.value) {
+                                  dispatch(getStationByPlotId(e.target.value));
+                                }
                               }}
                               onBlur={validation.handleBlur}
                               value={validation.values.plotId}
@@ -430,7 +429,11 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                       </tr>
                       </thead>
                       <tbody>
-                      {devices?.map((val: any, key: number) => (
+                      {filterByDynamicCriteria({
+                        stationId,
+                        categoryId: item?.id,
+                        plotId
+                      })?.map((val: any, key: number) => (
                         <tr key={key}>
                           <td>
                             <div className={'flex items-center'}>

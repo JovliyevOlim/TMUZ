@@ -7,11 +7,10 @@ import { getAllStation } from '../../slices/station/thunk.ts';
 import { AddDeviceExtra } from './AddDeviceExtra.tsx';
 import {
   deleteCategory,
-  getAllCategory,
-  getAllCategoryFalse,
   getAllCategoryTrue
 } from '../../slices/category/thunk.ts';
 import DeleteModal from '../../components/DeleteModal.tsx';
+import { getAllPlot } from '../../slices/plot/thunk.ts';
 
 const Device = () => {
 
@@ -44,6 +43,7 @@ const Device = () => {
   useEffect(() => {
     dispatch(getAllCategoryTrue());
     dispatch(getAllStation());
+    dispatch(getAllPlot());
   }, [isAction]);
   return (
     <>

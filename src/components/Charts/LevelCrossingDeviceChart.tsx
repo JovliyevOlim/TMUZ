@@ -21,7 +21,7 @@ const LevelCrossingDeviceChart: React.FC = () => {
 
 
   const [row, setRow] = useState<any>([]);
-  const [categoryId, setCategoryId] = useState<string>(categoryFalse[0]?.id);
+  const [categoryId, setCategoryId] = useState<string>('');
 
   useEffect(() => {
     dispatch(getAllCategoryFalse());
@@ -132,9 +132,10 @@ const LevelCrossingDeviceChart: React.FC = () => {
               name="#"
               id="#"
               value={categoryId}
-              onChange={(e: any) => setCategoryId(e)}
+              onChange={(e: any) => setCategoryId(e.target.value)}
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
+              <option value={''}>Tanlang</option>
               {
                 categoryFalse?.map((item: any) =>
                   <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>

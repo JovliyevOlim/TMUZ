@@ -21,13 +21,12 @@ const StationDeviceChart: React.FC = () => {
   const { devices } = useSelector((state: any) => state.Device);
 
   const [row, setRow] = useState<any>([]);
-  const [categoryId, setCategoryId] = useState<string>(categoryTrue[0]?.id);
+  const [categoryId, setCategoryId] = useState<string>('');
 
   useEffect(() => {
-    dispatch(getAllCategoryTrue);
+    dispatch(getAllCategoryTrue());
     dispatch(getAllDevice());
   }, [isAction]);
-
 
 
   const [state, setState] = useState<ChartTwoState>({
@@ -138,6 +137,7 @@ const StationDeviceChart: React.FC = () => {
               onChange={(e) => setCategoryId(e.target.value)}
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
+              <option value={''}>Tanlang</option>
               {
                 categoryTrue?.map((item: any) =>
                   <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>

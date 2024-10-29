@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLevelCrossingByPlot } from '../../slices/levelCrossing/thunk.ts';
 import {
   addNewDevice,
-  deleteDevice, getDeviceByCategoryId, getDeviceByLevelCrossingId,
-  getDeviceByPlotId,
+  deleteDevice, getDeviceByCategoryId,
   updateDevice
 } from '../../slices/device/thunk.ts';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
@@ -22,6 +21,8 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
   const { levelCrossingForSelect } = useSelector((state: any) => state.LevelCrossing);
   const { plot } = useSelector((state: any) => state.Plot);
   const [deviceItem, setDeviceItem] = useState<any>(null);
+  const [levelCrossId, setLevelCrossId] = useState<any>(null);
+  const [plotId, setPlotId] = useState<any>(null);
   const [qrCodemodal, setQrCodeModal] = useState(false);
   const [initialValues, setInitialValues] = useState({
     name: '',
@@ -36,7 +37,6 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
 
 
   const getUserLocation = () => {
-    console.log('ewef');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -77,6 +77,9 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
     setAddOpen(!addOpen);
     setItem(null);
     setDeviceItem(null);
+    setLevelCrossId(null);
+    setPlotId(null);
+    validation.reset();
   }
 
   useEffect(() => {
@@ -133,21 +136,13 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
     }
   }, [dispatch, isAction]);
 
-  useEffect(() => {
-    if (validation.values.plotId) {
-      dispatch(getLevelCrossingByPlot(validation.values.plotId));
-      dispatch(getDeviceByPlotId({
-        plotId: validation.values.plotId,
-        isStation: false
-      }));
-    }
-  }, [validation.values.plotId]);
-
-  useEffect(() => {
-    if (validation.values.levelCrossingId) {
-      dispatch(getDeviceByLevelCrossingId(validation.values.levelCrossingId));
-    }
-  }, [validation.values.levelCrossingId]);
+  const filterByDynamicCriteria = (criteria: any) => {
+    return devices.filter((item: any) =>
+      Object.keys(criteria).every(key =>
+        criteria[key] == null || item[key] === criteria[key]
+      )
+    );
+  };
 
   useEffect(() => {
     if (item) {
@@ -156,7 +151,11 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
   }, [item, isAction]);
 
   return (
-    <Dialog open={modalOpen} onClose={() => setModalOpen(false)} className="relative z-9999">
+    <Dialog open={modalOpen} onClose={() => {
+      setLevelCrossId(null);
+      setPlotId(null);
+      setModalOpen(false);
+    }} className="relative z-9999">
       <DialogBackdrop
         transition
         className="fixed inset-0  bg-black bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-500 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -205,7 +204,13 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
                             <select
                               id="plotId"
                               name="plotId"
-                              onChange={validation.handleChange}
+                              onChange={(e: any) => {
+                                validation.handleChange(e);
+                                setPlotId(e.target.value);
+                                if (e.target.value) {
+                                  dispatch(getLevelCrossingByPlot(e.target.value));
+                                }
+                              }}
                               onBlur={validation.handleBlur}
                               value={validation.values.plotId}
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
@@ -238,7 +243,10 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
                             <select
                               id="levelCrossingId"
                               name="levelCrossingId"
-                              onChange={validation.handleChange}
+                              onChange={(e) => {
+                                validation.handleChange(e);
+                                setLevelCrossId(e.target.value);
+                              }}
                               onBlur={validation.handleBlur}
                               value={validation.values.levelCrossingId || ''}
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
@@ -416,7 +424,11 @@ export const AddLevelCrossingDeviceExtra = ({ modalOpen, setModalOpen, item, set
                       </tr>
                       </thead>
                       <tbody>
-                      {devices?.map((item: any, key: number) => (
+                      {filterByDynamicCriteria({
+                        levelCrossingId: levelCrossId,
+                        categoryId: item?.id,
+                        plotId
+                      })?.map((item: any, key: number) => (
                         <tr key={key}>
                           <td>
                             <div className={'flex items-center'}>
