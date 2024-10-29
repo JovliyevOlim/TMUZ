@@ -24,6 +24,8 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   const { plot } = useSelector((state: any) => state.Plot);
   const [deviceItem, setDeviceItem] = useState<any>(null);
   const [qrCodemodal, setQrCodeModal] = useState(false);
+  const [stationId, setStationId] = useState<any>(null);
+  const [plotId, setPlotId] = useState<any>(null);
   const [initialValues, setInitialValues] = useState({
     name: '',
     station: true,
@@ -127,7 +129,8 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
         name: '',
         station: true,
         description: '',
-        stationId: '',
+        stationId: stationId,
+        plotId: plotId,
         latitude: 0,
         longitude: 0
       });
@@ -135,24 +138,27 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
   }, [dispatch, isAction]);
 
   useEffect(() => {
-    if (validation.values.plotId) {
-      dispatch(getStationByPlotId(validation.values.plotId));
-      dispatch(getDeviceByPlotId({
-        plotId: validation.values.plotId,
-        categoryId: item.id,
-        stationId: validation.values.stationId
-      }));
+    if (plotId) {
+      dispatch(getStationByPlotId(plotId));
     }
-  }, [validation.values.plotId, validation.values.stationId]);
-
+  }, [plotId]);
 
   useEffect(() => {
     if (item) {
-      dispatch(getDeviceByCategoryId(item?.id));
+      if (plotId) {
+        dispatch(getDeviceByPlotId({
+          plotId: plotId,
+          categoryId: item.id,
+          params: {
+            stationId: stationId
+          }
+        }));
+      } else {
+        dispatch(getDeviceByCategoryId(item?.id));
+      }
     }
-  }, [item, isAction]);
+  }, [item, isAction, stationId, plotId]);
 
-  console.log(validation.values);
 
   return (
     <Dialog open={modalOpen} onClose={() => setModalOpen(false)} className="relative z-9999">
@@ -204,7 +210,10 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                             <select
                               id="plotId"
                               name="plotId"
-                              onChange={validation.handleChange}
+                              onChange={(e: any) => {
+                                validation.handleChange(e);
+                                setPlotId(e.target.value);
+                              }}
                               onBlur={validation.handleBlur}
                               value={validation.values.plotId}
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
@@ -228,39 +237,45 @@ export const AddDeviceExtra = ({ modalOpen, setModalOpen, item, setItem }: any) 
                           </h6>
                         ) : null}
                       </div>
-                      <div className={'my-2'}>
-                        <label htmlFor="stationId" className="block text-md font-medium leading-6 text-gray-900">
-                          Stansiya
-                        </label>
-                        <div className="mt-2">
-                          <div className="relative inline-block w-full">
-                            <select
-                              id="stationId"
-                              name="stationId"
-                              onChange={validation.handleChange}
-                              onBlur={validation.handleBlur}
-                              value={validation.values.stationId || ''}
-                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      {
+                        plotId &&
+                        <div className={'my-2'}>
+                          <label htmlFor="stationId" className="block text-md font-medium leading-6 text-gray-900">
+                            Stansiya
+                          </label>
+                          <div className="mt-2">
+                            <div className="relative inline-block w-full">
+                              <select
+                                id="stationId"
+                                name="stationId"
+                                onChange={(e: any) => {
+                                  validation.handleChange(e);
+                                  setStationId(e.target.value);
+                                }}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.stationId || ''}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                              <option value="" className="text-body dark:text-bodydark">
-                                Tanlang
-                              </option>
-                              {
-                                stations.map((item: any) =>
-                                  <option value={item.id} className="text-body dark:text-bodydark">
-                                    {item.name}
-                                  </option>
-                                )
-                              }
-                            </select>
+                                <option value="" className="text-body dark:text-bodydark">
+                                  Tanlang
+                                </option>
+                                {
+                                  stations.map((item: any) =>
+                                    <option value={item.id} className="text-body dark:text-bodydark">
+                                      {item.name}
+                                    </option>
+                                  )
+                                }
+                              </select>
+                            </div>
                           </div>
+                          {validation.touched.stationId && validation.errors.stationId ? (
+                            <h6 className="block text-md font-medium leading-6 text-red-900">
+                              {validation.errors.stationId}
+                            </h6>
+                          ) : null}
                         </div>
-                        {validation.touched.stationId && validation.errors.stationId ? (
-                          <h6 className="block text-md font-medium leading-6 text-red-900">
-                            {validation.errors.stationId}
-                          </h6>
-                        ) : null}
-                      </div>
+                      }
                       {
                         addOpen && <>
                           <div className={'my-2'}>
