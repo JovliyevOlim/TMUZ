@@ -14,7 +14,9 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     name: '',
     description: '',
     checkDay: 0,
-    station: true
+    station: true,
+    peregon: false,
+    levelCrossing: false
   });
 
 
@@ -24,7 +26,9 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       name: '',
       description: '',
       checkDay: 0,
-      station: true
+      station: true,
+      peregon: false,
+      levelCrossing: false
     });
     validation.resetForm();
     setItem(null);
@@ -36,14 +40,18 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
         name: item?.name,
         description: item?.description,
         checkDay: item?.checkDay,
-        station: true
+        station: true,
+        peregon: false,
+        levelCrossing: false
       });
     } else {
       setInitialValues({
         name: '',
         description: '',
         checkDay: 0,
-        station: true
+        station: true,
+        peregon: false,
+        levelCrossing: false
       });
       validation.resetForm();
     }
@@ -76,7 +84,9 @@ export const AddDevice = ({ modalOpen, setModalOpen, item, setItem }: any) => {
         name: '',
         description: '',
         checkDay: 0,
-        station: true
+        station: true,
+        peregon: false,
+        levelCrossing: false
       });
     }
   }, [dispatch, isAction]);

@@ -6,8 +6,7 @@ import { AddPeregonDevice } from './AddPeregonDevice.tsx';
 import { getAllStation } from '../../slices/station/thunk.ts';
 import { AddPeregonDeviceExtra } from './AddPeregonDeviceExtra.tsx';
 import {
-  deleteCategory,
-  getAllCategoryTrue
+  deleteCategory, getAllCategory,
 } from '../../slices/category/thunk.ts';
 import DeleteModal from '../../components/DeleteModal.tsx';
 import { getAllPlot } from '../../slices/plot/thunk.ts';
@@ -41,7 +40,13 @@ const PeregonDevice = () => {
     setModalDelete(false);
   };
   useEffect(() => {
-    dispatch(getAllCategoryTrue());
+    dispatch(getAllCategory(
+      {
+        isStation: false,
+        isLevelCrossing: false,
+        isPeregon: true
+      }
+    ));
     dispatch(getAllStation());
     dispatch(getAllPlot());
   }, [isAction]);
@@ -118,7 +123,8 @@ const PeregonDevice = () => {
         </div>
       </div>
       <AddPeregonDevice modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
-      <AddPeregonDeviceExtra modalOpen={modalStation} setModalOpen={setModalStation} item={editData} setItem={setEditData} />
+      <AddPeregonDeviceExtra modalOpen={modalStation} setModalOpen={setModalStation} item={editData}
+                             setItem={setEditData} />
       <DeleteModal modalOpen={modalDelete} setModalOpen={setModalDelete} text={'Qurilma turini'} setItem={setEditData}
                    deleteFunction={deleteFunction} />
     </>

@@ -2,9 +2,9 @@ import { ApexOptions } from 'apexcharts';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategory, getAllCategoryFalse } from '../../slices/category/thunk.ts';
+import { getAllCategory, getAllCategoryForSelect } from '../../slices/category/thunk.ts';
 import { getAllDevice } from '../../slices/device/thunk.ts';
-import { generateChartDataByCategory, generateSeriesData } from '../../helpers/utils.tsx';
+import { generateChartDataByCategory } from '../../helpers/utils.tsx';
 
 
 interface ChartTwoState {
@@ -16,7 +16,7 @@ interface ChartTwoState {
 
 const LevelCrossingDeviceChart: React.FC = () => {
   const dispatch: any = useDispatch();
-  const { categoryFalse, isAction } = useSelector((state: any) => state.Category);
+  const { allCategory, isAction } = useSelector((state: any) => state.Category);
   const { devices } = useSelector((state: any) => state.Device);
 
 
@@ -24,7 +24,7 @@ const LevelCrossingDeviceChart: React.FC = () => {
   const [categoryId, setCategoryId] = useState<string>('');
 
   useEffect(() => {
-    dispatch(getAllCategoryFalse());
+    dispatch(getAllCategoryForSelect());
     dispatch(getAllDevice());
   }, [isAction]);
 
@@ -137,7 +137,7 @@ const LevelCrossingDeviceChart: React.FC = () => {
             >
               <option value={''}>Tanlang</option>
               {
-                categoryFalse?.map((item: any) =>
+                allCategory.filter((val:any)=>val.levelCrossing)?.map((item: any) =>
                   <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
                 )
               }

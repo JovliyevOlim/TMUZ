@@ -2,9 +2,9 @@ import { ApexOptions } from 'apexcharts';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategoryTrue } from '../../slices/category/thunk.ts';
+import { getAllCategory, getAllCategoryForSelect } from '../../slices/category/thunk.ts';
 import { getAllDevice } from '../../slices/device/thunk.ts';
-import { generateChartDataByCategory, generateSeriesData } from '../../helpers/utils.tsx';
+import { generateChartDataByCategory } from '../../helpers/utils.tsx';
 
 
 interface ChartTwoState {
@@ -17,14 +17,15 @@ interface ChartTwoState {
 const StationDeviceChart: React.FC = () => {
   const dispatch: any = useDispatch();
 
-  const { categoryTrue, isAction } = useSelector((state: any) => state.Category);
+  const { allCategory, isAction } = useSelector((state: any) => state.Category);
   const { devices } = useSelector((state: any) => state.Device);
+
 
   const [row, setRow] = useState<any>([]);
   const [categoryId, setCategoryId] = useState<string>('');
 
   useEffect(() => {
-    dispatch(getAllCategoryTrue());
+    dispatch(getAllCategoryForSelect());
     dispatch(getAllDevice());
   }, [isAction]);
 
@@ -139,7 +140,7 @@ const StationDeviceChart: React.FC = () => {
             >
               <option value={''}>Tanlang</option>
               {
-                categoryTrue?.map((item: any) =>
+                allCategory.filter((val:any)=>val.station)?.map((item: any) =>
                   <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
                 )
               }

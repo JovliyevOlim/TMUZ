@@ -8,20 +8,22 @@ import {
   addNewCategory as addNewCategoryApi,
   updateCategory as updateCategoryApi,
   getAllCategory as getAllCategoryApi,
+  getAllCategoryForSelect as getAllCategoryForSelectApi,
   deleteCategory as deleteCategoryApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getAllCategoryFalse = createAsyncThunk('Category/getAllCategoryFalse', async () => {
+export const getAllCategoryForSelect = createAsyncThunk('Category/getAllCategoryForSelect', async () => {
   try {
-    const response = getAllCategoryApi(false);
+    const response = getAllCategoryForSelectApi();
     return response;
   } catch (error) {
     return error;
   }
 });
-export const getAllCategoryTrue = createAsyncThunk('Category/getAllCategoryTrue', async () => {
+
+export const getAllCategory = createAsyncThunk('Category/getAllCategoryFalse', async (params: any) => {
   try {
-    const response = getAllCategoryApi(true);
+    const response = getAllCategoryApi(params);
     return response;
   } catch (error) {
     return error;

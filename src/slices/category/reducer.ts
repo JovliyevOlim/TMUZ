@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllCategoryFalse, getAllCategoryTrue, addNewCategory, updateCategory, deleteCategory } from './thunk';
+import { getAllCategory, addNewCategory, updateCategory, deleteCategory ,getAllCategoryForSelect} from './thunk';
 
 
 interface initialState {
@@ -7,14 +7,14 @@ interface initialState {
   loading: boolean,
   isAction: boolean,
   isSuccess: boolean,
-  categoryFalse: [],
   categoryTrue: [],
+  allCategory:[],
   message: ''
 }
 
 export const initialState: initialState = {
-  categoryFalse: [],
   categoryTrue: [],
+  allCategory:[],
   error: null,
   loading: false,
   isAction: false,
@@ -29,32 +29,33 @@ const sliceOptions = {
   extraReducers: (builder: any) => {
 
     // get all Category
-    builder.addCase(getAllCategoryTrue.pending, (state: any) => {
+    builder.addCase(getAllCategoryForSelect.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
     })
-      .addCase(getAllCategoryTrue.fulfilled, (state: any, action: any) => {
-        state.categoryTrue = action.payload.data;
+      .addCase(getAllCategoryForSelect.fulfilled, (state: any, action: any) => {
+        state.allCategory = action.payload.data;
         state.loading = false;
       })
-      .addCase(getAllCategoryTrue.rejected, (state: any) => {
-        state.categoryTrue = [];
+      .addCase(getAllCategoryForSelect.rejected, (state: any) => {
+        state.allCategory = [];
         state.loading = false;
       });
 
     // get all Category
-    builder.addCase(getAllCategoryFalse.pending, (state: any) => {
+    builder.addCase(getAllCategory.pending, (state: any) => {
       state.loading = true;
       state.isSuccess = false;
     })
-      .addCase(getAllCategoryFalse.fulfilled, (state: any, action: any) => {
-        state.categoryFalse = action.payload.data;
+      .addCase(getAllCategory.fulfilled, (state: any, action: any) => {
+        state.categoryTrue = action.payload.data;
         state.loading = false;
       })
-      .addCase(getAllCategoryFalse.rejected, (state: any) => {
-        state.categoryFalse = [];
+      .addCase(getAllCategory.rejected, (state: any) => {
+        state.categoryTrue = [];
         state.loading = false;
       });
+
 
     // add new Category
     builder.addCase(addNewCategory.pending, (state: any) => {

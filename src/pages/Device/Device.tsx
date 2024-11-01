@@ -6,7 +6,7 @@ import { AddDevice } from './AddDevice.tsx';
 import { getAllStation } from '../../slices/station/thunk.ts';
 import { AddDeviceExtra } from './AddDeviceExtra.tsx';
 import {
-  deleteCategory,
+  deleteCategory, getAllCategory,
   getAllCategoryTrue
 } from '../../slices/category/thunk.ts';
 import DeleteModal from '../../components/DeleteModal.tsx';
@@ -41,7 +41,13 @@ const Device = () => {
     setModalDelete(false);
   };
   useEffect(() => {
-    dispatch(getAllCategoryTrue());
+    dispatch(getAllCategory(
+      {
+        isStation: true,
+        isLevelCrossing: false,
+        isPeregon: false
+      }
+    ));
     dispatch(getAllStation());
     dispatch(getAllPlot());
   }, [isAction]);

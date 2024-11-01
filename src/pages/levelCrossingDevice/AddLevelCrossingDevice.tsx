@@ -14,7 +14,9 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
     name: '',
     description: '',
     checkDay: 0,
-    station: false
+    station: false,
+    peregon: false,
+    levelCrossing: true
   });
 
 
@@ -24,7 +26,9 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
       name: '',
       description: '',
       checkDay: 0,
-      station: false
+      station: false,
+      peregon: false,
+      levelCrossing: true
     });
     validation.resetForm();
     setItem(null);
@@ -36,14 +40,18 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
         name: item?.name,
         description: item?.description,
         checkDay: item?.checkDay,
-        station: false
+        station: false,
+        peregon: false,
+        levelCrossing: true
       });
     } else {
       setInitialValues({
         name: '',
         description: '',
         checkDay: 0,
-        station: false
+        station: false,
+        peregon: false,
+        levelCrossing: true
       });
       validation.resetForm();
     }
@@ -76,7 +84,9 @@ export const AddLevelCrossingDevice = ({ modalOpen, setModalOpen, item, setItem 
         name: '',
         description: '',
         checkDay: 0,
-        station: false
+        station: false,
+        peregon: false,
+        levelCrossing: true
       });
     }
   }, [dispatch, isAction]);

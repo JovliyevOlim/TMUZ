@@ -131,9 +131,10 @@ export const updateLevelCrossing = (levelCrossing: any) => api.put(url.UPDATE_LE
 // delete level crossing
 export const deleteLevelCrossing = (levelCrossing: any) => api.delete(url.DELETE_LEVEL_CROSSING + '/' + levelCrossing);
 
-
+// get all category for select
+export const getAllCategoryForSelect = () => api.get(url.GET_ALL_CATEGORY_FOR_SELECT);
 // get category
-export const getAllCategory = (params: any) => api.get(url.GET_ALL_CATEGORY + '/' + params);
+export const getAllCategory = (params: any) => api.get(url.GET_ALL_CATEGORY + '/' + params.isStation + '/' + params.isLevelCrossing + '/' + params.isPeregon);
 // get category by id
 export const getCategoryById = (category: any) => api.get(url.GET_CATEGORY_BY_ID, category);
 // get category by mtu
