@@ -88,3 +88,11 @@ export const UPDATE_CATEGORY = '/category/edit';
 export const GET_ALL_CATEGORY = '/category/get-by-is-station';
 export const GET_CATEGORY_BY_ID = '/category/get-by-id';
 export const DELETE_CATEGORY = '/category/delete';
+
+//Peregon
+export const ADD_NEW_PEREGON = '/peregon/create';
+export const UPDATE_PEREGON = '/peregon/edit';
+export const DELETE_PEREGON = '/peregon/delete';
+export const GET_ALL_PEREGON = '/peregon/get-all';
+export const GET_PEREGON_BY_ID = '/peregon/get-by-id';
+export const GET_PEREGON_BY_PLOT_ID = '/peregon/get-by-plot-id';

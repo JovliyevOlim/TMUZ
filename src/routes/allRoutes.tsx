@@ -14,13 +14,14 @@ import Works from '../pages/Works/Works.tsx';
 import Stations from '../pages/Station/Station.tsx';
 import Device from '../pages/Device/Device.tsx';
 import DeviceInfo from '../pages/Device/DeviceInfo.tsx';
-import ReloadSignIn from '../pages/Authentication/ReloadSignIn.tsx';
 import Actions from '../pages/Device/Actions.tsx';
 import MTU from '../pages/MTU/MTU.tsx';
 import Enterprise from '../pages/Enterprise/Enterprise.tsx';
 import Plot from '../pages/Plot/Plot.tsx';
 import LevelCrossing from '../pages/LevelCrossing/LevelCrossing.tsx';
 import LevelCrossingDevice from '../pages/levelCrossingDevice/LevelCrossingDevice.tsx';
+import Peregon from '../pages/Peregon/Peregon.tsx';
+import PeregonDevice from '../pages/Peregon/PeregonDevice.tsx';
 
 
 const authProtectedRoutes = [
@@ -51,14 +52,22 @@ const authProtectedRoutes = [
   //Level Crossing
   { path: '/levelCrossing', component: <LevelCrossing /> },
 
-  //Level Crossing
+  //LevelCrossingDevice
   { path: '/levelCrossingDevice', component: <LevelCrossingDevice /> },
 
   //Action
   { path: '/action', component: <Actions /> },
 
-  //LevelCrossingDevice
+  //Device
   { path: '/device', component: <Device /> },
+
+
+  //Peregon Device
+  { path: '/peregonDevice', component: <PeregonDevice /> },
+
+  //Peregon
+  { path: '/peregon', component: <Peregon /> },
+
 
   //Profile
   // { path: '/profile', component: <MapOne /> },

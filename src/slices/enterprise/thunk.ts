@@ -12,7 +12,7 @@ import {
   deleteEnterprise as deleteEnterpriseApi
 } from '../../helpers/backend_helpers.ts';
 
-export const getAllEnterprise = createAsyncThunk('Enterprise/getAllEnterprise', async () => {
+export const getAllEnterprise = createAsyncThunk('Peregon/getAllEnterprise', async () => {
   try {
     const response = getAllEnterpriseApi();
     return response;
@@ -20,7 +20,7 @@ export const getAllEnterprise = createAsyncThunk('Enterprise/getAllEnterprise', 
     return error;
   }
 });
-export const getEnterpriseByMTU = createAsyncThunk('Enterprise/getEnterpriseByMtu', async (enterprise: string) => {
+export const getEnterpriseByMTU = createAsyncThunk('Peregon/getEnterpriseByMtu', async (enterprise: string) => {
   try {
     const response = getEnterpriseByMTUApi(enterprise);
     return response;
@@ -28,7 +28,7 @@ export const getEnterpriseByMTU = createAsyncThunk('Enterprise/getEnterpriseByMt
     return error;
   }
 });
-export const addNewEnterprise = createAsyncThunk<any, any>('Enterprise/addEnterprise', async (Enterprise: any, { rejectWithValue }) => {
+export const addNewEnterprise = createAsyncThunk<any, any>('Peregon/addEnterprise', async (Enterprise: any, { rejectWithValue }) => {
   try {
     const response = addNewEnterpriseApi(Enterprise);
     const data = await response;
@@ -40,7 +40,7 @@ export const addNewEnterprise = createAsyncThunk<any, any>('Enterprise/addEnterp
     return rejectWithValue(error);
   }
 });
-export const updateEnterprise = createAsyncThunk('Enterprise/updateEnterprise', async (Enterprise: any, { rejectWithValue }) => {
+export const updateEnterprise = createAsyncThunk('Peregon/updateEnterprise', async (Enterprise: any, { rejectWithValue }) => {
   try {
     const response = updateEnterpriseApi(Enterprise);
     const data = await response;
@@ -52,7 +52,7 @@ export const updateEnterprise = createAsyncThunk('Enterprise/updateEnterprise', 
     return rejectWithValue(error);
   }
 });
-export const deleteEnterprise = createAsyncThunk('Enterprise/deleteEnterprise', async (Enterprise: any, { rejectWithValue }) => {
+export const deleteEnterprise = createAsyncThunk('Peregon/deleteEnterprise', async (Enterprise: any, { rejectWithValue }) => {
   try {
     const response = deleteEnterpriseApi(Enterprise);
     const data = await response;

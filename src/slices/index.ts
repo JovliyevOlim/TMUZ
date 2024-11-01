@@ -33,7 +33,11 @@ import LevelCrossingReducer from './levelCrossing/reducer.ts';
 //Category
 import CategoryReducer from './category/reducer.ts';
 
+//Peregon
+import PeregonReducer from './peregon/reducer.ts';
+
 const rootReducer = combineReducers({
+  Peregon: PeregonReducer,
   Category: CategoryReducer,
   LevelCrossing: LevelCrossingReducer,
   Plot: PlotReducer,

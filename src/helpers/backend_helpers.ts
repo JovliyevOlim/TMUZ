@@ -143,3 +143,17 @@ export const addNewCategory = (category: any) => api.create(url.ADD_NEW_CATEGORY
 export const updateCategory = (category: any) => api.put(url.UPDATE_CATEGORY + '/' + category.id, category);
 // delete  category
 export const deleteCategory = (category: any) => api.delete(url.DELETE_CATEGORY + '/' + category);
+
+
+// get all peregon
+export const getAllPeregon = () => api.get(url.GET_ALL_PEREGON);
+// get peregon by id
+export const getPeregonById = (station: any) => api.get(url.GET_PEREGON_BY_ID, station);
+// get peregon by plot id
+export const getPeregonByPlotId = (station: any) => api.get(url.GET_PEREGON_BY_PLOT_ID + '/' + station);
+// add New peregon
+export const addNewPeregon = (station: any) => api.create(url.ADD_NEW_PEREGON, station);
+// update  peregon
+export const updatePeregon = (station: any) => api.put(url.UPDATE_PEREGON + '/' + station.id, station);
+// delete  peregon
+export const deletePeregon = (station: any) => api.delete(url.DELETE_PEREGON + '/' + station);
