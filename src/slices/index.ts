@@ -36,7 +36,15 @@ import CategoryReducer from './category/reducer.ts';
 //Peregon
 import PeregonReducer from './peregon/reducer.ts';
 
+//Employee
+import EmployeeReducer from './employee/reducer.ts';
+
+//Roles
+import RolesReducer from './roles/reducer.ts';
+
 const rootReducer = combineReducers({
+  Role: RolesReducer,
+  Employees: EmployeeReducer,
   Peregon: PeregonReducer,
   Category: CategoryReducer,
   LevelCrossing: LevelCrossingReducer,

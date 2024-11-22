@@ -97,3 +97,15 @@ export const DELETE_PEREGON = '/peregon/delete';
 export const GET_ALL_PEREGON = '/peregon/get-all';
 export const GET_PEREGON_BY_ID = '/peregon/get-by-id';
 export const GET_PEREGON_BY_PLOT_ID = '/peregon/get-by-plot-id';
+
+
+// add new employee
+export const ADD_NEW_EMPLOYEE = '/employee';
+export const UPDATE_EMPLOYEE = '/employee/edit';
+export const GET_ALL_EMPLOYEE = '/employee';
+export const GET_EMPLOYEE_BY_ID = '/employee/get-by-id';
+export const GET_EMPLOYEE_ENTERPRISE = '/employee/get-by-enterpriseId';
+
+
+// get roles
+export const GET_ALL_ROLES = '/role/get-all-roles';

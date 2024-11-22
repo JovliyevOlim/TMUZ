@@ -158,3 +158,19 @@ export const addNewPeregon = (station: any) => api.create(url.ADD_NEW_PEREGON, s
 export const updatePeregon = (station: any) => api.put(url.UPDATE_PEREGON + '/' + station.id, station);
 // delete  peregon
 export const deletePeregon = (station: any) => api.delete(url.DELETE_PEREGON + '/' + station);
+
+
+// get all employee
+export const getAllEmployee = () => api.get(url.GET_ALL_EMPLOYEE);
+// get employee by id
+export const getEmployeeById = (user: any) => api.get(url.GET_EMPLOYEE_BY_ID, user);
+// add New employee
+export const addNewEmployee = (user: any) => api.create(url.ADD_NEW_EMPLOYEE, user);
+// update  employee
+export const updateEmployee = (user: any) => api.put(url.UPDATE_EMPLOYEE + '/' + user.id, user);
+// delete employee
+export const getEmployeeByEnterPrise = (user: any) => api.delete(url.GET_EMPLOYEE_ENTERPRISE, user);
+
+
+// get all roles
+export const getAllRoles = () => api.get(url.GET_ALL_ROLES);

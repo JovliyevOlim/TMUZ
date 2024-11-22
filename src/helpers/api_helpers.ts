@@ -4,11 +4,12 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 // export const localUrl = 'http://192.168.1.100:5173';
 // export const localUrl = 'https://tmuz-git-master-jovliyevolims-projects.vercel.app';
 export const localUrl = 'https://tmuz.netlify.app';
+// export const baseUrl = 'http://192.168.1.50:8080/api';
+export const baseUrl = 'https://railway-3187acae3c60.herokuapp.com/api';
 // default
-// axios.defaults.baseURL = 'http://192.168.1.50:8084/api';
-axios.defaults.baseURL = 'https://railway-3187acae3c60.herokuapp.com/api';
+axios.defaults.baseURL = baseUrl;
 // content type
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // content type
 const authUser: any = localStorage.getItem('authUser');
@@ -35,12 +36,12 @@ axios.interceptors.response.use(
         window.location.href = '/signIn';
         message = 'Invalid credentials';
         break;
-      case 403:
-        window.location.href = '/signIn';
-        // message = 'Login qilish kerak';
-        break;
+      // case 403:
+      //   window.location.href = '/signIn';
+      //   // message = 'Login qilish kerak';
+      //   break;
       case 404:
-        message = 'Sorry! the data you are looking for could not be found';
+        message = error.response.data.message;
         break;
       case 409:
         message = error.response.data.message;
@@ -88,6 +89,7 @@ class APIClient {
   create = (url: string, data: any): Promise<AxiosResponse> => {
     return axios.post(url, data);
   };
+
 
   /**
    * Updates data
