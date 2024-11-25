@@ -107,7 +107,6 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       enterpriseId: Yup.string().required('Korxonani tanglang !'),
       jshshir: Yup.string().required('JSHSHIR ni kiriting !'),
       stationIdList: Yup.array().min(1, 'Filial tanlang !').required('Filial tanlang !'),
-      // position: Yup.string().required(''),
       roleId: Yup.string().required('Lavozimini tanlang')
     }),
     onSubmit: (values) => {
@@ -318,7 +317,7 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                             Tanlang
                           </option>
                           {
-                            enterprise.map((item: any) =>
+                            enterprise?.map((item: any) =>
                               <option value={item.id} className="text-body dark:text-bodydark">
                                 {item.name}
                               </option>

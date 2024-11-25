@@ -56,7 +56,7 @@ const sliceOptions = {
 
     // add new station
     builder.addCase(addNewStation.pending, (state: any) => {
-      state.loadingTrade = true;
+      state.loading = true;
     });
     builder.addCase(addNewStation.fulfilled, (state: any) => {
       state.loading = false;
