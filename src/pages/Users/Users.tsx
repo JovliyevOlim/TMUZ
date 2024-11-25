@@ -1,10 +1,12 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AddUser } from './AddUsers.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllEmployee } from '../../slices/employee/thunk.ts';
 import { getAllRoles } from '../../slices/roles/thunk.ts';
 import { getAllEnterprise } from '../../slices/enterprise/thunk.ts';
+import { baseUrl } from '../../helpers/api_helpers.ts';
+import userSix from '../../images/user/user-06.png';
 
 
 const Users = () => {
@@ -47,6 +49,7 @@ const Users = () => {
             <table className="min-w-150 sm:min-w-full table-fixed">
               <thead>
               <tr className="text-start text-sm font-medium uppercase xsm:text-base">
+                <th className="p-2.5 text-start">Rasmi</th>
                 <th className="p-2.5 text-start">Nomi</th>
                 <th className="p-2.5 text-start">Lavozimi</th>
                 <th className="p-2.5 ext-start">Action</th>
@@ -56,12 +59,21 @@ const Users = () => {
               {employees?.map((item: any, key: number) => (
                 <tr key={key}>
                   <td>
+                    <img
+                      width={64}
+                      height={64}
+                      alt={item.attachmentId}
+                      src={item.attachmentId ? `${baseUrl}/attachment/download/${item.attachmentId}` : userSix}
+                      className="rounded-full ring-2 ring-white"
+                    />
+                  </td>
+                  <td>
                     <p className="p-2.5  text-black dark:text-white sm:block">
-                      {item?.firstName} {item?.lastName}
+                      {item?.firstName} <br /> {item?.lastName}
                     </p>
                   </td>
                   <td>
-                    <p className="p-2.5 text-black dark:text-white">{item?.roleId}</p>
+                    <p className="p-2.5 text-black dark:text-white">{item?.roleName}</p>
                   </td>
                   <td>
                     <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">

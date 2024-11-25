@@ -80,6 +80,7 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
         position: item?.position,
         stationIdList: item?.stationIdList
       });
+      setImage(item?.attachmentId);
     } else {
       setInitialValues({
         firstName: '',
@@ -103,11 +104,6 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     validationSchema: Yup.object({
       firstName: Yup.string().required('Ismni kiriting !'),
       lastName: Yup.string().required('Familiyani kiriting !'),
-      password: Yup.string().when('$isEdit', {
-        is: item, // `isEdit` false bo'lsa (ya'ni qo'shish rejimi)
-        then: Yup.string().required('Parolni kiriting!'),
-        otherwise: Yup.string() // Edit rejimida hech qanday tekshirish yo'q
-      }),
       enterpriseId: Yup.string().required('Korxonani tanglang !'),
       jshshir: Yup.string().required('JSHSHIR ni kiriting !'),
       stationIdList: Yup.array().min(1, 'Filial tanlang !').required('Filial tanlang !'),
