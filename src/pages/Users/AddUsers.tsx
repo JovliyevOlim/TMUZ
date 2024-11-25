@@ -286,8 +286,9 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                             Tanlang
                           </option>
                           {
-                            roles.map((item: any) =>
-                              <option value={item.id} className="text-body dark:text-bodydark">{item.name}</option>
+                            roles?.map((item: any) =>
+                              <option key={item.id} value={item.id}
+                                      className="text-body dark:text-bodydark">{item.name}</option>
                             )
                           }
                         </select>

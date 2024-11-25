@@ -7,12 +7,12 @@ interface initialState {
   loading: boolean,
   isAction: boolean,
   isSuccess: boolean,
-  roles: {},
+  roles: [],
   message: ''
 }
 
 export const initialState: initialState = {
-  roles: {},
+  roles: [],
   error: null,
   loading: false,
   isAction: false,
