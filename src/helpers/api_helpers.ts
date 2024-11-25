@@ -4,8 +4,8 @@ import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 // export const localUrl = 'http://192.168.1.100:5173';
 // export const localUrl = 'https://tmuz-git-master-jovliyevolims-projects.vercel.app';
 export const localUrl = 'https://tmuz.netlify.app';
-export const baseUrl = 'http://192.168.1.50:8080/api';
-// export const baseUrl = 'https://railway-3187acae3c60.herokuapp.com/api';
+// export const baseUrl = 'http://192.168.1.50:8080/api';
+export const baseUrl = 'https://railway-3187acae3c60.herokuapp.com/api';
 // default
 axios.defaults.baseURL = baseUrl;
 // content type
