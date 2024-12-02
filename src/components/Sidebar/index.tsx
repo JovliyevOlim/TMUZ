@@ -325,7 +325,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       fill=""
                     />
                   </svg>
-                  Uchastka
+                  Uchastkalar
                 </NavLink>
               </li>
 
@@ -396,7 +396,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Qurilmalar
+                  Stansiya qurilmalari
                 </NavLink>
               </li>
               <li>
@@ -516,7 +516,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       </clipPath>
                     </defs>
                   </svg>
-                  Peregon
+                  Peregonlar
                 </NavLink>
               </li>
               <li>
@@ -624,7 +624,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       fill=""
                     />
                   </svg>
-                  Ish yaratish
+                  Jurnallar
                 </NavLink>
               </li>
               <li>

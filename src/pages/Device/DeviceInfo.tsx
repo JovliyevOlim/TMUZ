@@ -25,7 +25,6 @@ const DeviceInfo = () => {
 
   function getLocation() {
     getUserLocation();
-    console.log('fewfewp');
   }
 
   console.log(userLocation);
@@ -84,16 +83,6 @@ const DeviceInfo = () => {
 
         <div className="flex flex-col">
           <div className="p-2.5 text-start xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              <strong>Nomi:</strong> {deviceQrCodeInfo?.deviceDto?.name}
-            </h5>
-          </div>
-          <div className="p-2.5 text-start xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              <strong>Tavsif:</strong> {deviceQrCodeInfo?.deviceDto?.description}
-            </h5>
-          </div>
-          <div className="p-2.5 text-start xl:p-5">
             {
               deviceQrCodeInfo?.deviceDto?.stationName ?
                 <h5 className="text-sm font-medium uppercase xsm:text-base">
@@ -104,6 +93,17 @@ const DeviceInfo = () => {
             }
 
           </div>
+          <div className="p-2.5 text-start xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <strong>Nomi:</strong> {deviceQrCodeInfo?.deviceDto?.name}
+            </h5>
+          </div>
+          <div className="p-2.5 text-start xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              <strong>Tavsif:</strong> {deviceQrCodeInfo?.deviceDto?.description}
+            </h5>
+          </div>
+
           <Button
             onClick={getLocation}
             className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
