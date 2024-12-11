@@ -52,7 +52,7 @@ export const AddEnterprise = ({ modalOpen, setModalOpen, item, setItem }: any) =
     initialValues: initialValues,
     validationSchema: Yup.object({
       name: Yup.string().required('Korxona nomini kiriting!'),
-      mtuId: Yup.string().required('MTU tanlang!')
+      mtuId: Yup.string().required('WorkExamples tanlang!')
     }),
     onSubmit: (values) => {
       if (item) {

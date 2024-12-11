@@ -2,22 +2,20 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewMtu, updateMtu } from '../../slices/mtu/thunk.ts';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import { addNewWorkExample, updateWorkExample } from '../../slices/workExample/thunk.ts';
 
-export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
+export const AddWorkExample = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
-  const { loading, isAction, isSuccess } = useSelector((state: any) => state.Mtu);
+  const { loading, isAction, isSuccess } = useSelector((state: any) => state.WorkExample);
   const [initialValues, setInitialValues] = useState({
-    name: '',
-    description: ''
+    name: ''
   });
 
   function tog_standard() {
     setModalOpen(!modalOpen);
     setInitialValues({
-      name: '',
-      description: ''
+      name: ''
     });
     setItem(null);
     validation.resetForm();
@@ -26,13 +24,11 @@ export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   useEffect(() => {
     if (item) {
       setInitialValues({
-        name: item?.name,
-        description: item?.description
+        name: item?.name
       });
     } else {
       setInitialValues({
-        name: '',
-        description: ''
+        name: ''
       });
       validation.resetForm();
     }
@@ -44,13 +40,13 @@ export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
 
     initialValues: initialValues,
     validationSchema: Yup.object({
-      name: Yup.string().required('WorkExamples nomini kiriting!')
+      name: Yup.string().required('Ish namunasini kiriting!')
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateMtu({ ...values, id: item.id }));
+        dispatch(updateWorkExample({ ...values, id: item.id }));
       } else {
-        dispatch(addNewMtu(values));
+        dispatch(addNewWorkExample(values));
       }
     }
   });
@@ -62,8 +58,7 @@ export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       validation.resetForm();
       setItem(null);
       setInitialValues({
-        name: '',
-        description: ''
+        name: ''
       });
     }
   }, [dispatch, isAction]);
@@ -91,11 +86,11 @@ export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
             >
               <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="divide-y divide-blue-200">
-                  <h5 className={'text-title-md font-semibold text-black dark:text-white '}>MTU yaratish</h5>
+                  <h5 className={'text-title-md font-semibold text-black dark:text-white '}>Ish namunasi yaratish</h5>
                 </div>
                 <div className={'my-2'}>
                   <label htmlFor="name" className="block text-md font-medium leading-6 text-gray-900">
-                    MTU nomi
+                    Ish namunasi
                   </label>
                   <div className="mt-2">
                     <input
@@ -105,7 +100,7 @@ export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                       onChange={validation.handleChange}
                       onBlur={validation.handleBlur}
                       value={validation.values.name || ''}
-                      placeholder="MTU nomi"
+                      placeholder="Ish namunasi"
                       className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -116,23 +111,6 @@ export const AddMTU = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                     </h6>
                   ) : null}
 
-                </div>
-                <div className={'my-2'}>
-                  <label htmlFor="description" className="block text-md font-medium leading-6 text-gray-900">
-                    Tavsif
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="description"
-                      onChange={validation.handleChange}
-                      onBlur={validation.handleBlur}
-                      value={validation.values.description || ''}
-                      name="description"
-                      type="text"
-                      placeholder="tavsif"
-                      className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 flex justify-end gap-2  sm:px-6">

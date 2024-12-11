@@ -42,7 +42,11 @@ import EmployeeReducer from './employee/reducer.ts';
 //Roles
 import RolesReducer from './roles/reducer.ts';
 
+//Work Example
+import WorkExampleReducer from './workExample/reducer.ts';
+
 const rootReducer = combineReducers({
+  WorkExample: WorkExampleReducer,
   Role: RolesReducer,
   Employees: EmployeeReducer,
   Peregon: PeregonReducer,

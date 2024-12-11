@@ -21,8 +21,11 @@ export const deleteUser = (user: any) => api.delete(url.DELETE_USER, user);
 // add New Work
 export const addNewJob = (job: any) => api.create(url.ADD_NEW_JOB, job);
 export const updateJob = (job: any) => api.put(url.UPDATE_JOB + '/' + job.id, job);
+export const pauseJob = (job: any) => api.put(url.PAUSE_JOB + '/' + job.id, job);
+export const doneJob = (job: any) => api.put(url.DONE_JOB + '/' + job.id, job);
+export const confirmJob = (job: any) => api.put(url.CONFIRM_JOB + '/' + job.id, job);
 export const deleteJob = (jobId: string) => api.delete(url.DELETE_JOB + '/' + jobId);
-export const getJobs = () => api.get(url.GET_ALL_JOB);
+export const getJobs = () => api.get(url.GET_ALL_JOB_BY_STATION);
 
 // get all station
 export const getAllStation = () => api.get(url.GET_ALL_STATION);
@@ -174,3 +177,15 @@ export const getEmployeeByEnterPrise = (user: any) => api.delete(url.GET_EMPLOYE
 
 // get all roles
 export const getAllRoles = () => api.get(url.GET_ALL_ROLES);
+
+
+// get work example
+export const getAllWorkExample = () => api.get(url.GET_ALL_WORK_EXAMPLE);
+// get work example by id
+export const getWorkExampleById = (workExample: any) => api.get(url.GET_WORK_EXAMPLE_BY_ID, workExample);
+// add New work example
+export const addNewWorkExample = (workExample: any) => api.create(url.ADD_NEW_WORK_EXAMPLE, workExample);
+// update  work example
+export const updateWorkExample = (workExample: any) => api.put(url.UPDATE_WORK_EXAMPLE + '/' + workExample.id, workExample);
+// delete work example
+export const deleteWorkExample = (workExample: any) => api.delete(url.DELETE_WORK_EXAMPLE + '/' + workExample);

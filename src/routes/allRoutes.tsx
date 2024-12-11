@@ -22,6 +22,7 @@ import LevelCrossing from '../pages/LevelCrossing/LevelCrossing.tsx';
 import LevelCrossingDevice from '../pages/levelCrossingDevice/LevelCrossingDevice.tsx';
 import Peregon from '../pages/Peregon/Peregon.tsx';
 import PeregonDevice from '../pages/Peregon/PeregonDevice.tsx';
+import WorkExamples from '../pages/WorkExample/WorkExamples.tsx';
 
 
 const authProtectedRoutes = [
@@ -35,7 +36,10 @@ const authProtectedRoutes = [
   { path: '/users', component: <Users /> },
 
   // Work
-  { path: '/work', component: <Works /> },
+  { path: '/works', component: <Works /> },
+
+  // Work Example
+  { path: '/workExample', component: <WorkExamples /> },
 
   //Stations
   { path: '/stations', component: <Stations /> },

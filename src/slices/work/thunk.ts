@@ -8,6 +8,9 @@ import {
   addNewJob as addNewJobApi,
   getJobs as getJobsApi,
   updateJob as updateJobApi,
+  pauseJob as pauseJobApi,
+  doneJob as doneJobApi,
+  confirmJob as confirmJobApi,
   deleteJob as deleteJobApi
 } from '../../helpers/backend_helpers.ts';
 
@@ -38,6 +41,44 @@ export const updateJob = createAsyncThunk<any, any>('job/updateJob', async (job:
     const response = updateJobApi(job);
     const data = await response;
     toast.success('Ish taxrirlandi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
+export const pauseJob = createAsyncThunk<any, any>('job/pauseJob', async (job: any, { rejectWithValue }) => {
+  try {
+    const response = pauseJobApi(job);
+    const data = await response;
+    toast.success('Ish to\'xtatildi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
+
+export const doneJob = createAsyncThunk<any, any>('job/doneJob', async (job: any, { rejectWithValue }) => {
+  try {
+    const response = doneJobApi(job);
+    const data = await response;
+    toast.success('Ish bajarildi', { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
+
+export const confirmJob = createAsyncThunk<any, any>('job/confirmJob', async (job: any, { rejectWithValue }) => {
+  try {
+    const response = confirmJobApi(job);
+    const data = await response;
+    toast.success('Ish tasdiqlandi', { autoClose: 3000 });
     return data;
   } catch (error) {
     let message: any = error;

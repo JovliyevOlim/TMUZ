@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addNewJob, deleteJob, getJobs, updateJob } from './thunk';
+import { addNewJob, confirmJob, deleteJob, doneJob, getJobs, pauseJob, updateJob } from './thunk';
 
 
 interface initialState {
@@ -70,10 +70,59 @@ const sliceOptions = {
       state.loading = false;
       state.isSuccess = false;
       state.isAction = !state.isAction;
-      // state.error = action.payload.error || null;
     });
+
+    // done  work
+    builder.addCase(doneJob.pending, (state: any) => {
+      state.loading = true;
+    });
+    builder.addCase(doneJob.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    });
+    builder.addCase(doneJob.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+    });
+
+    // pause  work
+    builder.addCase(pauseJob.pending, (state: any) => {
+      state.loading = true;
+    });
+    builder.addCase(pauseJob.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    });
+    builder.addCase(pauseJob.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+    });
+
+    // confirm  work
+    builder.addCase(confirmJob.pending, (state: any) => {
+      state.loading = true;
+    });
+    builder.addCase(confirmJob.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    });
+    builder.addCase(confirmJob.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+
+
+
+
+    });
+
     // delete Product
-    builder.addCase(deleteJob.pending, (state:any) => {
+    builder.addCase(deleteJob.pending, (state: any) => {
       state.loading = true;
     }).addCase(deleteJob.fulfilled, (state: any) => {
       state.loading = false;

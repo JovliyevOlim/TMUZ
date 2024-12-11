@@ -12,8 +12,11 @@ export const DELETE_USER = '/user/delete-by-id';
 // add new work
 export const ADD_NEW_JOB = '/job/create';
 export const UPDATE_JOB = '/job/edit';
+export const PAUSE_JOB = '/job/pause';
+export const DONE_JOB = '/job/done';
+export const CONFIRM_JOB = '/job/confirm';
 export const DELETE_JOB = '/job';
-export const GET_ALL_JOB = '/job/getAll';
+export const GET_ALL_JOB_BY_STATION = '/job/getAll';
 export const GET_ONE_JOB = '/job';
 
 // Stations
@@ -109,3 +112,11 @@ export const GET_EMPLOYEE_ENTERPRISE = '/employee/get-by-enterpriseId';
 
 // get roles
 export const GET_ALL_ROLES = '/role/get-all-roles';
+
+
+// Work Example
+export const ADD_NEW_WORK_EXAMPLE = '/job-example';
+export const UPDATE_WORK_EXAMPLE = '/job-example';
+export const GET_ALL_WORK_EXAMPLE = '/job-example';
+export const GET_WORK_EXAMPLE_BY_ID = '/job-example';
+export const DELETE_WORK_EXAMPLE = '/job-example';
