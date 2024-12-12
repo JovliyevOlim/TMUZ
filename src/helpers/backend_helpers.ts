@@ -25,7 +25,7 @@ export const pauseJob = (job: any) => api.put(url.PAUSE_JOB + '/' + job.id, job)
 export const doneJob = (job: any) => api.put(url.DONE_JOB + '/' + job.id, job);
 export const confirmJob = (job: any) => api.put(url.CONFIRM_JOB + '/' + job.id, job);
 export const deleteJob = (jobId: string) => api.delete(url.DELETE_JOB + '/' + jobId);
-export const getJobs = () => api.get(url.GET_ALL_JOB_BY_STATION);
+export const getJobs = (job: any) => api.get(url.GET_ALL_JOB_BY_STATION + '/' + job.stationId, job.params);
 
 // get all station
 export const getAllStation = () => api.get(url.GET_ALL_STATION);

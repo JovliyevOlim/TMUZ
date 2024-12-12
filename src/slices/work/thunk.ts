@@ -15,9 +15,9 @@ import {
 } from '../../helpers/backend_helpers.ts';
 
 
-export const getJobs = createAsyncThunk('job/getJobs', async () => {
+export const getJobs = createAsyncThunk('job/getJobs', async (job: any) => {
   try {
-    const response = getJobsApi();
+    const response = getJobsApi(job);
     return response;
   } catch (error) {
     return error;

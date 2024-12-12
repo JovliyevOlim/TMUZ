@@ -3,15 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 import { localUrl } from '../../helpers/api_helpers.ts';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
-import { useReactToPrint } from 'react-to-print';
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 export const DeviceQrCode = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const dispatch: any = useDispatch();
   const { loading, isAction, isSuccess } = useSelector((state: any) => state.Device);
   const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn: any = useReactToPrint({ contentRef });
 
   function tog_standard() {
     setModalOpen(!modalOpen);
@@ -29,25 +26,11 @@ export const DeviceQrCode = ({ modalOpen, setModalOpen, item, setItem }: any) =>
   const downloadPdf = () => {
     const divElement = document.getElementById('content');
     html2canvas(divElement).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210; // A4 format bo'yicha kenglik (mm)
-      const pageHeight = 295; // A4 format bo'yicha balandlik (mm)
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      pdf.save(`${item?.name}.pdf`);
+      const imgData = canvas.toDataURL('image/png'); // PNG formatidagi tasvir
+      const link = document.createElement('a');
+      link.href = imgData;
+      link.download = `${item?.name}.png`; // PNG fayl nomi
+      link.click(); // Yuklab olish
     });
   };
 
@@ -90,7 +73,7 @@ export const DeviceQrCode = ({ modalOpen, setModalOpen, item, setItem }: any) =>
                 type="submit"
                 className="flex justify-center rounded-md bg-blue-700 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-800 hover:bg-blue-600 sm:mt-0 sm:w-auto"
               >
-                Download PDF
+                Download PNG
               </button>
             </div>
           </DialogPanel>

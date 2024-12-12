@@ -18,6 +18,9 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
   const { enterprise } = useSelector((state: any) => state.EnterPrise);
   const { stations } = useSelector((state: any) => state.Station);
   const [image, setImage] = useState('');
+  const [roleName, setRoleName] = useState('');
+  const roleNames = ['SHNS', 'SHN', 'SHSM'];
+  const isAddStation = roleNames.some((item) => item === roleName);
   const newStations: any = stations?.map(({
                                             name: label,
                                             id: value, ...rest
@@ -33,6 +36,7 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     stationIdList: []
   });
 
+  // const isStation =
 
   const handleImageChange = async (event: any) => {
     const file = event.target.files[0];
@@ -106,7 +110,7 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
       lastName: Yup.string().required('Familiyani kiriting !'),
       enterpriseId: Yup.string().required('Korxonani tanglang !'),
       jshshir: Yup.string().required('JSHSHIR ni kiriting !'),
-      stationIdList: Yup.array().min(1, 'Filial tanlang !').required('Filial tanlang !'),
+      stationIdList: isAddStation ? Yup.array().min(1, 'Filial tanlang !').required('Filial tanlang !') : Yup.array(),
       roleId: Yup.string().required('Lavozimini tanlang')
     }),
     onSubmit: (values) => {
@@ -125,6 +129,9 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
     }
   });
 
+  console.log(roleName);
+  console.log(isAddStation);
+  console.log(validation.errors);
   useEffect(() => {
     dispatch(getAllStation());
   }, [isAction]);
@@ -276,7 +283,11 @@ export const AddUser = ({ modalOpen, setModalOpen, item, setItem }: any) => {
                         <select
                           id="roleId"
                           name="roleId"
-                          onChange={validation.handleChange}
+                          onChange={(e) => {
+                            let roleIdName = roles?.find((item: any) => e.target.value === item.id);
+                            setRoleName(roleIdName?.name);
+                            validation.handleChange(e);
+                          }}
                           onBlur={validation.handleBlur}
                           value={validation.values.roleId || ''}
                           className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
