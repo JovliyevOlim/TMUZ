@@ -6,6 +6,7 @@ import { confirmJob, doneJob, getJobs } from '../../slices/work/thunk.ts';
 import { getAllStation, getStationByPlotId } from '../../slices/station/thunk.ts';
 import { PauseWork } from './PauseWork.tsx';
 import { RejectedWork } from './RejectedWork.tsx';
+import moment from 'moment';
 
 
 const Works = () => {
@@ -201,35 +202,48 @@ const Works = () => {
                     <p className="p-2.5 text-black dark:text-white">{item.address}</p>
                   </td>
                   <td>
-                    <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
+                    <p className="p-2.5 text-black dark:text-white">{moment(item.startTime).format('L')}</p>
+                  </td>
+                  <td>
+                    <p className="p-2.5 text-black dark:text-white">{item.description}</p>
+                  </td>
+
+                  <td>
+                    <div className="flex items-center flex-wrap justify-center p-2.5  gap-2 xl:p-5">
                       {
-                        userPermissions?.includes('DONE_JOB')
-                        &&
-                        <button onClick={() => onClickDone(item.id)}
-                                className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                          Bajarildi
-                        </button>
-                      }
-                      {
-                        userPermissions?.includes('PAUSE_JOB')
-                        && <button
-                          onClick={() => onClickPause(item)}
-                          className="flex items-center gap-2 justify-center rounded-md bg-red-600
+                        !item.done && <>
+                          {
+                            userPermissions?.includes('DONE_JOB')
+                            &&
+                            <button onClick={() => onClickDone(item.id)}
+                                    className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                              Bajarildi
+                            </button>
+                          }
+                          {
+                            userPermissions?.includes('PAUSE_JOB')
+                            && <button
+                              onClick={() => onClickPause(item)}
+                              className="flex items-center gap-2 justify-center rounded-md bg-red-600
                             px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500
                             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-                          Ko'chirish
-                        </button>
+                              Ko'chirish
+                            </button>
 
+                          }
+                        </>
                       }
+
+
                       {
-                        userPermissions?.includes('CONFIRMED_JOB')
+                        userPermissions?.includes('CONFIRM_JOB')
                         && <button onClick={() => onClickConfirmed(item.id)}
                                    className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                           Tasdiqlash
                         </button>
                       }
                       {
-                        userPermissions?.includes('REJECTED_JOB')
+                        userPermissions?.includes('CONFIRM_JOB')
                         &&
                         <button onClick={() => onClickRejected(item)}
                                 className="flex items-center gap-2 justify-center rounded-md bg-red-600

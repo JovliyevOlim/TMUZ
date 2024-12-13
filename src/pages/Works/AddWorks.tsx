@@ -15,6 +15,7 @@ import {
 } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/16/solid';
 import { CheckIcon } from '@heroicons/react/20/solid';
+import moment from 'moment';
 
 export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any) => {
   const dispatch: any = useDispatch();
@@ -25,8 +26,7 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
   const [initialValues, setInitialValues] = useState({
     name: '',
     description: '',
-    yearJob: !daily,
-    startTime: new Date()
+    startTime: moment(new Date()).format('YYYY-MM-DD')
   });
 
   function tog_standard() {
@@ -38,8 +38,7 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
       setInitialValues({
         name: item?.name,
         description: item?.description,
-        yearJob: !daily,
-        startTime: new Date()
+        startTime: moment(new Date()).format('YYYY-MM-DD')
       });
     }
   }, [item]);
@@ -55,9 +54,9 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateJob({ ...values, id: item.id }));
+        dispatch(updateJob({ ...values, year: !daily, id: item.id }));
       } else {
-        dispatch(addNewJob(values));
+        dispatch(addNewJob({ ...values, year: !daily }));
       }
     }
   });
@@ -71,8 +70,7 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
       setInitialValues({
         name: '',
         description: '',
-        yearJob: !daily,
-        startTime: new Date()
+        startTime: moment(new Date()).format('YYYY-MM-DD')
       });
     }
   }, [dispatch, isAction]);
