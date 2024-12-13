@@ -8,6 +8,7 @@ export const initialState = {
   error: '', // for error message
   loading: false,
   isUserLogout: false,
+  userPermissions: [],
   errorMsg: false, // for error,
   isAction: false
 };
@@ -28,6 +29,7 @@ const loginSlice = createSlice({
       state.userId = action.payload.user.id;
       state.loading = false;
       state.errorMsg = false;
+      state.userPermissions = action.payload.user.role?.permission;
       state.isAction = !state.isAction;
       if (document.referrer !== 'login') {
         if (window.location.pathname !== 'login') {

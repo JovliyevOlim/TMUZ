@@ -1,9 +1,11 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddWorks } from './AddWorks.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { doneJob, getJobs } from '../../slices/work/thunk.ts';
+import { confirmJob, doneJob, getJobs } from '../../slices/work/thunk.ts';
 import { getAllStation } from '../../slices/station/thunk.ts';
+import { PauseWork } from './PauseWork.tsx';
+import { RejectedWork } from './RejectedWork.tsx';
 
 
 const Works = () => {
@@ -11,18 +13,37 @@ const Works = () => {
   const [modal, setModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const { jobs, isAction } = useSelector((state: any) => state.Work);
-  const { userId } = useSelector((state: any) => state.Login);
+  const { userId, userPermissions } = useSelector((state: any) => state.Login);
   const { stations } = useSelector((state: any) => state.Station);
   const dispatch: any = useDispatch();
   const [isYear, setIsYear] = useState('daily');
   const [stationId, setStationId] = useState(stations[0]?.id);
   const [status, setStatus] = useState('all');
+  const [pausedJob, setPausedJob] = useState(false);
+  const [rejectedJob, setRejectedJob] = useState(false);
   const onClickDone = (data: any) => {
     dispatch(doneJob({
       id: data,
       done: true,
       userId
     }));
+  };
+
+  const onClickConfirmed = (data: any) => {
+    dispatch(confirmJob({
+      id: data,
+      done: true,
+      userId
+    }));
+  };
+
+  const onClickRejected = (data: any) => {
+    setEditData(data);
+    setRejectedJob(true);
+  };
+  const onClickPause = (data: any) => {
+    setEditData(data);
+    setPausedJob(true);
   };
 
   const daily: boolean = isYear === 'daily';
@@ -64,12 +85,16 @@ const Works = () => {
       </div>
 
       <div className={'flex justify-end my-3'}>
-        <button
-          onClick={() => setModal(true)}
-          className="inline-flex items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
-          Rejaviy {daily ? 'kundalik' : 'yillik'} ishlar +
-        </button>
+        {
+          userPermissions?.includes('ADD_JOB')
+          && <button
+            onClick={() => setModal(true)}
+            className="inline-flex items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Rejaviy {daily ? 'kundalik' : 'yillik'} ishlar +
+          </button>
+        }
+
 
       </div>
       <div
@@ -80,16 +105,16 @@ const Works = () => {
 
         <div className={'flex gap-4'}>
           <div className={'my-2 w-1/2'}>
-            <label htmlFor="stationId" className="block text-md font-medium leading-6 text-gray-900">
+            <label htmlFor="status" className="block text-md font-medium leading-6 text-gray-900">
               Ish statusi
             </label>
             <div className="mt-2">
               <div className="relative inline-block w-full">
                 <select
-                  id="stationId"
-                  name="stationId"
-                  onChange={(e) => setStationId(e.target.value)}
-                  value={stationId}
+                  id="status"
+                  name="status"
+                  onChange={(e) => setStatus(e.target.value)}
+                  value={status}
                   className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                   <option value={'all'} className="text-body dark:text-bodydark">Barchasi</option>
@@ -129,8 +154,10 @@ const Works = () => {
             <table className="min-w-171.5 sm:min-w-full table-fixed">
               <thead>
               <tr className="text-start text-sm font-medium uppercase xsm:text-base">
-                <th className="p-2.5 text-start">Ish</th>
-                {/*<th className="p-2.5 text-start">Tavsif</th>*/}
+                <th className="p-2.5 text-start">Ish yaratgan xodim</th>
+                <th className="p-2.5 text-start">Stansiya</th>
+                <th className="p-2.5 text-start">Yaratilgan sana</th>
+                <th className="p-2.5 text-start">Tavsif</th>
                 <th className="p-2.5 ext-start">Action</th>
               </tr>
               </thead>
@@ -145,21 +172,45 @@ const Works = () => {
                   <td>
                     <p className="p-2.5 text-black dark:text-white">{item.address}</p>
                   </td>
-                  {/*<td>*/}
-                  {/*  <p className="p-2.5 text-black dark:text-white">{item.description}</p>*/}
-                  {/*</td>*/}
                   <td>
                     <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
-                      <button onClick={() => onClickDone(item.id)}
-                              className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Bajarildi
-                      </button>
-                      <button
-                        className="flex items-center gap-2 justify-center rounded-md bg-red-600
+                      {
+                        !userPermissions?.includes('DONE_JOB')
+                        &&
+                        <button onClick={() => onClickDone(item.id)}
+                                className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                          Bajarildi
+                        </button>
+                      }
+                      {
+                        !userPermissions?.includes('PAUSE_JOB')
+                        && <button
+                          onClick={() => onClickPause(item)}
+                          className="flex items-center gap-2 justify-center rounded-md bg-red-600
                             px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500
                             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-                        Ko'chirish
-                      </button>
+                          Ko'chirish
+                        </button>
+
+                      }
+                      {
+                        !userPermissions?.includes('CONFIRMED_JOB')
+                        && <button onClick={() => onClickConfirmed(item.id)}
+                                   className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                          Tasdiqlash
+                        </button>
+                      }
+                      {
+                        !userPermissions?.includes('REJECTED_JOB')
+                        &&
+                        <button onClick={() => onClickRejected(item)}
+                                className="flex items-center gap-2 justify-center rounded-md bg-red-600
+                            px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500
+                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                          Rad etish
+                        </button>
+                      }
+
                     </div>
                   </td>
                 </tr>
@@ -170,6 +221,8 @@ const Works = () => {
         </div>
       </div>
       <AddWorks modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} daily={daily} />
+      <PauseWork modalOpen={pausedJob} setModalOpen={setPausedJob} item={editData} setItem={setEditData} />
+      <RejectedWork modalOpen={rejectedJob} setModalOpen={setRejectedJob} item={editData} setItem={setEditData} />
     </>
   );
 };
