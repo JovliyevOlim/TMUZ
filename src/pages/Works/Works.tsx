@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { AddWorks } from './AddWorks.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmJob, doneJob, getJobs } from '../../slices/work/thunk.ts';
-import { getAllStation } from '../../slices/station/thunk.ts';
+import { getAllStation, getStationByPlotId } from '../../slices/station/thunk.ts';
 import { PauseWork } from './PauseWork.tsx';
 import { RejectedWork } from './RejectedWork.tsx';
 
@@ -15,9 +15,11 @@ const Works = () => {
   const { jobs, isAction } = useSelector((state: any) => state.Work);
   const { userId, userPermissions } = useSelector((state: any) => state.Login);
   const { stations } = useSelector((state: any) => state.Station);
+  const { plot } = useSelector((state: any) => state.Plot);
   const dispatch: any = useDispatch();
   const [isYear, setIsYear] = useState('daily');
   const [stationId, setStationId] = useState(stations[0]?.id);
+  const [plotId, setPlotId] = useState('');
   const [status, setStatus] = useState('all');
   const [pausedJob, setPausedJob] = useState(false);
   const [rejectedJob, setRejectedJob] = useState(false);
@@ -49,18 +51,22 @@ const Works = () => {
   const daily: boolean = isYear === 'daily';
 
   useEffect(() => {
-    dispatch(getJobs({
-      stationId: stationId,
-      params: {
-        daily: daily,
-        status: status
-      }
-    }));
+    if (stationId) {
+      dispatch(getJobs({
+        stationId: stationId,
+        params: {
+          daily: daily,
+          status: status
+        }
+      }));
+    }
   }, [isAction, daily, status, stationId]);
 
   useEffect(() => {
-    dispatch(getAllStation());
-  }, []);
+    if (plotId) {
+      dispatch(getStationByPlotId(plotId));
+    }
+  }, [plotId]);
 
   return (
     <>
@@ -126,6 +132,28 @@ const Works = () => {
             </div>
           </div>
           <div className={'my-2 w-1/2'}>
+            <label htmlFor="plotId" className="block text-md font-medium leading-6 text-gray-900">
+              Stansiya
+            </label>
+            <div className="mt-2">
+              <div className="relative inline-block w-full">
+                <select
+                  id="plotId"
+                  name="plotId"
+                  onChange={(e) => setPlotId(e.target.value)}
+                  value={plotId}
+                  className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
+                      ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  {
+                    plot.map((item: any) =>
+                      <option value={item.id} className="text-body dark:text-bodydark">{item.name}</option>
+                    )
+                  }
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className={'my-2 w-1/2'}>
             <label htmlFor="stationId" className="block text-md font-medium leading-6 text-gray-900">
               Stansiya
             </label>
@@ -175,7 +203,7 @@ const Works = () => {
                   <td>
                     <div className="flex items-center justify-center p-2.5  gap-2 xl:p-5">
                       {
-                        !userPermissions?.includes('DONE_JOB')
+                        userPermissions?.includes('DONE_JOB')
                         &&
                         <button onClick={() => onClickDone(item.id)}
                                 className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
@@ -183,7 +211,7 @@ const Works = () => {
                         </button>
                       }
                       {
-                        !userPermissions?.includes('PAUSE_JOB')
+                        userPermissions?.includes('PAUSE_JOB')
                         && <button
                           onClick={() => onClickPause(item)}
                           className="flex items-center gap-2 justify-center rounded-md bg-red-600
@@ -194,14 +222,14 @@ const Works = () => {
 
                       }
                       {
-                        !userPermissions?.includes('CONFIRMED_JOB')
+                        userPermissions?.includes('CONFIRMED_JOB')
                         && <button onClick={() => onClickConfirmed(item.id)}
                                    className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                           Tasdiqlash
                         </button>
                       }
                       {
-                        !userPermissions?.includes('REJECTED_JOB')
+                        userPermissions?.includes('REJECTED_JOB')
                         &&
                         <button onClick={() => onClickRejected(item)}
                                 className="flex items-center gap-2 justify-center rounded-md bg-red-600

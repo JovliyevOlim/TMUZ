@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { authProtectedRoutes, publicRoutes } from './allRoutes';
 import AuthProtected from './AuthProtected';
 import DefaultLayout from '../layout/DefaultLayout.tsx';
+import ProtectedRoute from './ProtectedRoute.tsx';
 
 const Index = () => {
   return (
@@ -31,7 +32,9 @@ const Index = () => {
               path={route.path}
               element={
                 <AuthProtected>
-                  <DefaultLayout>{route.component}</DefaultLayout>
+                  {/*<ProtectedRoute allowedRoles={route?.permission}>*/}
+                    <DefaultLayout>{route.component}</DefaultLayout>
+                  {/*</ProtectedRoute>*/}
                 </AuthProtected>}
               key={idx}
             />

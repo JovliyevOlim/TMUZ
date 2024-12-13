@@ -29,7 +29,7 @@ const loginSlice = createSlice({
       state.userId = action.payload.user.id;
       state.loading = false;
       state.errorMsg = false;
-      state.userPermissions = action.payload.user.role?.permission;
+      state.userPermissions = action.payload.user.role?.permissions;
       state.isAction = !state.isAction;
       if (document.referrer !== 'login') {
         if (window.location.pathname !== 'login') {
