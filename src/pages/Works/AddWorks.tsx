@@ -22,6 +22,7 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
   const { loading, isAction, isSuccess, jobs } = useSelector((state: any) => state.Work);
   const { stations } = useSelector((state: any) => state.Station);
   const { workExample } = useSelector((state: any) => state.WorkExample);
+  const { userId } = useSelector((state: any) => state.Login);
 
   const [initialValues, setInitialValues] = useState({
     name: '',
@@ -54,9 +55,9 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateJob({ ...values, year: !daily, id: item.id }));
+        dispatch(updateJob({ ...values, yearJob: !daily,createdBy:userId, id: item.id }));
       } else {
-        dispatch(addNewJob({ ...values, year: !daily }));
+        dispatch(addNewJob({ ...values, yearJob: !daily,createdBy:userId }));
       }
     }
   });

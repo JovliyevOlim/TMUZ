@@ -7,6 +7,7 @@ import { getAllStation, getStationByPlotId } from '../../slices/station/thunk.ts
 import { PauseWork } from './PauseWork.tsx';
 import { RejectedWork } from './RejectedWork.tsx';
 import moment from 'moment';
+import { getAllPlot } from '../../slices/plot/thunk.ts';
 
 
 const Works = () => {
@@ -35,7 +36,7 @@ const Works = () => {
   const onClickConfirmed = (data: any) => {
     dispatch(confirmJob({
       id: data,
-      done: true,
+      confirm: true,
       userId
     }));
   };
@@ -68,6 +69,10 @@ const Works = () => {
       dispatch(getStationByPlotId(plotId));
     }
   }, [plotId]);
+
+  useEffect(() => {
+    dispatch(getAllPlot());
+  }, []);
 
   return (
     <>
@@ -167,6 +172,7 @@ const Works = () => {
                   value={stationId}
                   className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value={''} className="text-body dark:text-bodydark">Tanlang</option>
                   {
                     stations.map((item: any) =>
                       <option value={item.id} className="text-body dark:text-bodydark">{item.name}</option>
@@ -195,11 +201,11 @@ const Works = () => {
                 <tr key={key}>
                   <td>
                     <p className="p-2.5  text-black dark:text-white sm:block">
-                      {item.name}
+                      {item.createdBy}
                     </p>
                   </td>
                   <td>
-                    <p className="p-2.5 text-black dark:text-white">{item.address}</p>
+                    <p className="p-2.5 text-black dark:text-white">{item.station}</p>
                   </td>
                   <td>
                     <p className="p-2.5 text-black dark:text-white">{moment(item.startTime).format('L')}</p>
