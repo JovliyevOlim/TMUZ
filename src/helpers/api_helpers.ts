@@ -37,10 +37,10 @@ axios.interceptors.response.use(
         window.location.href = '/signIn';
         message = 'Invalid credentials';
         break;
-      // case 403:
-      //   window.location.href = '/signIn';
-      //   // message = 'Login qilish kerak';
-      //   break;
+      case 403:
+        window.location.href = '/signIn';
+        message = 'Login qilish kerak';
+        break;
       case 404:
         message = error.response.data.message;
         break;
