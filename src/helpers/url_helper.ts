@@ -6,7 +6,7 @@ export const POST_LOGIN = '/auth/login';
 export const ADD_NEW_USER = '/user/create';
 export const UPDATE_USER = '/user/edit';
 export const GET_ALL_USER = '/user/get-all-user';
-export const GET_USER_BY_ID = '/user/get-by-id';
+export const GET_USER_BY_ID = '/user';
 export const DELETE_USER = '/user/delete-by-id';
 
 // add new work

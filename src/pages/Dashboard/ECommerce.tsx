@@ -3,12 +3,13 @@ import StationDeviceChart from '../../components/Charts/StationDeviceChart.tsx';
 import LevelCrossingDeviceChart from '../../components/Charts/LevelCrossingDeviceChart.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllStation } from '../../slices/station/thunk.ts';
-import { getDeviceByStationId } from '../../slices/device/thunk.ts';
+import { getAllDevice, getDeviceByStationId } from '../../slices/device/thunk.ts';
+import PeregonChart from '../../components/Charts/PeregonChart.tsx';
+import { getAllCategoryForSelect } from '../../slices/category/thunk.ts';
 
 const ECommerce: React.FC = () => {
 
 
-  const { devices } = useSelector((state: any) => state.Device);
   const { stations } = useSelector((state: any) => state.Station);
   const dispatch: any = useDispatch();
   const [stationId, setStationId] = useState<any>(stations[0]?.id);
@@ -17,9 +18,14 @@ const ECommerce: React.FC = () => {
     dispatch(getAllStation());
   }, []);
 
+  useEffect(() => {
+    dispatch(getAllCategoryForSelect());
+    dispatch(getAllDevice());
+  }, []);
+
 
   useEffect(() => {
-    dispatch(getDeviceByStationId(stationId))
+    dispatch(getDeviceByStationId(stationId));
   }, [stationId]);
 
   return (
@@ -110,66 +116,13 @@ const ECommerce: React.FC = () => {
       {/*    </svg>*/}
       {/*  </CardDataStats>*/}
       {/*</div>*/}
-      {
-        stations.length > 0 &&
-        <div
-          className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="mb-4 justify-between gap-4 sm:flex">
-            <div>
-              <h4 className="text-xl font-semibold text-black dark:text-white">
-                Qurilmalar
-              </h4>
-            </div>
-            <div>
-              <div className="relative z-20 inline-block">
-                <select
-                  name="stationId"
-                  id="stationId"
-                  value={stationId}
-                  onChange={(e: any) => setStationId(e.target.value)}
-                  className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
-                >
-                  {
-                    stations.map((item: any) =>
-                      <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
-                    )
-                  }
-                </select>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <div className="overflow-x-auto">
-              <table className="sm:min-w-full table-fixed">
-                <thead>
-                <tr className="text-start text-sm font-medium uppercase xsm:text-base">
-                  <th className="p-2.5 text-start">Nomi</th>
-                </tr>
-                </thead>
-                <tbody>
-                {devices?.map((item: any, key: number) => (
-                  <tr key={key}>
-                    <td>
-                      <p style={{ cursor: 'pointer' }}
-                         className="p-2.5  text-black dark:text-white sm:block">
-                        {item.name}
-                      </p>
-                    </td>
-                  </tr>
-                ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      }
+
 
       <div className="mt-4 grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         {/*<ChartOne />*/}
         <StationDeviceChart />
         <LevelCrossingDeviceChart />
-        {/*<ChartThree />*/}
-        {/*<MapOne />*/}
+        <PeregonChart />
         <div className="col-span-12 mt-4 xl:col-span-8">
           {/*<TableOne />*/}
         </div>

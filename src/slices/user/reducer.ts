@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addNewUser, deleteUser, getAllUser, updateUser } from './thunk';
+import { addNewUser, deleteUser, getAllUser, getUserById, updateUser } from './thunk';
 
 
 interface initialState {
@@ -8,11 +8,13 @@ interface initialState {
   isAction: boolean,
   isSuccess: boolean,
   users: {},
+  user: {},
   message: ''
 }
 
 export const initialState: initialState = {
   users: {},
+  user: {},
   error: null,
   loading: false,
   isAction: false,
@@ -25,6 +27,19 @@ const sliceOptions = {
   initialState,
   reducers: {},
   extraReducers: (builder: any) => {
+
+    // get user by Id
+    builder.addCase(getUserById.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getUserById.fulfilled, (state: any, action: any) => {
+        state.user = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getUserById.rejected, (state: any) => {
+        state.loading = false;
+      });
 
     // get all user
     builder.addCase(getAllUser.pending, (state: any) => {

@@ -9,8 +9,17 @@ import {
   getAllUser as getAllUserApi,
   updateUser as updateUserApi,
   deleteUser as deleteUserApi,
-  // getUserById as getUserByIdApi
+  getUserById as getUserByIdApi
 } from '../../helpers/backend_helpers.ts';
+
+export const getUserById = createAsyncThunk('user/getAllUserId', async (userId: string) => {
+  try {
+    const response = getUserByIdApi(userId);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
 
 export const getAllUser = createAsyncThunk('user/getAllUser', async () => {
   try {
@@ -20,6 +29,7 @@ export const getAllUser = createAsyncThunk('user/getAllUser', async () => {
     return error;
   }
 });
+
 export const addNewUser = createAsyncThunk<any, any>('user/addUser', async (user: any, { rejectWithValue }) => {
   try {
     const response = addNewUserApi(user);
@@ -48,7 +58,7 @@ export const deleteUser = createAsyncThunk('user/deleteUser', async (user: strin
   try {
     const response = deleteUserApi(user);
     const data = await response;
-    toast.success("Xodim o'chirildi", { autoClose: 3000 });
+    toast.success('Xodim o\'chirildi', { autoClose: 3000 });
     return data;
   } catch (error) {
     let message: any = error;

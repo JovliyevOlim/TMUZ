@@ -27,12 +27,11 @@ const DeviceInfo = () => {
     getUserLocation();
   }
 
-  console.log(userLocation);
   const getUserLocation = () => {
-    console.log('location');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log(position);
           const { latitude, longitude } = position.coords;
           setUserLocation({ latitude, longitude });
         },
@@ -48,6 +47,7 @@ const DeviceInfo = () => {
 
   useEffect(() => {
     console.log('check use', checkUser);
+    console.log(userLocation);
     if (checkUser) {
       setModal(true);
     } else {

@@ -14,7 +14,7 @@ interface ChartTwoState {
   }[];
 }
 
-const StationDeviceChart: React.FC = () => {
+const PeregonChart: React.FC = () => {
   const dispatch: any = useDispatch();
 
   const { allCategory, isAction } = useSelector((state: any) => state.Category);
@@ -41,13 +41,11 @@ const StationDeviceChart: React.FC = () => {
 
   useEffect(() => {
     const result = generateChartDataByCategory(devices, categoryId);
-    console.log(result);
-    setRow(result.xaxis.stationCategories);
-    state.series = result.stationSeries;
+    setRow(result.xaxis.peregonCategories);
+    state.series = result.peregonSeries;
     let a = { ...state };
     setState(a);
   }, [categoryId]);
-
 
   const options: ApexOptions = {
     colors: ['#d20404', '#03d907'],
@@ -123,7 +121,7 @@ const StationDeviceChart: React.FC = () => {
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Stansiyada qurilmalar
+            Peregon qurilmalar
           </h4>
         </div>
         <div>
@@ -137,7 +135,7 @@ const StationDeviceChart: React.FC = () => {
             >
               <option value={''}>Tanlang</option>
               {
-                allCategory.filter((val: any) => val.station)?.map((item: any) =>
+                allCategory.filter((val: any) => val.peregon)?.map((item: any) =>
                   <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
                 )
               }
@@ -160,4 +158,4 @@ const StationDeviceChart: React.FC = () => {
   );
 };
 
-export default StationDeviceChart;
+export default PeregonChart;

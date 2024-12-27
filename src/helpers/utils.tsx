@@ -9,6 +9,8 @@ interface Device {
   stationName: string;
   levelCrossingId: string | null;
   levelCrossingName: string | null;
+  peregonName: string | null,
+  peregonId: string | null
 }
 
 // Series formatida qaytarish uchun natija turi
@@ -21,19 +23,22 @@ interface SeriesData {
 export function generateChartDataByCategory(data: Device[], categoryId: string): {
   stationSeries: SeriesData[];
   levelCrossingSeries: SeriesData[];
+  peregonSeries: SeriesData[];
   xaxis: {
     stationCategories: string[];
     levelCrossingCategories: string[];
+    peregonCategories: string[]
   };
 } {
   const stationCounts: Record<string, { name: string; checked: number; unchecked: number }> = {};
   const levelCrossingCounts: Record<string, { name: string; checked: number; unchecked: number }> = {};
+  const peregonCounts: Record<string, { name: string; checked: number; unchecked: number }> = {};
 
   // Kiritilgan categoryId bo‘yicha filtrlaymiz va tekshirilgan hamda tekshirilmaganlarni hisoblaymiz
   data
     .filter((item) => item.categoryId === categoryId)
     .forEach((item) => {
-      const { stationId, stationName, levelCrossingId, levelCrossingName, check } = item;
+      const { stationId, stationName, levelCrossingId, levelCrossingName, peregonId, peregonName, check } = item;
 
       // Station uchun hisob
       if (stationId) {
@@ -56,6 +61,18 @@ export function generateChartDataByCategory(data: Device[], categoryId: string):
           levelCrossingCounts[levelCrossingId].checked += 1;
         } else {
           levelCrossingCounts[levelCrossingId].unchecked += 1;
+        }
+      }
+
+      // Level Crossing uchun hisob
+      if (peregonId && peregonName) {
+        if (!peregonCounts[peregonId]) {
+          peregonCounts[peregonId] = { name: peregonName, checked: 0, unchecked: 0 };
+        }
+        if (check) {
+          peregonCounts[peregonId].checked += 1;
+        } else {
+          peregonCounts[peregonId].unchecked += 1;
         }
       }
     });
@@ -82,6 +99,17 @@ export function generateChartDataByCategory(data: Device[], categoryId: string):
     levelCrossingCheckedData.push(counts.checked);
   });
 
+  // peregon bo‘yicha `xaxis` va `series` ma'lumotlari
+  const peregonUncheckedData: number[] = [];
+  const peregonCheckedData: number[] = [];
+  const peregonCategories: string[] = [];
+
+  Object.values(peregonCounts).forEach((counts) => {
+    peregonCategories.push(counts.name);
+    peregonUncheckedData.push(counts.unchecked);
+    peregonCheckedData.push(counts.checked);
+  });
+
   return {
     stationSeries: [
       {
@@ -103,9 +131,20 @@ export function generateChartDataByCategory(data: Device[], categoryId: string):
         data: levelCrossingCheckedData
       }
     ],
+    peregonSeries: [
+      {
+        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
+        data: peregonUncheckedData
+      },
+      {
+        name: 'Qurilma ko\'rikdan o\'tkazilgan',
+        data: peregonCheckedData
+      }
+    ],
     xaxis: {
       stationCategories,
-      levelCrossingCategories
+      levelCrossingCategories,
+      peregonCategories
     }
   };
 }

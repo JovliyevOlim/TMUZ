@@ -10,7 +10,7 @@ export const postLogin = (data: any) => api.create(url.POST_LOGIN, data);
 // get all user
 export const getAllUser = () => api.get(url.GET_ALL_USER);
 // get user by id
-export const getUserById = (user: any) => api.get(url.ADD_NEW_USER, user);
+export const getUserById = (user: any) => api.get(url.GET_USER_BY_ID + '/' + user);
 // add New User
 export const addNewUser = (user: any) => api.create(url.ADD_NEW_USER, user);
 // update  User

@@ -23,10 +23,7 @@ const LevelCrossingDeviceChart: React.FC = () => {
   const [row, setRow] = useState<any>([]);
   const [categoryId, setCategoryId] = useState<string>('');
 
-  useEffect(() => {
-    dispatch(getAllCategoryForSelect());
-    dispatch(getAllDevice());
-  }, [isAction]);
+
 
   const [state, setState] = useState<ChartTwoState>({
     series: [
