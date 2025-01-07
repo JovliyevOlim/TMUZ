@@ -150,7 +150,7 @@ const Actions = () => {
                 <select
                   id="stationId"
                   name="stationId"
-                  value={stations}
+                  value={stationId}
                   onChange={(e) => {
                     setStationId(e.target.value);
                     setLevelCrossingId('');

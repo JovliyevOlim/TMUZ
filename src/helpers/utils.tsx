@@ -150,4 +150,7 @@ export function generateChartDataByCategory(data: Device[], categoryId: string):
 }
 
 
+export const checkPermission = (userPermissions: any, checkPermissions: any) => {
+  return checkPermissions.some((perm: any) => userPermissions.includes(perm));
+};
 

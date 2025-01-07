@@ -8,6 +8,7 @@ import { AddLevelCrossingDeviceExtra } from './AddLevelCrossingDeviceExtra.tsx';
 import { DeviceQrCode } from '../Device/DeviceQrCode.tsx';
 import { deleteCategory, getAllCategory } from '../../slices/category/thunk.ts';
 import DeleteModal from '../../components/DeleteModal.tsx';
+import { checkPermission } from '../../helpers/utils.tsx';
 
 const LevelCrossingDevice = () => {
 
@@ -18,6 +19,8 @@ const LevelCrossingDevice = () => {
   const [qrCodemodal, setQrCodeModal] = useState(false);
   const [editData, setEditData] = useState<any>(null);
   const { categoryTrue, isAction } = useSelector((state: any) => state.Category);
+  const { userPermissions } = useSelector((state: any) => state.Login);
+
   const dispatch: any = useDispatch();
 
 
@@ -53,12 +56,15 @@ const LevelCrossingDevice = () => {
     <>
       <Breadcrumb pageName="Temiryo'l kesishmasi qurilmalari" />
       <div className={'flex justify-end my-3'}>
-        <button
-          onClick={() => setModal(true)}
-          className="inline-flex items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-        >
-          Yaratish
-        </button>
+        {
+          checkPermission(userPermissions, ['ADD_CATEGORY']) &&
+          <button
+            onClick={() => setModal(true)}
+            className="inline-flex items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+          >
+            Yaratish
+          </button>
+        }
 
       </div>
       <div
