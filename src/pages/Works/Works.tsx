@@ -115,8 +115,8 @@ const Works = () => {
           Rejaviy {daily ? 'kundalik' : 'yillik'} ishlar
         </h4>
 
-        <div className={'flex gap-4'}>
-          <div className={'my-2 w-1/2'}>
+        <div className={'md:flex gap-4'}>
+          <div className={'my-2 md:w-1/2'}>
             <label htmlFor="status" className="block text-md font-medium leading-6 text-gray-900">
               Ish statusi
             </label>
@@ -137,7 +137,7 @@ const Works = () => {
               </div>
             </div>
           </div>
-          <div className={'my-2 w-1/2'}>
+          <div className={'my-2 md:w-1/2'}>
             <label htmlFor="plotId" className="block text-md font-medium leading-6 text-gray-900">
               Stansiya
             </label>
@@ -159,7 +159,7 @@ const Works = () => {
               </div>
             </div>
           </div>
-          <div className={'my-2 w-1/2'}>
+          <div className={'my-2 md:w-1/2'}>
             <label htmlFor="stationId" className="block text-md font-medium leading-6 text-gray-900">
               Stansiya
             </label>

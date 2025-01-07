@@ -29,11 +29,11 @@ const StationDeviceChart: React.FC = () => {
     series: [
       {
         name: 'Qurilma ko\'rikdan o\'tkazilmagan',
-        data: [13, 23, 20, 8, 13, 27, 15]
+        data: [4, 5, 6, 7]
       },
       {
         name: 'Qurilma ko\'rikdan o\'tkazilgan',
-        data: [44, 55, 41, 67, 22, 43, 65]
+        data: [4, 5, 67, 8]
       }
     ]
   });
@@ -63,7 +63,19 @@ const StationDeviceChart: React.FC = () => {
         enabled: false
       }
     },
-
+    // tooltip: {
+    //   custom: function({ series, seriesIndex, dataPointIndex, w }) {
+    //     const category = w.globals.labels[dataPointIndex];
+    //     const value = series[seriesIndex][dataPointIndex];
+    //     return `
+    //     <div style="padding: 10px; background: #fff; border: 1px solid #ddd;">
+    //       <strong>${category}</strong><br/>
+    //       Qiymat: ${value}<br/>
+    //       Jami: ${series[seriesIndex].reduce((acc:any, val:any) => acc + val, 0)}
+    //     </div>
+    //   `;
+    //   }
+    // },
     responsive: [
       {
         breakpoint: 1536,

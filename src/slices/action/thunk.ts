@@ -11,8 +11,18 @@ import {
   updateAction as updateActionApi,
   checkDeviceForAction as checkDeviceForActionApi,
   deleteAction as deleteActionApi,
+  getActionFilter as getActionFilterApi
 } from '../../helpers/backend_helpers.ts';
 
+
+export const getActionFilter = createAsyncThunk('action/getActionFilter', async (action: string) => {
+  try {
+    const response = getActionFilterApi(action);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
 export const getActionByUserDone = createAsyncThunk('action/getActionByUserDone', async (action: string) => {
   try {
     const response = getActionByUserDoneApi(action);

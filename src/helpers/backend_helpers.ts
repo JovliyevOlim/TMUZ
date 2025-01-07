@@ -40,6 +40,9 @@ export const updateStation = (station: any) => api.put(url.UPDATE_STATION + '/' 
 // delete  station
 export const deleteStation = (station: any) => api.delete(url.DELETE_STATION + '/' + station);
 
+
+// get action filter
+export const getActionFilter = (params: any) => api.get(url.GET_ACTION_FILTER + '/' + params);
 // get action by user done
 export const getActionByUserDone = (action: any) => api.get(url.GET_ACTION_BY_USER + '/' + action);
 // get action by user done false

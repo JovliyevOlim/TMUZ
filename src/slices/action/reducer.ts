@@ -4,7 +4,7 @@ import {
   getActionByUserDone,
   addNewAction,
   updateAction,
-  checkDeviceForAction, deleteAction
+  checkDeviceForAction, deleteAction, getActionFilter
 } from './thunk';
 
 
@@ -37,6 +37,20 @@ const sliceOptions = {
     }
   },
   extraReducers: (builder: any) => {
+
+    // get action filter
+    builder.addCase(getActionFilter.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getActionFilter.fulfilled, (state: any, action: any) => {
+        state.actions = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getActionFilter.rejected, (state: any) => {
+        state.loading = false;
+        state.actions = [];
+      });
 
     // get action by user done
     builder.addCase(getActionByUserDone.pending, (state: any) => {

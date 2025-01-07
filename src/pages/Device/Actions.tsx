@@ -1,11 +1,15 @@
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
 import { useEffect, useState } from 'react';
-// import { AddWorks } from './AddWorks.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAction, getActionByUserDone, getActionByUserDoneFalse } from '../../slices/action/thunk.ts';
+import { deleteAction, getActionFilter } from '../../slices/action/thunk.ts';
 import moment from 'moment/moment';
 import { AddNewAction } from './AddNewAction.tsx';
 import DeleteModal from '../../components/DeleteModal.tsx';
+import { getAllPlot } from '../../slices/plot/thunk.ts';
+import { getStationByPlotId } from '../../slices/station/thunk.ts';
+import { getPeregonByPlotId } from '../../slices/peregon/thunk.ts';
+import { getAllCategory } from '../../slices/category/thunk.ts';
+import { getLevelCrossingByPlot } from '../../slices/levelCrossing/thunk.ts';
 
 const Actions = () => {
 
@@ -13,9 +17,19 @@ const Actions = () => {
   const [modalDelete, setModalDelete] = useState(false);
   const [editData, setEditData] = useState<any>(null);
   const { actions, isAction } = useSelector((state: any) => state.Action);
+  const { plot } = useSelector((state: any) => state.Plot);
+  const { stations } = useSelector((state: any) => state.Station);
+  const { peregons } = useSelector((state: any) => state.Peregon);
+  const { levelCrossingForSelect } = useSelector((state: any) => state.LevelCrossing);
+  const { categoryTrue } = useSelector((state: any) => state.Category);
   const { userId } = useSelector((state: any) => state.Login);
   const dispatch: any = useDispatch();
-  const [userIsDone, setUserIsDone] = useState('true');
+
+  const [plotId, setPlotId] = useState<string>('');
+  const [stationId, setStationId] = useState<string>('');
+  const [peregonId, setPeregonId] = useState<string>('');
+  const [levelCrossingId, setLevelCrossingId] = useState<string>('');
+  const [deviceCategoryId, setDeviceCategoryId] = useState<string>('');
   const onClickEdit = (data: any) => {
     setModal(true);
     setEditData(data);
@@ -33,12 +47,54 @@ const Actions = () => {
   };
 
   useEffect(() => {
-    if (userIsDone === 'true') {
-      dispatch(getActionByUserDone(userId));
-    } else {
-      dispatch(getActionByUserDoneFalse(userId));
+    dispatch(getAllPlot());
+  }, []);
+
+
+  const filterByPlot = (id) => {
+    dispatch(getStationByPlotId(id));
+    dispatch(getLevelCrossingByPlot(id));
+    dispatch(getPeregonByPlotId(id));
+  };
+
+  useEffect(() => {
+    if (stationId) {
+      dispatch(getAllCategory(
+        {
+          isStation: true,
+          isLevelCrossing: false,
+          isPeregon: false
+        }
+      ));
     }
-  }, [isAction, userIsDone]);
+    if (levelCrossingId) {
+      dispatch(getAllCategory(
+        {
+          isStation: false,
+          isLevelCrossing: true,
+          isPeregon: false
+        }
+      ));
+    }
+    if (peregonId) {
+      dispatch(getAllCategory(
+        {
+          isStation: false,
+          isLevelCrossing: false,
+          isPeregon: true
+        }
+      ));
+    }
+  }, [peregonId, levelCrossingId, stationId]);
+
+
+  useEffect(() => {
+    if (deviceCategoryId) {
+      dispatch(getActionFilter(deviceCategoryId));
+    }
+  }, [isAction, deviceCategoryId]);
+
+
   return (
     <>
       <Breadcrumb pageName="Qurilmalar harakati" />
@@ -50,21 +106,164 @@ const Actions = () => {
           <h4 className="text-xl font-semibold text-black dark:text-white">
             Qurilmalar
           </h4>
-          <div>
+
+        </div>
+
+        <div className={'md:flex gap-4'}>
+          <div className={'my-2 md:w-1/2'}>
+            <label htmlFor="status" className="block text-md font-medium leading-6 text-gray-900">
+              Uchastka
+            </label>
             <div className="mt-2">
               <div className="relative inline-block w-full">
                 <select
                   id="plotId"
-                  name="userIsDone"
-                  onChange={(e) => setUserIsDone(e.target.value)}
+                  name="plotId"
+                  value={plotId}
+                  onChange={(e) => {
+                    setPlotId(e.target.value);
+                    filterByPlot(e.target.value);
+                  }}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                  ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value={''} className="text-body dark:text-bodydark">
+                    Tanlang
+                  </option>
+                  {
+                    plot.map((item: any) =>
+                      <option value={item.id} className="text-body dark:text-bodydark">
+                        {item.name}
+                      </option>
+                    )
+                  }
+
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className={'my-2 md:w-1/2'}>
+            <label htmlFor="status" className="block text-md font-medium leading-6 text-gray-900">
+              Stansiya
+            </label>
+            <div className="mt-2">
+              <div className="relative inline-block w-full">
+                <select
+                  id="stationId"
+                  name="stationId"
+                  value={stations}
+                  onChange={(e) => {
+                    setStationId(e.target.value);
+                    setLevelCrossingId('');
+                    setPeregonId('');
+                  }}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  <option value="true" className="text-body dark:text-bodydark">
-                    Bajarilgan
+                  <option value={''} className="text-body dark:text-bodydark">
+                    Tanlang
                   </option>
-                  <option value="false" className="text-body dark:text-bodydark">
-                    Bajarilmagan
+                  {
+                    stations.map((item: any) =>
+                      <option value={item.id} className="text-body dark:text-bodydark">
+                        {item.name}
+                      </option>
+                    )
+                  }
+
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className={'my-2 md:w-1/2'}>
+            <label htmlFor="status" className="block text-md font-medium leading-6 text-gray-900">
+              Kesishma
+            </label>
+            <div className="mt-2">
+              <div className="relative inline-block w-full">
+                <select
+                  id="levelCrossingId"
+                  name="levelCrossingId"
+                  value={levelCrossingId}
+                  onChange={(e) => {
+                    setLevelCrossingId(e.target.value);
+                    setStationId('');
+                    setPeregonId('');
+                  }}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value={''} className="text-body dark:text-bodydark">
+                    Tanlang
                   </option>
+                  {
+                    levelCrossingForSelect.map((item: any) =>
+                      <option value={item.id} className="text-body dark:text-bodydark">
+                        {item.name}
+                      </option>
+                    )
+                  }
+
+                </select>
+              </div>
+
+            </div>
+          </div>
+          <div className={'my-2 md:w-1/2'}>
+            <label htmlFor="status" className="block text-md font-medium leading-6 text-gray-900">
+              Peregon
+            </label>
+            <div className="mt-2">
+              <div className="relative inline-block w-full">
+                <select
+                  id="peregonId"
+                  name="peregonId"
+                  value={peregonId}
+                  onChange={(e) => {
+                    setPeregonId(e.target.value);
+                    setStationId('');
+                    setLevelCrossingId('');
+                  }}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value={''} className="text-body dark:text-bodydark">
+                    Tanlang
+                  </option>
+                  {
+                    peregons.map((item: any) =>
+                      <option value={item.id} className="text-body dark:text-bodydark">
+                        {item.name}
+                      </option>
+                    )
+                  }
+
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className={'my-2 md:w-1/2'}>
+            <label htmlFor="status" className="block text-md font-medium leading-6 text-gray-900">
+              Qurilma turlari
+            </label>
+            <div className="mt-2">
+              <div className="relative inline-block w-full">
+                <select
+                  id="deviceCategoryId"
+                  name="deviceCategoryId"
+                  value={deviceCategoryId}
+                  onChange={(e) => {
+                    setDeviceCategoryId(e.target.value);
+                  }}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
+                      ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value={''} className="text-body dark:text-bodydark">
+                    Tanlang
+                  </option>
+                  {
+                    categoryTrue.map((item: any) =>
+                      <option value={item.id} className="text-body dark:text-bodydark">
+                        {item.name}
+                      </option>
+                    )
+                  }
+
                 </select>
               </div>
             </div>
@@ -132,11 +331,12 @@ const Actions = () => {
           </div>
         </div>
       </div>
-      <AddNewAction modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
+      <AddNewAction modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />;
       <DeleteModal modalOpen={modalDelete} setModalOpen={setModalDelete} text={'Action'} setItem={setEditData}
-                   deleteFunction={deleteFunction} />
+                   deleteFunction={deleteFunction} />;
     </>
-  );
+  )
+    ;
 };
 
 export default Actions;
