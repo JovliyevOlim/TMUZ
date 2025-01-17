@@ -7,18 +7,27 @@ export const localUrl = 'https://tmuz-git-master-jovliyevolims-projects.vercel.a
 // export const baseUrl = 'http://192.168.1.50:8080/api';
 export const baseUrl = 'https://railway-3187acae3c60.herokuapp.com/api';
 // export const baseUrl = 'http://192.168.1.50:8080/api';
-// default
 axios.defaults.baseURL = baseUrl;
-// content type
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-// content type
-const authUser: any = localStorage.getItem('authUser');
-const token = JSON.parse(authUser) ? JSON.parse(authUser).token : null;
-console.log(JSON.parse(authUser));
-console.log(token);
+
+
+const getToken = (): string | null => {
+  const authUser = localStorage.getItem('authUser');
+  if (authUser) {
+    try {
+      const parsedAuthUser = JSON.parse(authUser);
+      return parsedAuthUser?.token || null;
+    } catch (error) {
+      console.error("Error parsing authUser:", error);
+      return null;
+    }
+  }
+  return null;
+};
+
+const token = getToken();
 if (token) {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
 // intercepting to capture errors

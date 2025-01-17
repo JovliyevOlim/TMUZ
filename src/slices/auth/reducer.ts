@@ -25,6 +25,7 @@ const loginSlice = createSlice({
       state.errorMsg = true;
     },
     loginSuccess(state, action) {
+      console.log(localStorage.getItem('authUser'));
       state.user = action.payload.userEmployeeDto.user;
       state.employeeEnterPriceId = action.payload.userEmployeeDto?.employee?.enterprise?.id;
       state.userToken = action.payload.token;

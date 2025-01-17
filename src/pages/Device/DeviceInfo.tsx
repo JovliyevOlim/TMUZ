@@ -39,6 +39,10 @@ const DeviceInfo = () => {
 
   useEffect(() => {
     getUserLocation();
+    // setUserLocation({
+    //   latitude: 41.306018,
+    //   longitude: 69.279271
+    // });
   }, []);
 
   const getUserLocation = () => {

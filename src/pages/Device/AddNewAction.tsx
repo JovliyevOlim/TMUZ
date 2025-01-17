@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearCheckUser } from '../../slices/action/reducer.ts';
 import { addNewAction, updateAction } from '../../slices/action/thunk.ts';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import axios from 'axios';
+import { baseUrl } from '../../helpers/api_helpers.ts';
+import { toast } from 'react-toastify';
 
 
 export const AddNewAction = ({ modalOpen, setModalOpen, item, setItem }: any) => {
@@ -29,6 +32,20 @@ export const AddNewAction = ({ modalOpen, setModalOpen, item, setItem }: any) =>
     }
   }, [item]);
 
+  const getToken = (): string | null => {
+    const authUser = localStorage.getItem('authUser');
+    if (authUser) {
+      try {
+        const parsedAuthUser = JSON.parse(authUser);
+        return parsedAuthUser?.token || null;
+      } catch (error) {
+        console.error('Error parsing authUser:', error);
+        return null;
+      }
+    }
+    return null;
+  };
+
   const validation: any = useFormik({
     // enableReinitialize : use this flag when initial values needs to be changed
     enableReinitialize: true,
@@ -41,7 +58,27 @@ export const AddNewAction = ({ modalOpen, setModalOpen, item, setItem }: any) =>
       if (item) {
         dispatch(updateAction({ ...values, id: item.id }));
       } else {
-        dispatch(addNewAction({ ...values, deviceId: deviceQrCodeInfo?.deviceDto?.id, userId }));
+        try {
+          const responseImg: any = axios.post(baseUrl + '/action/create', {
+            ...values,
+            deviceId: deviceQrCodeInfo?.deviceDto?.id,
+            userId
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${getToken()}`
+            }
+          });
+          toast.success('Action qo\'shildi', { autoClose: 3000 });
+          setModalOpen(false);
+          validation.resetForm();
+          setItem(null);
+          setInitialValues({
+            description: ''
+          });
+        } catch (error) {
+          console.error('Error uploading file:', error);
+        }
       }
     }
   });
