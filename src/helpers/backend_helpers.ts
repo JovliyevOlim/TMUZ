@@ -34,6 +34,7 @@ export const getStationById = (station: any) => api.get(url.GET_STATION_BY_ID, s
 // get station by plot id
 export const getStationByPlotId = (station: any) => api.get(url.GET_STATION_BY_PLOT_ID + '/' + station);
 export const getStationByUserId = (station: any) => api.get(url.GET_STATION_GET_BY_USER_ID + '/' + station);
+export const getStationByUserPlotId = (station: any) => api.get(url.GET_STATION_GET_BY_USER_PLOT_ID + '/' + station.id, station.params);
 // add New station
 export const addNewStation = (station: any) => api.create(url.ADD_NEW_STATION, station);
 // update  station

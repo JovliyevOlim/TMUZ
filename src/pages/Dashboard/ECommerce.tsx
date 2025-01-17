@@ -25,7 +25,9 @@ const ECommerce: React.FC = () => {
 
 
   useEffect(() => {
-    dispatch(getDeviceByStationId(stationId));
+    if (stationId) {
+      dispatch(getDeviceByStationId(stationId));
+    }
   }, [stationId]);
 
   return (

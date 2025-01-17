@@ -23,7 +23,6 @@ const AuthProtected = (props: any) => {
   /*
     Navigate is un-auth access protected routes via url
     */
-    console.log('efe')
   if (!userProfile && loading && !token) {
     return (
       <Navigate to={{ pathname: '/login' }} />

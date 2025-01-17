@@ -4,6 +4,7 @@
 import { loginSuccess, logoutUserSuccess, apiError, reset_login_flag } from './reducer';
 import { postLogin } from '../../helpers/backend_helpers.ts';
 import { toast } from 'react-toastify';
+import { checkPermission } from '../../helpers/utils.tsx';
 
 export const loginUser = (user: any, navigate: any) => async (dispatch: any) => {
   try {
@@ -17,12 +18,11 @@ export const loginUser = (user: any, navigate: any) => async (dispatch: any) => 
       localStorage.setItem('authUser', JSON.stringify(data.data));
       if (data.success) {
         dispatch(loginSuccess(data.data));
-        if (document.referrer == '/singIn') {
-          if (window.location.pathname == '/singIn') {
-            window.history.back();
-          }
-        } else {
+        const isCheck = checkPermission(data.data?.userEmployeeDto.user.role?.permissions, ['GET_DEVICE']);
+        if (isCheck) {
           navigate('/dashboard');
+        } else {
+          navigate('/works');
         }
       } else {
         dispatch(apiError(data.data));

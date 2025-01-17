@@ -26,6 +26,7 @@ export const DELETE_STATION = '/station/delete';
 export const GET_ALL_STATION = '/station/get-all';
 export const GET_STATION_BY_ID = '/station/get-by-id';
 export const GET_STATION_GET_BY_USER_ID = '/station/get-by-user-id';
+export const GET_STATION_GET_BY_USER_PLOT_ID = '/station/get-by-user-plot-id';
 export const GET_STATION_BY_PLOT_ID = '/station/get-by-plot-id';
 
 

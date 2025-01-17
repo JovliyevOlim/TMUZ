@@ -3,12 +3,18 @@ import { useEffect, useState } from 'react';
 import { AddWorks } from './AddWorks.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmJob, doneJob, getJobs } from '../../slices/work/thunk.ts';
-import { getAllStation, getStationByPlotId, getStationByUserId } from '../../slices/station/thunk.ts';
+import {
+  getAllStation,
+  getStationByPlotId,
+  getStationByUserId,
+  getStationByUserPlotId
+} from '../../slices/station/thunk.ts';
 import { PauseWork } from './PauseWork.tsx';
 import { RejectedWork } from './RejectedWork.tsx';
 import moment from 'moment';
-import { getAllPlot } from '../../slices/plot/thunk.ts';
+import { getAllPlot, getPlotByEnterprise } from '../../slices/plot/thunk.ts';
 import { getAllWorkExample } from '../../slices/workExample/thunk.ts';
+import { checkPermission } from '../../helpers/utils.tsx';
 
 
 const Works = () => {
@@ -16,16 +22,20 @@ const Works = () => {
   const [modal, setModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const { jobs, isAction } = useSelector((state: any) => state.Work);
-  const { userId, userPermissions } = useSelector((state: any) => state.Login);
+  const { userId, userPermissions, employeeEnterPriceId } = useSelector((state: any) => state.Login);
   const { stations } = useSelector((state: any) => state.Station);
-  const { plot } = useSelector((state: any) => state.Plot);
+  const { plot, plotForSelect } = useSelector((state: any) => state.Plot);
   const dispatch: any = useDispatch();
   const [isYear, setIsYear] = useState('daily');
   const [stationId, setStationId] = useState(stations[0]?.id);
   const [plotId, setPlotId] = useState('');
   const [status, setStatus] = useState('all');
+  const [date, setDate] = useState(moment(new Date()).format('YYYY-MM-DD'));
   const [pausedJob, setPausedJob] = useState(false);
   const [rejectedJob, setRejectedJob] = useState(false);
+  const getAllPlotCheck = checkPermission(userPermissions, ['GET_PLOT']);
+  const getAllWorkExampleCheck = checkPermission(userPermissions, ['JOB_EXAMPLE']);
+
   const onClickDone = (data: any) => {
     dispatch(doneJob({
       id: data,
@@ -37,7 +47,7 @@ const Works = () => {
   const onClickConfirmed = (data: any) => {
     dispatch(confirmJob({
       id: data,
-      confirm: true,
+      confirmed: true,
       userId
     }));
   };
@@ -59,21 +69,33 @@ const Works = () => {
         stationId: stationId,
         params: {
           daily: daily,
-          status: status
+          status: status,
+          date: moment(date).format('YYYY-MM-DD 00:00:00')
         }
       }));
     }
-  }, [isAction, daily, status, stationId]);
+  }, [isAction, daily, status, stationId, date]);
 
   useEffect(() => {
     if (plotId) {
-      dispatch(getStationByPlotId(plotId));
+      dispatch(getStationByUserPlotId({
+        id: userId,
+        params: {
+          plotId: plotId
+        }
+      }));
+    }
+    if (getAllWorkExampleCheck) {
       dispatch(getAllWorkExample());
     }
   }, [plotId]);
 
   useEffect(() => {
-    dispatch(getAllPlot());
+    if (getAllPlotCheck) {
+      dispatch(getAllPlot());
+    } else {
+      dispatch(getPlotByEnterprise(employeeEnterPriceId));
+    }
     dispatch(getStationByUserId(userId));
   }, []);
 
@@ -153,10 +175,13 @@ const Works = () => {
                   value={plotId}
                   className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1
                       ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option value={''} className="text-body dark:text-bodydark">Tanlang</option>
                   {
-                    plot.map((item: any) =>
-                      <option value={item.id} className="text-body dark:text-bodydark">{item.name}</option>
-                    )
+                    getAllPlotCheck ?
+                      plot.map((item: any) =>
+                        <option value={item.id} className="text-body dark:text-bodydark">{item.name}</option>
+                      ) : plotForSelect.map((item: any) =>
+                        <option value={item.id} className="text-body dark:text-bodydark">{item.name}</option>)
                   }
                 </select>
               </div>
@@ -185,6 +210,23 @@ const Works = () => {
               </div>
             </div>
           </div>
+          <div className={'my-2 md:w-1/2'}>
+            <label htmlFor="startTime" className="block text-md font-medium leading-6 text-gray-900">
+              Sana
+            </label>
+            <div className="mt-2">
+              <div className="relative inline-block w-full">
+                <input
+                  id="startTime"
+                  onChange={(e) => setDate(e.target.value)}
+                  value={date}
+                  name="startTime"
+                  type="date"
+                  className="block w-full rounded-md border-0 py-1.5 text-black-2 shadow-sm ring-1 ring-zinc-400 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col">
@@ -195,6 +237,7 @@ const Works = () => {
                 <th className="p-2.5 text-start">Ish yaratgan xodim</th>
                 <th className="p-2.5 text-start">Stansiya</th>
                 <th className="p-2.5 text-start">Yaratilgan sana</th>
+                <th className="p-2.5 text-start">Ish</th>
                 <th className="p-2.5 text-start">Tavsif</th>
                 <th className="p-2.5 ext-start">Action</th>
               </tr>
@@ -214,13 +257,16 @@ const Works = () => {
                     <p className="p-2.5 text-black dark:text-white">{moment(item.startTime).format('L')}</p>
                   </td>
                   <td>
+                    <p className="p-2.5 text-black dark:text-white">{item.name}</p>
+                  </td>
+                  <td>
                     <p className="p-2.5 text-black dark:text-white">{item.description}</p>
                   </td>
 
                   <td>
                     <div className="flex items-center flex-wrap justify-center p-2.5  gap-2 xl:p-5">
                       {
-                        !item.done && <>
+                        !item.done && !item.confirm && <>
                           {
                             userPermissions?.includes('DONE_JOB')
                             &&
@@ -231,7 +277,8 @@ const Works = () => {
                           }
                           {
                             userPermissions?.includes('PAUSE_JOB')
-                            && <button
+                            &&
+                            <button
                               onClick={() => onClickPause(item)}
                               className="flex items-center gap-2 justify-center rounded-md bg-red-600
                             px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500
@@ -245,22 +292,27 @@ const Works = () => {
 
 
                       {
-                        userPermissions?.includes('CONFIRM_JOB')
-                        && <button onClick={() => onClickConfirmed(item.id)}
-                                   className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                          Tasdiqlash
-                        </button>
-                      }
-                      {
-                        userPermissions?.includes('CONFIRM_JOB')
-                        &&
-                        <button onClick={() => onClickRejected(item)}
-                                className="flex items-center gap-2 justify-center rounded-md bg-red-600
+                        item.done && !item.confirm && <>
+                          {
+                            userPermissions?.includes('CONFIRM_JOB')
+                            && <button onClick={() => onClickConfirmed(item.id)}
+                                       className="flex items-center gap-2 justify-center rounded-md bg-indigo-600 px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                              Tasdiqlash
+                            </button>
+                          }
+                          {
+                            userPermissions?.includes('CONFIRM_JOB')
+                            &&
+                            <button onClick={() => onClickRejected(item)}
+                                    className="flex items-center gap-2 justify-center rounded-md bg-red-600
                             px-4 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500
                             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-                          Rad etish
-                        </button>
+                              Rad etish
+                            </button>
+                          }
+                        </>
                       }
+
 
                     </div>
                   </td>

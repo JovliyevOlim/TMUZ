@@ -5,7 +5,7 @@ import {
   updateStation,
   getStationByPlotId,
   deleteStation,
-  getStationByUserId
+  getStationByUserId, getStationByUserPlotId
 } from './thunk';
 
 
@@ -45,6 +45,20 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getStationByPlotId.rejected, (state: any) => {
+        state.stations = [];
+        state.loading = false;
+      });
+
+    // get all station by plot
+    builder.addCase(getStationByUserPlotId.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getStationByUserPlotId.fulfilled, (state: any, action: any) => {
+        state.stations = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getStationByUserPlotId.rejected, (state: any) => {
         state.stations = [];
         state.loading = false;
       });

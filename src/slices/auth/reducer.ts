@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const initialState = {
   userToken: '',
   user: {},
+  employeeEnterPriceId: {},
   userId: null,
   businessId: null,
   error: '', // for error message
@@ -24,18 +25,14 @@ const loginSlice = createSlice({
       state.errorMsg = true;
     },
     loginSuccess(state, action) {
-      state.user = action.payload.user;
+      state.user = action.payload.userEmployeeDto.user;
+      state.employeeEnterPriceId = action.payload.userEmployeeDto?.employee?.enterprise?.id;
       state.userToken = action.payload.token;
-      state.userId = action.payload.user.id;
+      state.userId = action.payload.userEmployeeDto.user.id;
       state.loading = false;
       state.errorMsg = false;
-      state.userPermissions = action.payload.user.role?.permissions;
+      state.userPermissions = action.payload.userEmployeeDto.user.role?.permissions;
       state.isAction = !state.isAction;
-      if (document.referrer !== 'login') {
-        if (window.location.pathname !== 'login') {
-          window.history.back();
-        }
-      }
     },
     logoutUserSuccess(state) {
       state.isUserLogout = true;

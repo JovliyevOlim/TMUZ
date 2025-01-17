@@ -2,20 +2,24 @@ import { useEffect, useState } from 'react';
 // import { AddWorks } from './AddWorks.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getDeviceInfoForQr } from '../../slices/device/thunk.ts';
 import moment from 'moment';
 import { Button } from 'reactstrap';
 import { AddNewAction } from './AddNewAction.tsx';
-import { checkDeviceForAction } from '../../slices/action/thunk.ts';
 import { toast } from 'react-toastify';
+import { Login } from '../Authentication/Login.tsx';
+import { getDeviceInfoForQr } from '../../slices/device/thunk.ts';
+import { checkDeviceForAction } from '../../slices/action/thunk.ts';
 
 const DeviceInfo = () => {
 
   const { deviceQrCodeInfo } = useSelector((state: any) => state.Device);
   const { checkUser, isAction } = useSelector((state: any) => state.Action);
+
   const dispatch: any = useDispatch();
   const { id }: any = useParams();
   const [modal, setModal] = useState(false);
+  const [modalLogin, setModalLogin] = useState(false);
+  const [checkIsUser, setCheckIsUser] = useState(false);
   const [editData, setEditData] = useState(null);
   const [userLocation, setUserLocation] = useState<{
     latitude: number;
@@ -23,9 +27,19 @@ const DeviceInfo = () => {
   } | null>(null);
 
 
-  function getLocation() {
+  useEffect(() => {
+    console.log(localStorage.getItem('authUser'));
+    if (localStorage.getItem('authUser')) {
+      setCheckIsUser(true);
+    } else {
+      setCheckIsUser(false);
+    }
+  }, [modalLogin]);
+
+
+  useEffect(() => {
     getUserLocation();
-  }
+  }, []);
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -45,30 +59,21 @@ const DeviceInfo = () => {
     }
   };
 
+
   useEffect(() => {
-    console.log('check use', checkUser);
-    console.log(userLocation);
-    if (checkUser) {
-      setModal(true);
-    } else {
-      setModal(false);
+    if (userLocation && checkIsUser) {
+      dispatch(checkDeviceForAction({
+        longitude: userLocation?.longitude,
+        latitude: userLocation?.latitude,
+        deviceId: id
+      }));
     }
-  }, [checkUser]);
-
-  // useEffect(() => {
-  //   if (userLocation) {
-  //     dispatch(checkDeviceForAction({
-  //       longitude: userLocation?.longitude,
-  //       latitude: userLocation?.latitude,
-  //       deviceId: id
-  //     }));
-  //   }
-  // }, [userLocation]);
+  }, [userLocation, checkIsUser]);
 
 
-  // useEffect(() => {
-  //   dispatch(getDeviceInfoForQr(id));
-  // }, [isAction]);
+  useEffect(() => {
+    dispatch(getDeviceInfoForQr(id));
+  }, [isAction]);
 
 
   return (
@@ -104,13 +109,23 @@ const DeviceInfo = () => {
             </h5>
           </div>
 
-          <Button
-            onClick={getLocation}
-            className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-          >
-            Yangi ish qilish
-          </Button>
+          {
+            checkIsUser ? <Button
+                onClick={() => setModal(true)}
+                className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                Yangi ish qilish
+              </Button>
+              : <Button
+                onClick={() => setModalLogin(true)}
+                className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+              >
+                Kirish
+              </Button>
+          }
+
           <AddNewAction modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />
+          <Login modalOpen={modalLogin} setModalOpen={setModalLogin} />
         </div>
       </div>
       <div

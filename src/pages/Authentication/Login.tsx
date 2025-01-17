@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +7,6 @@ import { loginUserOther } from '../../slices/auth/thunk.ts';
 
 export const Login = ({ modalOpen, setModalOpen }: any) => {
   const dispatch: any = useDispatch();
-  const { loading} = useSelector((state: any) => state.Login);
 
   function tog_standard() {
     setModalOpen(!modalOpen);
@@ -28,10 +26,9 @@ export const Login = ({ modalOpen, setModalOpen }: any) => {
     }),
     onSubmit: (values) => {
       dispatch(loginUserOther(values));
-      setModalOpen(modalOpen)
+      setModalOpen(false);
     }
   });
-
 
 
   return (
@@ -113,7 +110,7 @@ export const Login = ({ modalOpen, setModalOpen }: any) => {
                   Cancel
                 </button>
                 <button
-                  disabled={loading}
+                  // disabled={loading}
                   type="submit"
                   className="flex justify-center rounded-md bg-blue-700 px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-blue-800 hover:bg-blue-600 sm:mt-0 sm:w-auto"
                 >
