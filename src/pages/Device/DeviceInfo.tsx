@@ -14,6 +14,7 @@ const DeviceInfo = () => {
 
   const { deviceQrCodeInfo } = useSelector((state: any) => state.Device);
   const { checkUser, isAction } = useSelector((state: any) => state.Action);
+  const { user } = useSelector((state: any) => state.Login);
 
   const dispatch: any = useDispatch();
   const { id }: any = useParams();
@@ -26,15 +27,14 @@ const DeviceInfo = () => {
     longitude: number;
   } | null>(null);
 
-
   useEffect(() => {
-    console.log(localStorage.getItem('authUser'));
-    if (localStorage.getItem('authUser')) {
+    const storage = localStorage.getItem('authUser');
+    if (storage) {
       setCheckIsUser(true);
     } else {
       setCheckIsUser(false);
     }
-  }, [modalLogin]);
+  }, [modalLogin, localStorage.getItem('authUser'), user]);
 
 
   useEffect(() => {
@@ -61,14 +61,14 @@ const DeviceInfo = () => {
 
 
   useEffect(() => {
-    if (userLocation && checkIsUser) {
+    if (userLocation && (checkIsUser || user)) {
       dispatch(checkDeviceForAction({
         longitude: userLocation?.longitude,
         latitude: userLocation?.latitude,
         deviceId: id
       }));
     }
-  }, [userLocation, checkIsUser]);
+  }, [userLocation, checkIsUser, user]);
 
 
   useEffect(() => {
