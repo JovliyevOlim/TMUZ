@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import userSix from '../../images/user/user-06.png';
+import userSix from '../../images/avatardefault_92824.webp';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';

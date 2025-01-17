@@ -20,7 +20,7 @@ import moment from 'moment';
 export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any) => {
   const dispatch: any = useDispatch();
   const { loading, isAction, isSuccess, jobs } = useSelector((state: any) => state.Work);
-  const { stations } = useSelector((state: any) => state.Station);
+  const { stationsUser } = useSelector((state: any) => state.Station);
   const { workExample } = useSelector((state: any) => state.WorkExample);
   const { userId } = useSelector((state: any) => state.Login);
 
@@ -55,9 +55,9 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
     }),
     onSubmit: (values) => {
       if (item) {
-        dispatch(updateJob({ ...values, yearJob: !daily,createdBy:userId, id: item.id }));
+        dispatch(updateJob({ ...values, yearJob: !daily, createdBy: userId, id: item.id }));
       } else {
-        dispatch(addNewJob({ ...values, yearJob: !daily,createdBy:userId }));
+        dispatch(addNewJob({ ...values, yearJob: !daily, createdBy: userId }));
       }
     }
   });
@@ -168,7 +168,7 @@ export const AddWorks = ({ modalOpen, setModalOpen, item, setItem, daily }: any)
                             Tanlang
                           </option>
                           {
-                            stations.map((item: any) =>
+                            stationsUser?.map((item: any) =>
                               <option value={item.id} className="text-body dark:text-bodydark">
                                 {item.name}
                               </option>

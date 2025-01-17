@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
-import UserOne from '../../images/user/user-01.png';
-import { useDispatch } from 'react-redux';
+import userSix from '../../images/avatardefault_92824.webp';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../slices/auth/thunk.ts';
 
 const DropdownUser = () => {
   const dispatch: any = useDispatch();
   const navigate: any = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { userId, userPermissions, user } = useSelector((state: any) => state.Login);
 
 
   function logOut() {
@@ -25,13 +26,13 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-           Xodim Ismi
+           {user?.firstName} {user?.lastName}
           </span>
-          <span className="block text-xs">Lavozim</span>
+          <span className="block text-xs">{user?.role?.name}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+          <img src={userSix} alt="User" />
         </span>
 
         <svg

@@ -6,7 +6,7 @@ import { getAllEmployee } from '../../slices/employee/thunk.ts';
 import { getAllRoles } from '../../slices/roles/thunk.ts';
 import { getAllEnterprise } from '../../slices/enterprise/thunk.ts';
 import { baseUrl } from '../../helpers/api_helpers.ts';
-import userSix from '../../images/user/user-06.png';
+import userSix from '../../images/avatardefault_92824.webp';
 import { checkPermission } from '../../helpers/utils.tsx';
 
 

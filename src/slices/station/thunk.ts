@@ -10,7 +10,8 @@ import {
   getAllStation as getAllStationByApi,
   addNewStation as addNewStationApi,
   updateStation as updateStationApi,
-  deleteStation as deleteStationApi
+  deleteStation as deleteStationApi,
+  getStationByUserId as getStationByUserIdApi
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllStation = createAsyncThunk('station/getAllStation', async () => {
@@ -24,6 +25,14 @@ export const getAllStation = createAsyncThunk('station/getAllStation', async () 
 export const getStationByPlotId = createAsyncThunk('station/getStationPlotById', async (station: string) => {
   try {
     const response = getStationByPlotIdApi(station);
+    return response;
+  } catch (error) {
+    return error;
+  }
+});
+export const getStationByUserId = createAsyncThunk('station/getStationByUserId', async (station: string) => {
+  try {
+    const response = getStationByUserIdApi(station);
     return response;
   } catch (error) {
     return error;

@@ -55,20 +55,20 @@ const DeviceInfo = () => {
     }
   }, [checkUser]);
 
-  useEffect(() => {
-    if (userLocation) {
-      dispatch(checkDeviceForAction({
-        longitude: userLocation?.longitude,
-        latitude: userLocation?.latitude,
-        deviceId: id
-      }));
-    }
-  }, [userLocation]);
+  // useEffect(() => {
+  //   if (userLocation) {
+  //     dispatch(checkDeviceForAction({
+  //       longitude: userLocation?.longitude,
+  //       latitude: userLocation?.latitude,
+  //       deviceId: id
+  //     }));
+  //   }
+  // }, [userLocation]);
 
 
-  useEffect(() => {
-    dispatch(getDeviceInfoForQr(id));
-  }, [isAction]);
+  // useEffect(() => {
+  //   dispatch(getDeviceInfoForQr(id));
+  // }, [isAction]);
 
 
   return (

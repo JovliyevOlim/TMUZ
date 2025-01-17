@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 import { AddWorks } from './AddWorks.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmJob, doneJob, getJobs } from '../../slices/work/thunk.ts';
-import { getAllStation, getStationByPlotId } from '../../slices/station/thunk.ts';
+import { getAllStation, getStationByPlotId, getStationByUserId } from '../../slices/station/thunk.ts';
 import { PauseWork } from './PauseWork.tsx';
 import { RejectedWork } from './RejectedWork.tsx';
 import moment from 'moment';
 import { getAllPlot } from '../../slices/plot/thunk.ts';
+import { getAllWorkExample } from '../../slices/workExample/thunk.ts';
 
 
 const Works = () => {
@@ -67,11 +68,13 @@ const Works = () => {
   useEffect(() => {
     if (plotId) {
       dispatch(getStationByPlotId(plotId));
+      dispatch(getAllWorkExample());
     }
   }, [plotId]);
 
   useEffect(() => {
     dispatch(getAllPlot());
+    dispatch(getStationByUserId(userId));
   }, []);
 
   return (

@@ -1,5 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllStation, addNewStation, updateStation, getStationByPlotId, deleteStation } from './thunk';
+import {
+  getAllStation,
+  addNewStation,
+  updateStation,
+  getStationByPlotId,
+  deleteStation,
+  getStationByUserId
+} from './thunk';
 
 
 interface initialState {
@@ -8,11 +15,13 @@ interface initialState {
   isAction: boolean,
   isSuccess: boolean,
   stations: [],
+  stationsUser: [],
   message: ''
 }
 
 export const initialState: initialState = {
   stations: [],
+  stationsUser: [],
   error: null,
   loading: false,
   isAction: false,
@@ -36,7 +45,21 @@ const sliceOptions = {
         state.loading = false;
       })
       .addCase(getStationByPlotId.rejected, (state: any) => {
-        state.stations = []
+        state.stations = [];
+        state.loading = false;
+      });
+
+    // get all station by plot
+    builder.addCase(getStationByUserId.pending, (state: any) => {
+      state.loading = true;
+      state.isSuccess = false;
+    })
+      .addCase(getStationByUserId.fulfilled, (state: any, action: any) => {
+        state.stationsUser = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(getStationByUserId.rejected, (state: any) => {
+        state.stationsUser = [];
         state.loading = false;
       });
 
