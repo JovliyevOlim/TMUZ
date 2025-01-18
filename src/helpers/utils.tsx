@@ -19,136 +19,74 @@ interface SeriesData {
   data: number[];
 }
 
-// Diagramma uchun tayyor ma'lumotlarni chiqaruvchi funksiya
-export function generateChartDataByCategory(data: Device[], categoryId: string): {
-  stationSeries: SeriesData[];
-  levelCrossingSeries: SeriesData[];
-  peregonSeries: SeriesData[];
-  xaxis: {
-    stationCategories: string[];
-    levelCrossingCategories: string[];
-    peregonCategories: string[]
-  };
-} {
-  const stationCounts: Record<string, { name: string; checked: number; unchecked: number }> = {};
-  const levelCrossingCounts: Record<string, { name: string; checked: number; unchecked: number }> = {};
-  const peregonCounts: Record<string, { name: string; checked: number; unchecked: number }> = {};
+export function generateChartDataByCategory(data: Device[], categoryId: string) {
+  const stationCounts: Record<string, { name: string; checked: number; unchecked: number; devices: string[] }> = {};
+  const levelCrossingCounts: Record<string, { name: string; checked: number; unchecked: number; devices: string[] }> = {};
+  const peregonCounts: Record<string, { name: string; checked: number; unchecked: number; devices: string[] }> = {};
 
-  // Kiritilgan categoryId bo‘yicha filtrlaymiz va tekshirilgan hamda tekshirilmaganlarni hisoblaymiz
   data
     .filter((item) => item.categoryId === categoryId)
     .forEach((item) => {
-      const { stationId, stationName, levelCrossingId, levelCrossingName, peregonId, peregonName, check } = item;
+      const { stationId, stationName, levelCrossingId, levelCrossingName, peregonId, peregonName, check, deviceName } = item;
 
-      // Station uchun hisob
       if (stationId) {
         if (!stationCounts[stationId]) {
-          stationCounts[stationId] = { name: stationName, checked: 0, unchecked: 0 };
+          stationCounts[stationId] = { name: stationName, checked: 0, unchecked: 0, devices: [] };
         }
-        if (check) {
-          stationCounts[stationId].checked += 1;
-        } else {
-          stationCounts[stationId].unchecked += 1;
-        }
+        stationCounts[stationId].devices.push(deviceName);
+        check ? stationCounts[stationId].checked++ : stationCounts[stationId].unchecked++;
       }
 
-      // Level Crossing uchun hisob
-      if (levelCrossingId && levelCrossingName) {
+      if (levelCrossingId) {
         if (!levelCrossingCounts[levelCrossingId]) {
-          levelCrossingCounts[levelCrossingId] = { name: levelCrossingName, checked: 0, unchecked: 0 };
+          levelCrossingCounts[levelCrossingId] = { name: levelCrossingName, checked: 0, unchecked: 0, devices: [] };
         }
-        if (check) {
-          levelCrossingCounts[levelCrossingId].checked += 1;
-        } else {
-          levelCrossingCounts[levelCrossingId].unchecked += 1;
-        }
+        levelCrossingCounts[levelCrossingId].devices.push(deviceName);
+        check ? levelCrossingCounts[levelCrossingId].checked++ : levelCrossingCounts[levelCrossingId].unchecked++;
       }
 
-      // Level Crossing uchun hisob
-      if (peregonId && peregonName) {
+      if (peregonId) {
         if (!peregonCounts[peregonId]) {
-          peregonCounts[peregonId] = { name: peregonName, checked: 0, unchecked: 0 };
+          peregonCounts[peregonId] = { name: peregonName, checked: 0, unchecked: 0, devices: [] };
         }
-        if (check) {
-          peregonCounts[peregonId].checked += 1;
-        } else {
-          peregonCounts[peregonId].unchecked += 1;
-        }
+        peregonCounts[peregonId].devices.push(deviceName);
+        check ? peregonCounts[peregonId].checked++ : peregonCounts[peregonId].unchecked++;
       }
     });
 
-  // Station bo‘yicha `xaxis` va `series` ma'lumotlari
-  const stationUncheckedData: number[] = [];
-  const stationCheckedData: number[] = [];
-  const stationCategories: string[] = [];
+  const deviceNames: Record<string, string[]> = {};
 
-  Object.values(stationCounts).forEach((counts) => {
-    stationCategories.push(counts.name);
-    stationUncheckedData.push(counts.unchecked);
-    stationCheckedData.push(counts.checked);
+  Object.values(stationCounts).forEach(({ name, devices }) => {
+    deviceNames[name] = devices;
   });
-
-  // Level Crossing bo‘yicha `xaxis` va `series` ma'lumotlari
-  const levelCrossingUncheckedData: number[] = [];
-  const levelCrossingCheckedData: number[] = [];
-  const levelCrossingCategories: string[] = [];
-
-  Object.values(levelCrossingCounts).forEach((counts) => {
-    levelCrossingCategories.push(counts.name);
-    levelCrossingUncheckedData.push(counts.unchecked);
-    levelCrossingCheckedData.push(counts.checked);
+  Object.values(levelCrossingCounts).forEach(({ name, devices }) => {
+    deviceNames[name] = devices;
   });
-
-  // peregon bo‘yicha `xaxis` va `series` ma'lumotlari
-  const peregonUncheckedData: number[] = [];
-  const peregonCheckedData: number[] = [];
-  const peregonCategories: string[] = [];
-
-  Object.values(peregonCounts).forEach((counts) => {
-    peregonCategories.push(counts.name);
-    peregonUncheckedData.push(counts.unchecked);
-    peregonCheckedData.push(counts.checked);
+  Object.values(peregonCounts).forEach(({ name, devices }) => {
+    deviceNames[name] = devices;
   });
 
   return {
     stationSeries: [
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
-        data: stationUncheckedData
-      },
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilgan',
-        data: stationCheckedData
-      }
+      { name: "Qurilma ko'rikdan o'tkazilmagan", data: Object.values(stationCounts).map(v => v.unchecked) },
+      { name: "Qurilma ko'rikdan o'tkazilgan", data: Object.values(stationCounts).map(v => v.checked) }
     ],
     levelCrossingSeries: [
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
-        data: levelCrossingUncheckedData
-      },
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilgan',
-        data: levelCrossingCheckedData
-      }
+      { name: "Qurilma ko'rikdan o'tkazilmagan", data: Object.values(levelCrossingCounts).map(v => v.unchecked) },
+      { name: "Qurilma ko'rikdan o'tkazilgan", data: Object.values(levelCrossingCounts).map(v => v.checked) }
     ],
     peregonSeries: [
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
-        data: peregonUncheckedData
-      },
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilgan',
-        data: peregonCheckedData
-      }
+      { name: "Qurilma ko'rikdan o'tkazilmagan", data: Object.values(peregonCounts).map(v => v.unchecked) },
+      { name: "Qurilma ko'rikdan o'tkazilgan", data: Object.values(peregonCounts).map(v => v.checked) }
     ],
     xaxis: {
-      stationCategories,
-      levelCrossingCategories,
-      peregonCategories
-    }
+      stationCategories: Object.values(stationCounts).map(v => v.name),
+      levelCrossingCategories: Object.values(levelCrossingCounts).map(v => v.name),
+      peregonCategories: Object.values(peregonCounts).map(v => v.name)
+    },
+    deviceNames
   };
 }
-
 
 export const checkPermission = (userPermissions: any, checkPermissions: any) => {
   return checkPermissions.some((perm: any) => userPermissions.includes(perm));

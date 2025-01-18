@@ -114,8 +114,6 @@ const DeviceInfo = () => {
           </div>
 
           {
-            checkUser && <>
-              {
                 checkIsUser ? <Button
                     onClick={() => setModal(true)}
                     className="inline-flex items-center justify-center gap-2.5 border border-primary py-2 px-5 text-center font-semibold text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
@@ -128,8 +126,7 @@ const DeviceInfo = () => {
                   >
                     Kirish
                   </Button>
-              }
-            </>
+
           }
 
           <AddNewAction modalOpen={modal} setModalOpen={setModal} item={editData} setItem={setEditData} />

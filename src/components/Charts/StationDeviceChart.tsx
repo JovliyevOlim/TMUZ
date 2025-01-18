@@ -63,19 +63,20 @@ const StationDeviceChart: React.FC = () => {
         enabled: false
       }
     },
-    // tooltip: {
-    //   custom: function({ series, seriesIndex, dataPointIndex, w }) {
-    //     const category = w.globals.labels[dataPointIndex];
-    //     const value = series[seriesIndex][dataPointIndex];
-    //     return `
-    //     <div style="padding: 10px; background: #fff; border: 1px solid #ddd;">
-    //       <strong>${category}</strong><br/>
-    //       Qiymat: ${value}<br/>
-    //       Jami: ${series[seriesIndex].reduce((acc:any, val:any) => acc + val, 0)}
-    //     </div>
-    //   `;
-    //   }
-    // },
+    tooltip: {
+      custom: function({ dataPointIndex, w }) {
+        const category = w.globals.labels[dataPointIndex]; // Get category name
+        const names = deviceNames[category] || []; // Get device names array
+
+        return `
+      <div style="padding: 10px; background: #fff; border: 1px solid #ddd;">
+        <strong>${category}</strong><br/>
+        Qurilmalar: <br/>
+        ${names.map(name => `- ${name}`).join('<br/>')}
+      </div>
+    `;
+      }
+    },
     responsive: [
       {
         breakpoint: 1536,
