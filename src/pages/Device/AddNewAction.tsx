@@ -69,11 +69,11 @@ export const AddNewAction = ({ modalOpen, setModalOpen, item, setItem }: any) =>
               'Authorization': `Bearer ${getToken()}`
             }
           });
-          alert(JSON.parse({
-            ...values,
-            deviceId: deviceQrCodeInfo?.deviceDto?.id,
-            userId
-          }));
+          // alert(JSON.parse({
+          //   ...values,
+          //   deviceId: deviceQrCodeInfo?.deviceDto?.id,
+          //   userId
+          // }));
           toast.success('Action qo\'shildi', { autoClose: 3000 });
           setModalOpen(false);
           validation.resetForm();
