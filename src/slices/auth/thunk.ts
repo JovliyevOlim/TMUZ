@@ -43,7 +43,9 @@ export const loginUserOther = (user: any) => async (dispatch: any) => {
     });
     var data: any = await response;
     if (data) {
+      const today = new Date();
       localStorage.setItem('authUser', JSON.stringify(data.data));
+      localStorage.setItem('savedDate', today.toISOString());
       if (data.success) {
         dispatch(loginSuccess(data.data));
       } else {

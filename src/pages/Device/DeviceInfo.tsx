@@ -52,12 +52,18 @@ const DeviceInfo = () => {
 
   useEffect(() => {
     const storage = localStorage.getItem('authUser');
-    if (storage) {
-      setCheckIsUser(true);
-    } else {
+    if (isWithin10Days) {
+      localStorage.removeItem('authUser');
       setCheckIsUser(false);
+    } else {
+      if (storage) {
+        setCheckIsUser(true);
+      } else {
+        setCheckIsUser(false);
+      }
     }
-  }, [modalLogin, localStorage.getItem('authUser'), user, isWithin10Days]);
+
+  }, [modalLogin, user, isWithin10Days]);
 
 
   useEffect(() => {
