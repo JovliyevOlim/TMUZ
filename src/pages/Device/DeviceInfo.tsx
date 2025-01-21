@@ -52,6 +52,7 @@ const DeviceInfo = () => {
 
   useEffect(() => {
     const storage = localStorage.getItem('authUser');
+    toast.success(isWithin10Days);
     if (!isWithin10Days) {
       localStorage.removeItem('authUser');
       setCheckIsUser(false);
