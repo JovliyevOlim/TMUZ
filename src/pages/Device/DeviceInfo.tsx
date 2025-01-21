@@ -27,6 +27,29 @@ const DeviceInfo = () => {
     longitude: number;
   } | null>(null);
 
+
+  const [isWithin10Days, setIsWithin10Days] = useState(false);
+
+  useEffect(() => {
+    // Sana saqlash
+    const savedDate = localStorage.getItem('savedDate');
+    if (!savedDate) {
+      // Agar sana saqlanmagan bo'lsa, hozirgi sanani saqlaymiz
+      const today = new Date();
+      localStorage.setItem('savedDate', today.toISOString());
+      localStorage.removeItem('authUser');
+    } else {
+      // Sana o'qiladi va kunlar farqi hisoblanadi
+      const today = new Date();
+      const storedDate = new Date(savedDate);
+
+      const differenceInTime = today - storedDate;
+      const differenceInDays = Math.floor(differenceInTime / (1000 * 60 * 60 * 24));
+
+      setIsWithin10Days(differenceInDays <= 10);
+    }
+  }, []);
+
   useEffect(() => {
     const storage = localStorage.getItem('authUser');
     if (storage) {
@@ -34,7 +57,7 @@ const DeviceInfo = () => {
     } else {
       setCheckIsUser(false);
     }
-  }, [modalLogin, localStorage.getItem('authUser'), user]);
+  }, [modalLogin, localStorage.getItem('authUser'), user, isWithin10Days]);
 
 
   useEffect(() => {
