@@ -61,7 +61,7 @@ const DeviceInfo = () => {
     } else {
       setCheckIsUser(false);
     }
-  }, [modalLogin, localStorage.getItem('authUser'), user, isWithin10Days]);
+  }, [modalLogin, localStorage.getItem('authUser'), user]);
 
 
   useEffect(() => {
