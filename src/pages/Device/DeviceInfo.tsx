@@ -52,7 +52,7 @@ const DeviceInfo = () => {
 
   useEffect(() => {
     const storage = localStorage.getItem('authUser');
-    if (isWithin10Days) {
+    if (!isWithin10Days) {
       localStorage.removeItem('authUser');
       setCheckIsUser(false);
     } else {
