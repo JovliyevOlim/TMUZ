@@ -28,8 +28,6 @@ const DeviceInfo = () => {
   } | null>(null);
 
 
-  const [isWithin10Days, setIsWithin10Days] = useState(false);
-
   useEffect(() => {
     // Sana saqlash
     const savedDate = localStorage.getItem('savedDate');
@@ -38,6 +36,7 @@ const DeviceInfo = () => {
       const today = new Date();
       localStorage.setItem('savedDate', today.toISOString());
       localStorage.removeItem('authUser');
+      setCheckIsUser(false);
     } else {
       // Sana o'qiladi va kunlar farqi hisoblanadi
       const today = new Date();
@@ -46,25 +45,23 @@ const DeviceInfo = () => {
       const differenceInTime = today - storedDate;
       const differenceInDays = Math.floor(differenceInTime / (1000 * 60 * 60 * 24));
 
-      setIsWithin10Days(differenceInDays <= 10);
-    }
-  }, []);
 
-  useEffect(() => {
-    const storage = localStorage.getItem('authUser');
-    toast.success(isWithin10Days);
-    if (!isWithin10Days) {
-      localStorage.removeItem('authUser');
-      setCheckIsUser(false);
-    } else {
-      if (storage) {
+      if (differenceInDays <= 10) {
         setCheckIsUser(true);
       } else {
         setCheckIsUser(false);
       }
     }
+  }, []);
 
-  }, [modalLogin, user, isWithin10Days]);
+  useEffect(() => {
+    const storage = localStorage.getItem('authUser');
+    if (storage) {
+      setCheckIsUser(true);
+    } else {
+      setCheckIsUser(false);
+    }
+  }, [modalLogin, localStorage.getItem('authUser'), user, isWithin10Days]);
 
 
   useEffect(() => {
