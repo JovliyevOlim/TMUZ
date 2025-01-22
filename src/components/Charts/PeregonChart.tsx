@@ -108,17 +108,19 @@ const PeregonChart: React.FC = () => {
 
   useEffect(() => {
     if (!categoryId) return; // Agar kategoriya tanlanmagan bo‘lsa, ishlamasin
+    if (devices){
+      const result = generateChartDataByCategoryPeregon(devices, categoryId, peregons);
+      console.log("Chart Data Updated:", result);
 
-    const result = generateChartDataByCategoryPeregon(devices, categoryId, peregons);
-    console.log("Chart Data Updated:", result);
-
-    if (result) {
-      setState({
-        series: result.peregonSeries || []
-      });
-      setRow(result?.xaxis?.peregonCategories || []);
-      setDeviceNames(result?.deviceNames || {});
+      if (result) {
+        setState({
+          series: result.peregonSeries || []
+        });
+        setRow(result?.xaxis?.peregonCategories || []);
+        setDeviceNames(result?.deviceNames || {});
+      }
     }
+
   }, [categoryId, devices, peregons]);
 
 
@@ -142,7 +144,7 @@ const PeregonChart: React.FC = () => {
             >
               <option value={''}>Tanlang</option>
               {
-                allCategory.filter((val: any) => val.peregon)?.map((item: any) =>
+                allCategory?.filter((val: any) => val.peregon)?.map((item: any) =>
                   <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
                 )
               }

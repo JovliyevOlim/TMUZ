@@ -2,8 +2,6 @@ import { ApexOptions } from 'apexcharts';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategory, getAllCategoryForSelect } from '../../slices/category/thunk.ts';
-import { getAllDevice } from '../../slices/device/thunk.ts';
 import { generateChartDataByCategory } from '../../helpers/utils.tsx';
 
 
@@ -33,8 +31,6 @@ const StationDeviceChart: React.FC = () => {
       { name: 'Qurilma ko\'rikdan o\'tkazilgan', data: [] }
     ]
   });
-
-
 
 
   const options: ApexOptions = {
@@ -108,16 +104,16 @@ const StationDeviceChart: React.FC = () => {
 
   useEffect(() => {
     if (!categoryId) return; // Agar kategoriya tanlanmagan bo‘lsa, ishlamasin
-
-    const result = generateChartDataByCategory(devices, categoryId, stations);
-    console.log("Chart Data Updated:", result);
-
-    if (result) {
-      setState({
-        series: result.stationSeries || []
-      });
-      setRow(result?.xaxis?.stationCategories || []);
-      setDeviceNames(result?.deviceNames || {});
+    if (devices) {
+      const result = generateChartDataByCategory(devices, categoryId, stations);
+      console.log('Chart Data Updated:', result);
+      if (result) {
+        setState({
+          series: result.stationSeries || []
+        });
+        setRow(result?.xaxis?.stationCategories || []);
+        setDeviceNames(result?.deviceNames || {});
+      }
     }
   }, [categoryId, devices, stations]);
 
@@ -141,7 +137,7 @@ const StationDeviceChart: React.FC = () => {
             >
               <option value={''}>Tanlang</option>
               {
-                allCategory.filter((val: any) => val.station)?.map((item: any) =>
+                allCategory?.filter((val: any) => val.station)?.map((item: any) =>
                   <option value={item.id} className="dark:bg-boxdark">{item?.name}</option>
                 )
               }

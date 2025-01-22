@@ -6,6 +6,8 @@ import { getAllStation } from '../../slices/station/thunk.ts';
 import { getAllDevice, getDeviceByStationId } from '../../slices/device/thunk.ts';
 import PeregonChart from '../../components/Charts/PeregonChart.tsx';
 import { getAllCategoryForSelect } from '../../slices/category/thunk.ts';
+import { getAllLevelCrossing } from '../../slices/levelCrossing/thunk.ts';
+import { getAllPeregon } from '../../slices/peregon/thunk.ts';
 
 const ECommerce: React.FC = () => {
 
@@ -16,6 +18,8 @@ const ECommerce: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAllStation());
+    dispatch(getAllLevelCrossing());
+    dispatch(getAllPeregon());
   }, []);
 
   useEffect(() => {
