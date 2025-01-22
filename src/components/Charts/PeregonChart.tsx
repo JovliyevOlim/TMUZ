@@ -2,9 +2,9 @@ import { ApexOptions } from 'apexcharts';
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategory, getAllCategoryForSelect } from '../../slices/category/thunk.ts';
-import { getAllDevice } from '../../slices/device/thunk.ts';
-import { generateChartDataByCategory } from '../../helpers/utils.tsx';
+import {
+  generateChartDataByCategoryPeregon,
+} from '../../helpers/utils.tsx';
 
 
 interface ChartTwoState {
@@ -19,33 +19,23 @@ const PeregonChart: React.FC = () => {
 
   const { allCategory, isAction } = useSelector((state: any) => state.Category);
   const { devices } = useSelector((state: any) => state.Device);
+  const { peregons } = useSelector((state: any) => state.Peregon);
+
+
 
 
   const [row, setRow] = useState<any>([]);
+  const [deviceNames, setDeviceNames] = useState<any>([]);
   const [categoryId, setCategoryId] = useState<string>('');
 
 
   const [state, setState] = useState<ChartTwoState>({
     series: [
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
-        data: [13, 23, 20, 8, 13, 27, 15]
-      },
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilgan',
-        data: [44, 55, 41, 67, 22, 43, 65]
-      }
+      { name: 'Qurilma ko\'rikdan o\'tkazilmagan', data: [] },
+      { name: 'Qurilma ko\'rikdan o\'tkazilgan', data: [] }
     ]
   });
 
-
-  useEffect(() => {
-    const result = generateChartDataByCategory(devices, categoryId);
-    setRow(result.xaxis.peregonCategories);
-    state.series = result.peregonSeries;
-    let a = { ...state };
-    setState(a);
-  }, [categoryId]);
 
   const options: ApexOptions = {
     colors: ['#d20404', '#03d907'],
@@ -61,20 +51,6 @@ const PeregonChart: React.FC = () => {
         enabled: false
       }
     },
-
-    responsive: [
-      {
-        breakpoint: 1536,
-        options: {
-          plotOptions: {
-            bar: {
-              borderRadius: 0,
-              columnWidth: '25%'
-            }
-          }
-        }
-      }
-    ],
     plotOptions: {
       bar: {
         horizontal: false,
@@ -87,7 +63,6 @@ const PeregonChart: React.FC = () => {
     dataLabels: {
       enabled: false
     },
-
     xaxis: {
       categories: row
     },
@@ -97,22 +72,54 @@ const PeregonChart: React.FC = () => {
       fontFamily: 'Satoshi',
       fontWeight: 500,
       fontSize: '14px',
-
       markers: {
         radius: 99
       }
     },
     fill: {
       opacity: 1
+    },
+    tooltip: {
+      shared: false, // ✅ Ensure separate tooltips for each bar
+      intersect: true, // ✅ Tooltip only shows when hovering directly on the bar
+      enabled: true,
+      custom: function({ dataPointIndex, seriesIndex, w }) {
+        const category = w.config.xaxis.categories[dataPointIndex] || 'Noma’lum Stansiya';
+
+        const devices = deviceNames[category] || { checked: [], unchecked: [] };
+        console.log(devices);
+        console.log(JSON.stringify(devices));
+
+        // ✅ Determine which series is hovered (Red = Unchecked, Green = Checked)
+        const isUnchecked = seriesIndex === 0; // Red
+        const isChecked = seriesIndex === 1; // Green
+
+        // ✅ Show only relevant devices
+        const relevantDevices = isUnchecked ? devices.unchecked : devices.checked;
+        return `
+      <div style="padding: 10px; background: #fff; border: 1px solid #ddd;">
+        ${relevantDevices.length > 0 ? relevantDevices.map((name: any) => `${name}`).join('<br/>') : 'Hech qanday qurilma yo‘q'}
+      </div>
+    `;
+      }
     }
   };
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState
-    }));
-  };
-  handleReset;
+
+  useEffect(() => {
+    if (!categoryId) return; // Agar kategoriya tanlanmagan bo‘lsa, ishlamasin
+
+    const result = generateChartDataByCategoryPeregon(devices, categoryId, peregons);
+    console.log("Chart Data Updated:", result);
+
+    if (result) {
+      setState({
+        series: result.peregonSeries || []
+      });
+      setRow(result?.xaxis?.peregonCategories || []);
+      setDeviceNames(result?.deviceNames || {});
+    }
+  }, [categoryId, devices, peregons]);
 
 
   return (

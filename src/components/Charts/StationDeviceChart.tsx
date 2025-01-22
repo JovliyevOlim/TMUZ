@@ -19,34 +19,22 @@ const StationDeviceChart: React.FC = () => {
 
   const { allCategory, isAction } = useSelector((state: any) => state.Category);
   const { devices } = useSelector((state: any) => state.Device);
+  const { stations } = useSelector((state: any) => state.Station);
 
 
   const [row, setRow] = useState<any>([]);
+  const [deviceNames, setDeviceNames] = useState<any>([]);
   const [categoryId, setCategoryId] = useState<string>('');
 
 
   const [state, setState] = useState<ChartTwoState>({
     series: [
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilmagan',
-        data: [4, 5, 6, 7]
-      },
-      {
-        name: 'Qurilma ko\'rikdan o\'tkazilgan',
-        data: [4, 5, 67, 8]
-      }
+      { name: 'Qurilma ko\'rikdan o\'tkazilmagan', data: [] },
+      { name: 'Qurilma ko\'rikdan o\'tkazilgan', data: [] }
     ]
   });
 
 
-  useEffect(() => {
-    const result = generateChartDataByCategory(devices, categoryId);
-    console.log(result);
-    setRow(result.xaxis.stationCategories);
-    state.series = result.stationSeries;
-    let a = { ...state };
-    setState(a);
-  }, [categoryId]);
 
 
   const options: ApexOptions = {
@@ -63,33 +51,6 @@ const StationDeviceChart: React.FC = () => {
         enabled: false
       }
     },
-    tooltip: {
-      custom: function({ dataPointIndex, w }) {
-        const category = w.globals.labels[dataPointIndex]; // Get category name
-        const names = deviceNames[category] || []; // Get device names array
-
-        return `
-      <div style="padding: 10px; background: #fff; border: 1px solid #ddd;">
-        <strong>${category}</strong><br/>
-        Qurilmalar: <br/>
-        ${names.map(name => `- ${name}`).join('<br/>')}
-      </div>
-    `;
-      }
-    },
-    responsive: [
-      {
-        breakpoint: 1536,
-        options: {
-          plotOptions: {
-            bar: {
-              borderRadius: 0,
-              columnWidth: '25%'
-            }
-          }
-        }
-      }
-    ],
     plotOptions: {
       bar: {
         horizontal: false,
@@ -102,7 +63,6 @@ const StationDeviceChart: React.FC = () => {
     dataLabels: {
       enabled: false
     },
-
     xaxis: {
       categories: row
     },
@@ -112,23 +72,54 @@ const StationDeviceChart: React.FC = () => {
       fontFamily: 'Satoshi',
       fontWeight: 500,
       fontSize: '14px',
-
       markers: {
         radius: 99
       }
     },
     fill: {
       opacity: 1
+    },
+    tooltip: {
+      shared: false, // ✅ Ensure separate tooltips for each bar
+      intersect: true, // ✅ Tooltip only shows when hovering directly on the bar
+      enabled: true,
+      custom: function({ dataPointIndex, seriesIndex, w }) {
+        const category = w.config.xaxis.categories[dataPointIndex] || 'Noma’lum Stansiya';
+
+        const devices = deviceNames[category] || { checked: [], unchecked: [] };
+        console.log(devices);
+        console.log(JSON.stringify(devices));
+
+        // ✅ Determine which series is hovered (Red = Unchecked, Green = Checked)
+        const isUnchecked = seriesIndex === 0; // Red
+        const isChecked = seriesIndex === 1; // Green
+
+        // ✅ Show only relevant devices
+        const relevantDevices = isUnchecked ? devices.unchecked : devices.checked;
+        return `
+      <div style="padding: 10px; background: #fff; border: 1px solid #ddd;">
+        ${relevantDevices.length > 0 ? relevantDevices.map((name: any) => `${name}`).join('<br/>') : 'Hech qanday qurilma yo‘q'}
+      </div>
+    `;
+      }
     }
   };
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState
-    }));
-  };
-  handleReset;
 
+  useEffect(() => {
+    if (!categoryId) return; // Agar kategoriya tanlanmagan bo‘lsa, ishlamasin
+
+    const result = generateChartDataByCategory(devices, categoryId, stations);
+    console.log("Chart Data Updated:", result);
+
+    if (result) {
+      setState({
+        series: result.stationSeries || []
+      });
+      setRow(result?.xaxis?.stationCategories || []);
+      setDeviceNames(result?.deviceNames || {});
+    }
+  }, [categoryId, devices, stations]);
 
   return (
     <div
