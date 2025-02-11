@@ -2,7 +2,7 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb.tsx';
 import { useEffect, useState } from 'react';
 import { AddUser } from './AddUsers.tsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllEmployee } from '../../slices/employee/thunk.ts';
+import { deleteEmployee, getAllEmployee } from '../../slices/employee/thunk.ts';
 import { getAllRoles } from '../../slices/roles/thunk.ts';
 import { getAllEnterprise } from '../../slices/enterprise/thunk.ts';
 import { baseUrl } from '../../helpers/api_helpers.ts';
@@ -30,7 +30,7 @@ const Users = () => {
   };
 
   const deleteFunction = () => {
-    dispatch(deleteStation(editData?.id));
+    dispatch(deleteEmployee(editData?.id));
     setModalDelete(false);
     setEditData(null);
   };

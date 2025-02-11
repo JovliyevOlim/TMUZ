@@ -106,7 +106,7 @@ export const UPDATE_EMPLOYEE = '/employee';
 export const GET_ALL_EMPLOYEE = '/employee';
 export const GET_EMPLOYEE_BY_ID = '/employee/get-by-id';
 export const GET_EMPLOYEE_ENTERPRISE = '/employee/get-by-enterpriseId';
-export const DELETE_EMPLOYEE = '/employee';
+export const DELETE_EMPLOYEE = '/employee/delete';
 
 // get roles
 export const GET_ALL_ROLES = '/role/get-all-roles';
