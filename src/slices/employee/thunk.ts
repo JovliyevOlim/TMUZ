@@ -9,7 +9,7 @@ import {
   getAllEmployee as getAllEmployeeApi,
   updateEmployee as updateEmployeeApi,
   getEmployeeByEnterPrise as getEmployeeByEnterPriseApi,
-  // getEmployeeById as getEmployeeByIdApi
+  deleteEmployee as deleteEmployeeApi,
 } from '../../helpers/backend_helpers.ts';
 
 export const getAllEmployee = createAsyncThunk('Employee/getAllEmployee', async () => {
@@ -52,16 +52,16 @@ export const updateEmployee = createAsyncThunk('Employee/updateEmployee', async 
     return rejectWithValue(error);
   }
 });
-// export const deleteEmployee = createAsyncThunk('Employee/deleteEmployee', async (Employee: string, { rejectWithValue }) => {
-//   try {
-//     const response = deleteEmployeeApi(Employee);
-//     const data = await response;
-//     toast.success("Xodim o'chirildi", { autoClose: 3000 });
-//     return data;
-//   } catch (error) {
-//     let message: any = error;
-//     toast.error(message, { autoClose: 3000 });
-//     return rejectWithValue(error);
-//   }
-// });
+export const deleteEmployee = createAsyncThunk('Employee/deleteEmployee', async (Employee: string, { rejectWithValue }) => {
+  try {
+    const response = deleteEmployeeApi(Employee);
+    const data = await response;
+    toast.success("Xodim o'chirildi", { autoClose: 3000 });
+    return data;
+  } catch (error) {
+    let message: any = error;
+    toast.error(message, { autoClose: 3000 });
+    return rejectWithValue(error);
+  }
+});
 

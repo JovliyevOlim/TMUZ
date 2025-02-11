@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addNewEmployee, getAllEmployee, updateEmployee } from './thunk.ts';
+import { addNewEmployee, deleteEmployee, getAllEmployee, updateEmployee } from './thunk.ts';
 
 
 interface initialState {
@@ -68,6 +68,18 @@ const sliceOptions = {
       state.isAction = !state.isAction;
     });
 
+    //delete Employee
+    builder.addCase(deleteEmployee.pending, (state: any) => {
+      state.loading = true;
+    }).addCase(deleteEmployee.fulfilled, (state: any) => {
+      state.loading = false;
+      state.isSuccess = true;
+      state.isAction = !state.isAction;
+    }).addCase(deleteEmployee.rejected, (state: any) => {
+      state.loading = false;
+      state.isSuccess = false;
+      state.isAction = !state.isAction;
+    });
 
   }
 };

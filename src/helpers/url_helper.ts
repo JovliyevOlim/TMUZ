@@ -1,7 +1,6 @@
 // auth
 export const POST_LOGIN = '/auth/login';
 
-
 // add new user
 export const ADD_NEW_USER = '/user/create';
 export const UPDATE_USER = '/user/edit';
@@ -28,7 +27,6 @@ export const GET_STATION_BY_ID = '/station/get-by-id';
 export const GET_STATION_GET_BY_USER_ID = '/station/get-by-user-id';
 export const GET_STATION_GET_BY_USER_PLOT_ID = '/station/get-by-user-plot-id';
 export const GET_STATION_BY_PLOT_ID = '/station/get-by-plot-id';
-
 
 // Action
 export const ADD_NEW_ACTION = '/action/create';
@@ -62,7 +60,6 @@ export const GET_ALL_MTU = '/mtu/get-all';
 export const GET_MTU_BY_ID = '/mtu/get-by-id';
 export const DELETE_MTU = '/mtu/delete';
 
-
 // EnterPrise
 export const ADD_NEW_ENTERPRISE = '/enterprise/create';
 export const UPDATE_ENTERPRISE = '/enterprise/edit';
@@ -71,7 +68,6 @@ export const GET_ALL_ENTERPRISE = '/enterprise/get-all';
 export const GET_ENTERPRISE_BY_ID = '/enterprise/get-by-id';
 export const GET_ENTERPRISE_BY_MTU = '/enterprise/get-by-mtu';
 
-
 // plot
 export const ADD_NEW_PLOT = '/plot/create';
 export const UPDATE_PLOT = '/plot/edit';
@@ -79,7 +75,6 @@ export const DELETE_PLOT = '/plot/delete';
 export const GET_ALL_PLOT = '/plot/get-all';
 export const GET_PLOT_BY_ID = '/plot/get-by-id';
 export const GET_PLOT_BY_ENTERPRISE = '/plot/get-by-enterprise';
-
 
 // levelCrossing
 export const ADD_NEW_LEVEL_CROSSING = '/level-crossing';
@@ -105,18 +100,16 @@ export const GET_ALL_PEREGON = '/peregon/get-all';
 export const GET_PEREGON_BY_ID = '/peregon/get-by-id';
 export const GET_PEREGON_BY_PLOT_ID = '/peregon/get-by-plot-id';
 
-
 // add new employee
 export const ADD_NEW_EMPLOYEE = '/employee';
 export const UPDATE_EMPLOYEE = '/employee';
 export const GET_ALL_EMPLOYEE = '/employee';
 export const GET_EMPLOYEE_BY_ID = '/employee/get-by-id';
 export const GET_EMPLOYEE_ENTERPRISE = '/employee/get-by-enterpriseId';
-
+export const DELETE_EMPLOYEE = '/employee';
 
 // get roles
 export const GET_ALL_ROLES = '/role/get-all-roles';
-
 
 // Work Example
 export const ADD_NEW_WORK_EXAMPLE = '/job-example';
