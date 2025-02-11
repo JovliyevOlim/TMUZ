@@ -31,7 +31,7 @@ export const confirmJob = (job: any) =>
 export const deleteJob = (jobId: string) =>
   api.delete(url.DELETE_JOB + '/' + jobId);
 export const getJobs = (job: any) =>
-  api.get(url.GET_ALL_JOB_BY_STATION + '/' + job.stationId, job.params);
+  api.get(url.GET_ALL_JOB_BY_STATION, job.params);
 
 // get all station
 export const getAllStation = () => api.get(url.GET_ALL_STATION);
